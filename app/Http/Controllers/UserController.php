@@ -28,7 +28,8 @@ class UserController extends Controller
 
       
 
-        //$role = User::createRole('Admin');
+        $role = User::createRole('Super Admin');
+        $role->givePermissionTo('settings.company');
 
         /*
         $role->givePermissionTo('match.list');
@@ -41,7 +42,7 @@ class UserController extends Controller
        
 
 
-        //return 1;
+        return 1;
 
 
        // $roles = request()->user()->getRoleNames()->toJson();
