@@ -27,7 +27,7 @@
             for($ss=0;$ss < count($vvv);$ss++)
             {
              
-             if($vvv[$ss]==(isset($submenu->permission)? $submenu->permission : ''))
+             if($vvv[$ss]===(isset($submenu->permission)? $submenu->permission : ''))
             {
         
           ?>

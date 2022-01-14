@@ -30,6 +30,7 @@ $configData = Helper::applClasses();
        $temp_arr = (array) $custom_get_all_permissions_access;
     }
 
+    //dd($temp_arr);
        
 
   ?>
@@ -82,7 +83,7 @@ if(isset($custom_get_all_permissions_access))
             for($ss=0;$ss < count($vvv);$ss++)
             {
              
-             if($vvv[$ss]==(isset($menu->permission)? $menu->permission : ''))
+             if($vvv[$ss]===(isset($menu->permission)? $menu->permission : ''))
             {
         
           ?>

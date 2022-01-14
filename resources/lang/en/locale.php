@@ -1,6 +1,22 @@
 <?php
 
 return [
+    "Notifications" => "Notifications",
+    "Announcements" => "Announcements",
+    "Matches" => "Matches",
+    "Pools" => "Pools",
+    "Mega Jackpots" => "Mega Jackpots",
+    "Company WinLoss" => "Company WinLoss",
+    "Statements" => "Statements",
+    "Transactions" => "Transactions",
+    "Withdrawals" => "Withdrawals",
+    "Deposit" => "Deposit",
+    "Members" => "Members",
+    "Win Loss" => "Win Loss",
+    "Adjust Credit" => "Adjust Credit",    
+    "Settlement" => "Settlement",
+    "Statement" => "Statement",
+    "Agents" => "Agents",
     "Company" => "Company",
     "Settings" => "Settings",
     "Role" => "Role",

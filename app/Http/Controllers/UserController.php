@@ -26,11 +26,20 @@ class UserController extends Controller
     public function index()
     { 
 
-        //$role = request()->user()::createRole('Super Admin');
-       // $role->givePermissionTo('settings.company');
+      
 
-        //$role = User::createRole('Super Admin');
-        //$role->givePermissionTo('settings.company');
+        //$role = User::createRole('Admin');
+
+        /*
+        $role->givePermissionTo('match.list');
+        $role->givePermissionTo('match.view');
+        $role->givePermissionTo('match.create');
+        $role->givePermissionTo('match.edit');
+        $role->givePermissionTo('match.delete');
+        */
+
+       
+
 
         //return 1;
 
@@ -81,9 +90,13 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => false];
          $current_user_id = Auth::id();
          $user = User::where('id',$current_user_id)->first();
+
+
+           $custom_permission_controller = new CustomPermissionController;
+        $custom_get_all_permissions_access = $custom_permission_controller->custom_get_all_permissions();
         
     
-        return view('/content/apps/user/photo',['pageConfigs' => $pageConfigs,'user'=>$user,'current_user_id'=>$current_user_id]);
+        return view('/content/apps/user/photo',['pageConfigs' => $pageConfigs,'user'=>$user,'current_user_id'=>$current_user_id,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
 
     

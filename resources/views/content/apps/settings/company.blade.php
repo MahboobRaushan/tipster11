@@ -37,7 +37,7 @@
           <h4 class="card-title">Company Settings</h4>
         </div>
         <div class="card-body">
-           <form action="{{ route('settings.companysave') }}"  method="POST"  id="postForm_edit" name="postForm_edit" enctype="multipart/form-data">
+           <form action="{{ route('companysave') }}"  method="POST"  id="postForm_edit" name="postForm_edit" enctype="multipart/form-data">
             @csrf
             <div class="row">
               <div class="col-6">
@@ -50,17 +50,24 @@
                       <span class="input-group-text"><i data-feather="image"></i></span>
                       <input
                         type="file"
-                        id="contact-icon"
+                        id="logo_file"
                         class="form-control"
                         name="logo"
                         
                        
                       />
 
-                      <img id="preview-image-before-upload_edit" src="{{ $users->profile_photo_path ? url('').'/'.$users->profile_photo_path : asset('images/portrait/small/avatar-s-11.jpg') }}"
-alt="preview image" style="max-height: 100px;">
+                      
+
 
                     </div>
+                     <?php  $companysettings = DB::table('companysettings')->get()->first(); ?>
+
+                      
+
+                      <img id="preview-image-before-upload_logo" src="{{ $companysettings->logo ? url('').'/'.$companysettings->logo : asset('images/portrait/small/avatar-s-11.jpg') }}"
+alt="preview image" style="max-height: 100px;">
+                        
                   </div>
                 </div>
               </div>
@@ -74,13 +81,17 @@ alt="preview image" style="max-height: 100px;">
                       <span class="input-group-text"><i data-feather="image"></i></span>
                       <input
                         type="file"
-                        id="contact-icon"
+                        id="favicon_file"
                         class="form-control"
                         name="favicon"
+
+
                         
                        
                       />
                     </div>
+                     <img id="preview-image-before-upload_favicon" src="{{ $companysettings->favicon ? url('').'/'.$companysettings->favicon : asset('images/portrait/small/avatar-s-11.jpg') }}"
+alt="preview image" style="max-height: 100px;">
                   </div>
                 </div>
               </div>
@@ -185,7 +196,7 @@ alt="preview image" style="max-height: 100px;">
               
              
               <div class="col-sm-12">
-                <button type="reset" class="btn btn-primary me-1">Submit</button>
+                <button type="submit" class="btn btn-primary me-1">Submit</button>
                 <button type="reset" class="btn btn-outline-secondary">Reset</button>
               </div>
             </div>
@@ -222,7 +233,23 @@ alt="preview image" style="max-height: 100px;">
 
 @section('page-script')
   {{-- Page js files --}}
-   
+   <script>
+      $('#logo_file').change(function(){
+          let reader = new FileReader();
+          reader.onload = (e) => { 
+          $('#preview-image-before-upload_logo').attr('src', e.target.result); 
+          }
+          reader.readAsDataURL(this.files[0]); 
+          });
+
+      $('#favicon_file').change(function(){
+          let reader = new FileReader();
+          reader.onload = (e) => { 
+          $('#preview-image-before-upload_favicon').attr('src', e.target.result); 
+          }
+          reader.readAsDataURL(this.files[0]); 
+          });
+        </script>
 
   }
 @endsection

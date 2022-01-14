@@ -19,6 +19,19 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AgentController;
+
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\DepositController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\StatementController;
+use App\Http\Controllers\MegajackpotController;
+use App\Http\Controllers\PoolController;
+use App\Http\Controllers\MatchController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\NotificationController;
+
 
 
 
@@ -293,7 +306,39 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('settings/company', [SettingsController::class,'company'])->name('company');
     Route::post('settings/companysave', [SettingsController::class,'companysave'])->name('companysave');
 
-   
+
+    Route::get('agent/agentdetails', [AgentController::class,'details_list'])->name('agentdetails');
+    Route::get('agent/statement', [AgentController::class,'statement_list'])->name('statement');
+    Route::get('agent/settlement', [AgentController::class,'settlement_list'])->name('settlement');
+
+    Route::get('member/details', [MemberController::class,'details_list'])->name('details');
+    Route::get('member/winloss', [MemberController::class,'winloss_list'])->name('winloss');
+    Route::get('member/adjust_credit', [MemberController::class,'adjust_credit_list'])->name('adjust_credit');
+
+    Route::get('deposit', [DepositController::class,'deposit_list'])->name('deposit');
+
+    Route::get('withdrawal', [WithdrawalController::class,'withdrawal_list'])->name('withdrawal');
+
+    Route::get('transaction', [TransactionController::class,'transaction_list'])->name('transaction');
+
+    Route::get('statement/companywinloss', [StatementController::class,'companywinloss_list'])->name('statementcompanywinloss');
+
+    Route::get('megajackpots', [MegajackpotController::class,'megajackpots_list'])->name('megajackpots');
+
+    Route::get('pool', [PoolController::class,'pool_list'])->name('pool');
+
+    Route::get('match', [MatchController::class,'match_list'])->name('match');
+
+     Route::get('matches/ajaxlist', [MatchController::class,'ajaxlist']);
+    Route::post('matches/add', [MatchController::class,'store'])->name('games.store');
+    Route::post('matches/{id}', [MatchController::class,'details']);
+    Route::post('matches/update/{id}', [MatchController::class,'update'])->name('games.update');
+    Route::delete('matches/{id}',  [MatchController::class,'destroy'])->name('games.destroy');
+
+
+    Route::get('announcement', [AnnouncementController::class,'announcement_list'])->name('announcement');
+
+    Route::get('notification', [NotificationController::class,'notification_list'])->name('notification');
    
    
 });

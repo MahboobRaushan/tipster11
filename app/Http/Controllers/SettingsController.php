@@ -34,31 +34,58 @@ class SettingsController extends Controller
         return view('/content/apps/settings/company',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'companysettings'=>$companysettings]);
     }
 
-    public function photoupdate(Request $request, User $user)
+    public function companysave(Request $request, Companysettings $companysettings)
     { 
 
 
-         $current_user_id = Auth::id();
-         $user = User::where('id',$current_user_id)->first();
+      
+         $companysettings = Companysettings::get()->first();
+
+         $companysettings->name = $request->name;
+         $companysettings->email = $request->email;
+         $companysettings->phone = $request->phone;
+         $companysettings->address = $request->address;
+         $companysettings->website = $request->website;
+          $companysettings->save();
         
     
-        if(!$request->image) {
+        if(!$request->logo) {
                 
             }
             else{
 
-                $time =time();
-                 $input['image'] = $time.'.'.$request->image->extension();
-                   $request->image->move(public_path('images/profile-photo'), $input['image']);
+                $time ='1'.time();
+                 $input['logo'] = $time.'.'.$request->logo->extension();
+                   $request->logo->move(public_path('images/company-photo'), $input['logo']);
 
 
-                 if($user->profile_photo_path)
+                 if($companysettings->logo)
                 {
-                    unlink($user->profile_photo_path);
+                    unlink($companysettings->logo);
                 }
 
-                 $user->profile_photo_path = 'images/profile-photo/'.$input['image'];
-                 $user->save();
+                 $companysettings->logo = 'images/company-photo/'.$input['logo'];
+                 $companysettings->save();
+
+            }
+
+             if(!$request->favicon) {
+                
+            }
+            else{
+
+                $time ='2'.time();
+                 $input['favicon'] = $time.'.'.$request->favicon->extension();
+                   $request->favicon->move(public_path('images/company-photo'), $input['favicon']);
+
+
+                 if($companysettings->favicon)
+                {
+                    unlink($companysettings->favicon);
+                }
+
+                 $companysettings->favicon = 'images/company-photo/'.$input['favicon'];
+                 $companysettings->save();
 
             }
 
