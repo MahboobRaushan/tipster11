@@ -160,7 +160,7 @@
    
  <script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
 
-  <script src="{{ asset(mix('js/scripts/pages/app-agentstatement-list.js')) }}"></script>
+  <script src="{{ asset(mix('js/scripts/pages/app-agentsettlement-list.js')) }}"></script>
   }
 @endsection
 
