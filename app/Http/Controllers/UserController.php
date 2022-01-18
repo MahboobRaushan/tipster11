@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Team;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -26,24 +27,23 @@ class UserController extends Controller
     public function index()
     { 
 
-      
-
-        $role = User::createRole('Super Admin');
-        $role->givePermissionTo('settings.company');
-
-        /*
-        $role->givePermissionTo('match.list');
-        $role->givePermissionTo('match.view');
-        $role->givePermissionTo('match.create');
-        $role->givePermissionTo('match.edit');
-        $role->givePermissionTo('match.delete');
-        */
+       /*
+        $role = User::createRole('Super Admin');        
+        $role->givePermissionTo('league.team');
+        
+        $role->givePermissionTo('league.view');
+       $role->givePermissionTo('league.create');
+        $role->givePermissionTo('league.edit');
+        $role->givePermissionTo('league.delete');
+        
 
        
 
 
         return 1;
 
+        */
+        
 
        // $roles = request()->user()->getRoleNames()->toJson();
        // $permissions = request()->user()->getAllPermissions()->pluck('name')->toJson();

@@ -25,7 +25,9 @@ class MemberController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+
+         return view('/content/apps/member/app-details-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
     
     public function winloss_list()
@@ -42,7 +44,8 @@ class MemberController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/apps/member/app-winloss-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
     
     public function adjust_credit_list()
@@ -59,7 +62,8 @@ class MemberController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/apps/member/app-adjustcredit',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
 
 }

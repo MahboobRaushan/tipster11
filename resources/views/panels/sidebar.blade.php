@@ -45,7 +45,7 @@ if(isset($custom_get_all_permissions_access))
         <li class="nav-item  {{Route::currentRouteName() === '' ? 'active' : ''}}">
           <a href="{{url('dashboard')}}" class="d-flex align-items-center" >
             <i data-feather="home"></i>
-            <span class="menu-title text-truncate">{{ __('locale.Dashboards') }}</span> 
+            <span class="menu-title text-truncate fw-bolder">{{ __('locale.Dashboards') }}</span> 
             
           </a>
         
@@ -90,7 +90,7 @@ if(isset($custom_get_all_permissions_access))
             <li class="nav-item {{ $custom_classes }} {{Route::currentRouteName() === $menu->slug ? 'active' : ''}}">
               <a href="{{isset($menu->url)? url($menu->url):'javascript:void(0)'}}" class="d-flex align-items-center" target="{{isset($menu->newTab) ? '_blank':'_self'}}">
                 <i data-feather="{{ $menu->icon }}"></i>
-                <span class="menu-title text-truncate">{{ __('locale.'.$menu->name) }}</span> 
+                <span class="menu-title text-truncate fw-bolder">{{ __('locale.'.$menu->name) }}</span> 
                 @if (isset($menu->badge))
                 <?php $badgeClasses = "badge rounded-pill badge-light-primary ms-auto me-1" ?>
                 <span class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{$menu->badge}}</span>

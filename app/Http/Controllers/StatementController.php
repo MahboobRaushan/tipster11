@@ -26,6 +26,7 @@ class StatementController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/apps/statement/app-companywinloss-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
 }

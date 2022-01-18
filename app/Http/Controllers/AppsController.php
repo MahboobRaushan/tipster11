@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use App\Models\Team;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\CustomPermissionController;
 use Illuminate\Http\Request;
+use Auth;
 
 class AppsController extends Controller
 {
@@ -49,8 +54,13 @@ class AppsController extends Controller
     // User List Page
     public function user_list()
     {
+         $custom_permission_controller = new CustomPermissionController; 
+        
+        $custom_get_all_permissions_access = $custom_permission_controller->custom_get_all_permissions();
+
         $pageConfigs = ['pageHeader' => false];
-        return view('/content/apps/user/app-user-list', ['pageConfigs' => $pageConfigs]);
+         $current_user_id = Auth::id();
+        return view('/content/apps/user/app-user-list', ['pageConfigs' => $pageConfigs,'current_user_id'=>$current_user_id,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
 
     // User Account Page

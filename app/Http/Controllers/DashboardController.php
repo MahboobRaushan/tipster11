@@ -42,7 +42,7 @@ class DashboardController extends Controller
       }
       else 
       {
-        return view('/content/dashboard/dashboard-ecommerce-not-login', ['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/auth/login', ['pageConfigs' => $pageConfigs]);
       }
     
   }

@@ -64,11 +64,14 @@ class MenuServiceProvider extends ServiceProvider
 
 
 
-        /*
-
        
-        $v_menu_array[] = (object) array("url"=> "games","name"=> "Game","icon"=> "circle","slug"=> "games","permission"=>"game.list");
-        $v_menu_array[] = (object) array("name"=> "Commission","icon"=> "circle","slug"=> "","permission"=>"commission.direct","submenu"=> array((object) array("url"=> "commission/direct","name"=> "Direct","icon"=> "circle","slug"=> "direct","permission"=>"commission.direct"),(object) array("url"=> "commission/indirect","name"=> "Indirect","icon"=> "circle","slug"=> "indirect","permission"=>"commission.indirect")));
+
+       $v_menu_array[] = (object) array("url"=> "leagues","name"=> "League","icon"=> "copy","slug"=> "leagues","permission"=>"league.list");
+
+        $v_menu_array[] = (object) array("url"=> "games","name"=> "Game","icon"=> "copy","slug"=> "games","permission"=>"game.list");
+
+
+       /*  $v_menu_array[] = (object) array("name"=> "Commission","icon"=> "circle","slug"=> "","permission"=>"commission.direct","submenu"=> array((object) array("url"=> "commission/direct","name"=> "Direct","icon"=> "circle","slug"=> "direct","permission"=>"commission.direct"),(object) array("url"=> "commission/indirect","name"=> "Indirect","icon"=> "circle","slug"=> "indirect","permission"=>"commission.indirect")));
         
     */
 

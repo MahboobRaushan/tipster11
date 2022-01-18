@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Game;
 
-use App\Models\User;
-use App\Models\Team;
-use Spatie\Permission\Models\Role;
-
-use Illuminate\Support\Facades\Hash;
 use Validator;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\CustomPermissionController;
 
@@ -18,21 +14,7 @@ class GameController extends Controller
 {
     public function index()
     {
-         $role = User::createRole('Super Admin');
-        $role->givePermissionTo('settings.company');
-
-        /*
-        $role->givePermissionTo('match.list');
-        $role->givePermissionTo('match.view');
-        $role->givePermissionTo('match.create');
-        $role->givePermissionTo('match.edit');
-        $role->givePermissionTo('match.delete');
-        */
-
-       
-
-
-        return 1;
+        //request()->user()->revokePermissionTo('game.edit');
 
         $custom_permission_controller = new CustomPermissionController;
         $custom_permission_access = $custom_permission_controller->custom_permission('game.list');

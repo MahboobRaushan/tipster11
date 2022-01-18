@@ -31,7 +31,7 @@ use App\Http\Controllers\PoolController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\NotificationController;
-
+use App\Http\Controllers\LeagueController;
 
 
 
@@ -339,6 +339,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('announcement', [AnnouncementController::class,'announcement_list'])->name('announcement');
 
     Route::get('notification', [NotificationController::class,'notification_list'])->name('notification');
+
+     Route::get('leagues', [LeagueController::class,'index'])->name('leagues');
+    Route::get('leagues/ajaxlist', [LeagueController::class,'ajaxlist']);
+    Route::post('leagues/add', [LeagueController::class,'store'])->name('leagues.store');
+     Route::post('leagues/addtim', [LeagueController::class,'storetim'])->name('leagues.storetim');
+    Route::post('leagues/{id}', [LeagueController::class,'details']);
+    Route::post('leagues/update/{id}', [LeagueController::class,'update'])->name('leagues.update');
+    Route::delete('leagues/{id}',  [LeagueController::class,'destroy'])->name('leagues.destroy');
    
    
 });
