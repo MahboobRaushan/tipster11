@@ -15,11 +15,11 @@ class CreateMatchTable extends Migration
     {
         Schema::create('match', function (Blueprint $table) {
             $table->id();
-            $table->string('homeTeam',100);
-            $table->string('awayTeam',100);
+            $table->integer('homeTeam',100);
+            $table->integer('awayTeam',100);
             $table->timestamp('startTime')->useCurrent();
             $table->timestamp('endTime')->useCurrent();
-            $table->string('league',100);
+            $table->integer('league');
             $table->enum('result', ['home', 'away'])->nullable();
             $table->integer('status')->default(1); 
             $table->integer('createdBy'); 
