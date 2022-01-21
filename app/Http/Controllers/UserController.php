@@ -27,10 +27,10 @@ class UserController extends Controller
     public function index()
     { 
 
-     
+       /*
         $role = User::createRole('Super Admin');        
         $role->givePermissionTo('league.team');
-        $role->givePermissionTo('league.view');
+        
         $role->givePermissionTo('league.view');
        $role->givePermissionTo('league.create');
         $role->givePermissionTo('league.edit');
@@ -42,7 +42,7 @@ class UserController extends Controller
 
         return 1;
 
-        
+        */
         
 
        // $roles = request()->user()->getRoleNames()->toJson();
