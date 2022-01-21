@@ -27,6 +27,7 @@ class UserController extends Controller
     public function index()
     { 
 
+        /*
         $permission = Permission::create(['name' => 'league.list']);
         $permission = Permission::create(['name' => 'league.team']);
         $permission = Permission::create(['name' => 'league.view']);
@@ -48,7 +49,7 @@ class UserController extends Controller
 
         return 1;
 
-        
+        */
         
 
        // $roles = request()->user()->getRoleNames()->toJson();
