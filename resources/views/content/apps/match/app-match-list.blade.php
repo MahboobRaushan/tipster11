@@ -128,27 +128,35 @@
             <h5 class="modal-title" id="exampleModalLabel">Add Match</h5>
           </div>
           <div class="modal-body flex-grow-1">
-            
+              <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-fullname">League</label>
+              <select 
+                class="form-control select2"
+                id="basic-icon-default-league"
+               required
+                name="league"
+              ></select>
+            </div>
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Home Team</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
+             
+              <select 
+                class="form-control select2"
                 id="basic-icon-default-homeTeam"
-                placeholder="Brazil"
+               required
                 name="homeTeam"
-              />
+              ></select>
             </div>
 
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Away Team</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
+              
+              <select 
+                class="form-control select2"
                 id="basic-icon-default-awayTeam"
-                placeholder="Argentina"
+                required 
                 name="awayTeam"
-              />
+              ></select>
             </div>
 
             <div class="mb-1">
@@ -212,16 +220,7 @@
               
             </div>
 
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">League</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-league"
-                placeholder="World Cup"
-                name="league"
-              />
-            </div>
+          
             
 
          
@@ -244,27 +243,34 @@
           </div>
           <div class="modal-body flex-grow-1">
             
-
+              <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-fullname">League</label>            
+               <select 
+                class="form-control select2"
+                id="basic-icon-default-league_edit"
+               required
+                name="league"
+              ></select>
+            </div>
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Home Team</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
+          
+               <select 
+                class="form-control select2"
                 id="basic-icon-default-homeTeam_edit"
-                placeholder="Brazil"
+               required
                 name="homeTeam"
-              />
+              ></select>
             </div>
 
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Away Team</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
+               <select 
+                class="form-control select2"
                 id="basic-icon-default-awayTeam_edit"
-                placeholder="Argentina"
+               required
                 name="awayTeam"
-              />
+              ></select>
             </div>
 
            <div class="mb-1">
@@ -328,16 +334,7 @@
               
             </div>
 
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">League</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-league_edit"
-                placeholder="World Cup"
-                name="league"
-              />
-            </div>
+          
          
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-result_edit">Result</label>
@@ -475,7 +472,7 @@
    <script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
    
 <script> 
-
+var league_obj = <?php echo json_encode($league); ?>; 
 var custom_get_all_permissions_access_Array = <?php echo json_encode($custom_get_all_permissions_access); ?>; 
 </script>
 

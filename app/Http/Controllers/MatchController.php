@@ -6,6 +6,9 @@ use App\Models\Match;
 use Validator;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
+use App\Models\League;
+use App\Models\Tim;
 
 class MatchController extends Controller
 {
@@ -28,12 +31,20 @@ class MatchController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/content/apps/match/app-match-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        $league = League::where('status',1)->orderBy('name','asc')->get();
+        return view('/content/apps/match/app-match-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'league'=>$league]);
     }
 
      public function ajaxlist()
     {
-        $data = Match::get();
+        
+        $data = DB::table('match')
+            ->select('match.*','leagues.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name')
+            ->leftJoin('leagues', 'leagues.id', '=', 'match.league')
+            ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
+            ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
+            ->get();
+
         return json_decode(json_encode(array('data'=>$data)));
         
     }
@@ -57,6 +68,15 @@ class MatchController extends Controller
             'league' => 'required',                       
             
         ]);
+
+           $matchexist = DB::table('match')                   
+            ->where('homeTeam',$request->homeTeam)
+            ->where('awayTeam',$request->awayTeam)
+            ->count();
+         if($matchexist > 0)
+         {
+            return json_encode(array('status'=>'notok','message'=>'These Home Team and Away Team combination already exist.'));
+         }
 
         if ($v->fails())
         {
@@ -98,8 +118,24 @@ class MatchController extends Controller
      */
     public function details($id)
     {
-        $match = Match::where('id',$id)->first();
-        return $match->toJson();
+        //$match = Match::where('id',$id)->first();
+
+        $match = DB::table('match')
+            ->select('match.*','leagues.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name')
+            ->leftJoin('leagues', 'leagues.id', '=', 'match.league')
+            ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
+            ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
+            ->where('match.id',$id)
+            ->get();
+            $league_id = $match[0]->league;
+            $tims = DB::table('tims')
+                ->select('id','name')
+                ->where('league_id',$league_id)
+                ->get();
+
+
+        //return $match->toJson();
+        return json_encode(array('match'=>$match,'tims'=>$tims));
     }
 
   
@@ -124,6 +160,16 @@ class MatchController extends Controller
         ]);
 
         // return json_encode(array('status'=>'ok','message'=>'Successfully updated!','request'=> $request->name));
+
+        $matchexist = DB::table('match')                   
+            ->where('homeTeam',$request->homeTeam)
+            ->where('awayTeam',$request->awayTeam)
+            ->where('id','!=',$request->edit_id)
+            ->count();
+         if($matchexist > 0)
+         {
+            return json_encode(array('status'=>'notok','message'=>'These Home Team and Away Team combination already exist in another match.'));
+         }
 
         if ($v->fails())
         {
