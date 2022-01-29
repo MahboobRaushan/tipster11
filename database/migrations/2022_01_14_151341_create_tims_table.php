@@ -17,7 +17,8 @@ class CreateTimsTable extends Migration
             $table->id();
             $table->string('name',100);
 
-
+            $table->integer('createdBy')->default(0); 
+            $table->integer('updatedBy')->default(0); 
             $table->bigInteger('league_id')->unsigned()->index()->nullable();
              $table->foreign('league_id')->references('id')->on('leagues');
             $table->timestamps();

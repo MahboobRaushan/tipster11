@@ -10,6 +10,7 @@ use DB;
 use App\Models\League;
 use App\Models\Tim;
 
+
 class MatchController extends Controller
 {
     /**
@@ -17,6 +18,11 @@ class MatchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $per_page;
+    function __construct() {
+        $this->per_page = 10;
+      }
+
     public function match_list()
     { 
           $custom_permission_controller = new CustomPermissionController;
@@ -32,20 +38,65 @@ class MatchController extends Controller
 
         $pageConfigs = ['pageHeader' => false];  
         $league = League::where('status',1)->orderBy('name','asc')->get();
+
+      
+
         return view('/content/apps/match/app-match-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'league'=>$league]);
     }
+    
+    public function handle_pagination($total, $page, $shown, $url) {  
+          $pages = ceil( $total / $shown ); 
+          $range_start = ( ($page >= 5) ? ($page - 3) : 1 );
+          $range_end = ( (($page + 5) > $pages ) ? $pages : ($page + 5) );
 
-     public function ajaxlist()
+          if ( $page >= 1 ) {
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url .'1">&laquo; </a></li>';
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $page ) .'">&lsaquo; </a></li>';
+            $r[] = ( ($range_start > 1) ? ' ... ' : '' ); 
+          }
+
+          if ( $range_end > 1 ) {
+            foreach(range($range_start, $range_end) as $key => $value) {
+              if ( $value == ($page + 1) ) $r[] = '<li class="page-item active" aria-current="page"><span class="page-link">'. $value .'</span></li>'; 
+              else $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ($value ) .'">'. $value .'</a></li>'; 
+            }
+          }
+
+          if ( ( $page + 1 ) < $pages ) {
+            $r[] = ( ($range_end < $pages) ? ' ... ' : '' );
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $page + 2 ) .'"> &rsaquo;</a></li>';
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $pages  ) .'"> &raquo;</a></li>';
+          }
+
+          return ( (isset($r)) ? '<div class="pagination" style="float:right;"><nav><ul class="pagination">'. implode("", $r) .'</ul></nav></div>' : '');
+        }     
+     public function ajaxlist($page_no)
     {
-        
+       // Paginator::setCurrentPage($page_no);
+        $per_page = $this->per_page;
+        $offset=($page_no -1 ) * $per_page ;
+        $limit=$per_page;
+
         $data = DB::table('match')
             ->select('match.*','leagues.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name')
             ->leftJoin('leagues', 'leagues.id', '=', 'match.league')
             ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
             ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
+            ->offset($offset)
+            ->limit($limit)
             ->get();
 
-        return json_decode(json_encode(array('data'=>$data)));
+            $totalcount = DB::table('match')
+            ->select('match.*','leagues.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name')
+            ->leftJoin('leagues', 'leagues.id', '=', 'match.league')
+            ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
+            ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')          
+            ->count();
+
+           $links = $this->handle_pagination($totalcount, ($page_no-1), $this->per_page, url('/match?page='));
+           $page_link = array('links'=>$links,'offset'=>$offset,'totalcount'=>$totalcount);
+           
+        return json_decode(json_encode(array('per_page'=>$per_page,'offset'=>$offset,'totalcount'=>$totalcount,'page_links'=>$links,'data'=>$data,'page_no'=>$page_no)));
         
     }
 

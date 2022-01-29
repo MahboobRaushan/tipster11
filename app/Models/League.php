@@ -16,6 +16,6 @@ class League extends Model
         return $this->hasMany(Tim::class);
     }
     protected $fillable = [
-        'name','game_id',
+        'name','game_id','createdBy','updatedBy'
     ];
 }

@@ -327,9 +327,21 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('pool', [PoolController::class,'pool_list'])->name('pool');
 
+     Route::get('pool/ajaxlist', [PoolController::class,'ajaxlist']);
+    Route::post('pool/add', [PoolController::class,'store'])->name('pool.store');
+    Route::post('pool/{id}', [PoolController::class,'details']);
+    Route::post('pool/matchbyleague/{id}', [PoolController::class,'matchbyleaguedetails']);
+    Route::post('pool/update/{id}', [PoolController::class,'update'])->name('pool.update');
+    Route::post('pool/updateteam/{id}', [PoolController::class,'updateteam'])->name('pool.updateteam');
+    
+
+    Route::delete('pool/{id}',  [PoolController::class,'destroy'])->name('pool.destroy');
+    Route::delete('pool/matchdelete/{id}/{pullid}',  [PoolController::class,'matchdestroy'])->name('pool.matchdestroy');
+    
+
     Route::get('match', [MatchController::class,'match_list'])->name('match');
 
-     Route::get('matches/ajaxlist', [MatchController::class,'ajaxlist']);
+     Route::get('matches/ajaxlist/{page_no}', [MatchController::class,'ajaxlist']);
     Route::post('matches/add', [MatchController::class,'store'])->name('games.store');
     Route::post('matches/{id}', [MatchController::class,'details']);
     Route::post('matches/update/{id}', [MatchController::class,'update'])->name('games.update');
@@ -339,6 +351,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('announcement', [AnnouncementController::class,'announcement_list'])->name('announcement');
 
     Route::get('notification', [NotificationController::class,'notification_list'])->name('notification');
+
+    Route::get('testingpagination', [NotificationController::class,'testingpagination'])->name('testingpagination');
+    Route::get('testingpagination_fetch_data', [NotificationController::class,'testingpagination_fetch_data'])->name('testingpagination_fetch_data');
+
 
      Route::get('leagues', [LeagueController::class,'index'])->name('leagues');
     Route::get('leagues/ajaxlist', [LeagueController::class,'ajaxlist']);

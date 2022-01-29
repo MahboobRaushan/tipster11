@@ -36,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\FormsController' => $baseDir . '/app/Http/Controllers/FormsController.php',
     'App\\Http\\Controllers\\GameController' => $baseDir . '/app/Http/Controllers/GameController.php',
     'App\\Http\\Controllers\\LanguageController' => $baseDir . '/app/Http/Controllers/LanguageController.php',
+    'App\\Http\\Controllers\\LeagueController' => $baseDir . '/app/Http/Controllers/LeagueController.php',
     'App\\Http\\Controllers\\MatchController' => $baseDir . '/app/Http/Controllers/MatchController.php',
     'App\\Http\\Controllers\\MegajackpotController' => $baseDir . '/app/Http/Controllers/MegajackpotController.php',
     'App\\Http\\Controllers\\MemberController' => $baseDir . '/app/Http/Controllers/MemberController.php',

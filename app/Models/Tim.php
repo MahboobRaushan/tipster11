@@ -16,6 +16,6 @@ class Tim extends Model
         return $this->belongsTo(League::class);
     }
      protected $fillable = [
-        'name', 'league_id',
+        'name', 'league_id','createdBy','updatedBy'
     ];
 }

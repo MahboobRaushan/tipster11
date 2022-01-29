@@ -10,6 +10,9 @@ use App\Models\League;
 use App\Models\Tim;
 use App\Models\Game;
 
+use Auth;
+use DB;
+
 class LeagueController extends Controller
 {
     public function getTimbyLeague($id)
@@ -77,9 +80,10 @@ class LeagueController extends Controller
             $game_id = $request->game_id;
             $status = $request->status;
           
+             $createdBy = Auth::user()->id;
 
            
-             $leagueData = array('name'=>$name,'game_id'=>$game_id,'status'=>$status);
+             $leagueData = array('name'=>$name,'game_id'=>$game_id,'status'=>$status,'createdBy'=>$createdBy);
             
             
 
@@ -113,20 +117,50 @@ class LeagueController extends Controller
             $type = $request->type;
             $id = $request->id;
             $league_id = $request->league_id;
-          
+           
+            $createdBy = Auth::user()->id;
+            $updatedBy = Auth::user()->id;
 
             if($type=='add')
             {
-             $timData = array('name'=>$name,'league_id'=>$league_id);
-              $team = Tim::create($timData); 
-              return json_encode(array('status'=>'ok','message'=>'Successfully added!')); 
+
+                 $timsexist = DB::table('tims')                   
+                    ->where('league_id',$league_id)
+                    ->where('name',$name)
+                    ->count();
+                 if($timsexist > 0)
+                 {
+                    return json_encode(array('status'=>'notok','message'=>'This Team is already exist with this League.'));
+                 }
+                 else 
+                 {
+                     $timData = array('name'=>$name,'league_id'=>$league_id,'createdBy'=>$createdBy);
+                      $team = Tim::create($timData); 
+                      return json_encode(array('status'=>'ok','message'=>'Successfully added!')); 
+                 }
+
+            
             }
             if($type=='edit')
             {
-                $tim = Tim::where('id',$id)->first();
-                $tim->name = $name;
-                $tim->save(); 
-                return json_encode(array('status'=>'ok','message'=>'Successfully updated!'));
+                 $timsexist = DB::table('tims')                   
+                    ->where('league_id',$league_id)
+                    ->where('name',$name)
+                    ->where('id','!=',$request->id)
+                    ->count();
+                 if($timsexist > 0)
+                 {
+                    return json_encode(array('status'=>'notok','message'=>'This Team is already exist with this League.'));
+                 }
+                 else 
+                 {
+                    $tim = Tim::where('id',$id)->first();
+                    $tim->name = $name;
+                    $tim->updatedBy = $updatedBy;
+                    $tim->save(); 
+                    return json_encode(array('status'=>'ok','message'=>'Successfully updated!'));
+                 }
+               
             }
             if($type=='delete')
             {
@@ -156,7 +190,25 @@ class LeagueController extends Controller
         
 
         $data =League::with('tims')->where('id',$id)->get();
-        return $data->toJson();
+       /* $data = DB::table('leagues')
+                ->leftJoin('tims', 'tims.league_id', '=', 'leagues.id')
+               
+                ->select('leagues.*','tims.name as team_name')
+                ->where('leagues.id',$id)
+                ->get();
+                */
+               // $returndata = array('leaguge_details'=>$data->toJson(),'match_details'=>'aaa');
+        
+        $match = DB::table('match')
+                 ->leftJoin('tims as t1', 'match.homeTeam', '=', 't1.id')
+                ->leftJoin('tims as t2', 'match.awayTeam', '=', 't2.id')
+                ->select('t1.name as homeTeam_name','t2.name as awayTeam_name','match.result')
+                ->where('match.league',$id)
+                ->get();
+                        
+                $returndata = array('leaguge_details'=>$data,'match_details'=>$match);
+
+        return $returndata;
     }
 
   
@@ -191,12 +243,14 @@ class LeagueController extends Controller
 
             $league = League::where('id',$request->edit_id)->first();
 
-           
+            $updatedBy = Auth::user()->id;
 
             $league->name = $name;
             $league->status = $status;
             $league->game_id = $game_id;
-                        
+            
+            $league->updatedBy = $updatedBy;
+
             $league->save();
 
             return json_encode(array('status'=>'ok','message'=>'Successfully updated!','gm'=>$league));

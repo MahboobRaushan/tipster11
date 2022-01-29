@@ -118,7 +118,15 @@
           </tr>
         </thead>
       </table>
+
+
     </div>
+
+    <div class="d-flex justify-content-between mx-0 row dataTables_wrapper "><div class="col-sm-12 col-md-4"><div class="dataTables_info" id="DataTables_Table_1_info" >Showing <span id="pagination_start_no"></span> to <span id="pagination_end_no"></span> of <span id="pagination_total_entries"></span> entries</div></div><div class="col-sm-12 col-md-8"><div class="dataTables_paginate paging_simple_numbers" id="dataTables_paginate_id" ><div class="pagination" >
+          
+        </div></div></div></div>
+
+ 
     <!-- Modal to add new match starts-->
     <div class="modal modal-slide-in new-match-modal fade" id="modals-slide-in">
       <div class="modal-dialog">

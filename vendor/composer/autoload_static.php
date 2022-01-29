@@ -619,6 +619,7 @@ class ComposerStaticInitabaf1199f071d2270f10bf1f6c29698f
         'App\\Http\\Controllers\\FormsController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormsController.php',
         'App\\Http\\Controllers\\GameController' => __DIR__ . '/../..' . '/app/Http/Controllers/GameController.php',
         'App\\Http\\Controllers\\LanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/LanguageController.php',
+        'App\\Http\\Controllers\\LeagueController' => __DIR__ . '/../..' . '/app/Http/Controllers/LeagueController.php',
         'App\\Http\\Controllers\\MatchController' => __DIR__ . '/../..' . '/app/Http/Controllers/MatchController.php',
         'App\\Http\\Controllers\\MegajackpotController' => __DIR__ . '/../..' . '/app/Http/Controllers/MegajackpotController.php',
         'App\\Http\\Controllers\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/MemberController.php',
