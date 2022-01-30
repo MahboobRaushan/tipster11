@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Auth;
+use DB;
 
 class AuthenticationController extends Controller
 {
@@ -109,4 +112,7 @@ class AuthenticationController extends Controller
 
         return view('/content/authentication/auth-register-multisteps', ['pageConfigs' => $pageConfigs]);
     }
+
+   
+
 }

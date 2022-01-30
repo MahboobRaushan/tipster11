@@ -651,6 +651,7 @@ class ComposerStaticInitabaf1199f071d2270f10bf1f6c29698f
         'App\\Models\\League' => __DIR__ . '/../..' . '/app/Models/League.php',
         'App\\Models\\Match' => __DIR__ . '/../..' . '/app/Models/Match.php',
         'App\\Models\\Membership' => __DIR__ . '/../..' . '/app/Models/Membership.php',
+        'App\\Models\\Pool' => __DIR__ . '/../..' . '/app/Models/Pool.php',
         'App\\Models\\Team' => __DIR__ . '/../..' . '/app/Models/Team.php',
         'App\\Models\\TeamInvitation' => __DIR__ . '/../..' . '/app/Models/TeamInvitation.php',
         'App\\Models\\Tim' => __DIR__ . '/../..' . '/app/Models/Tim.php',

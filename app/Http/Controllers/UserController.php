@@ -145,7 +145,7 @@ class UserController extends Controller
     {
        
 
-         $data =User::with('roles')->get();
+         $data =User::whereIn('user_type',array('super_admin','admin','agent'))->with('roles')->get();
         return json_decode(json_encode(array('data'=>$data)));
         
     }
