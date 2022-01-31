@@ -352,11 +352,30 @@
                 name="result"
                >
                <option value="home">Home</option>
+               <option value="draw">Draw</option>
                <option value="away">Away</option>
              </select>
             </div>    
            
-          
+            <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-home_score_edit">Home Score</label>
+              <input type="text"
+                id="basic-icon-default-home_score_edit"
+                class="form-control"
+                name="home_score"
+               />
+              
+            </div> 
+
+            <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-away_score_edit">Away Score</label>
+              <input type="text"
+                id="basic-icon-default-away_score_edit"
+                class="form-control"
+                name="away_score"
+               />
+              
+            </div>    
 
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-status_edit">Status</label>

@@ -137,7 +137,7 @@ class PoolController extends Controller
                 ->leftJoin('tims as t1', 'match.homeTeam', '=', 't1.id')
                 ->leftJoin('leagues as l', 't1.league_id', '=', 'l.id')
                 ->leftJoin('tims as t2', 'match.awayTeam', '=', 't2.id')
-                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result')
+                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result','match.home_score','match.away_score')
                 ->where('pool_match.pool_id',$id)
                 ->get();
 

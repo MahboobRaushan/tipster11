@@ -202,7 +202,7 @@ class LeagueController extends Controller
         $match = DB::table('match')
                  ->leftJoin('tims as t1', 'match.homeTeam', '=', 't1.id')
                 ->leftJoin('tims as t2', 'match.awayTeam', '=', 't2.id')
-                ->select('t1.name as homeTeam_name','t2.name as awayTeam_name','match.result')
+                ->select('t1.name as homeTeam_name','t2.name as awayTeam_name','match.result','match.home_score','match.away_score')
                 ->where('match.league',$id)
                 ->get();
                         

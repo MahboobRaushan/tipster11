@@ -235,6 +235,9 @@ class MatchController extends Controller
             $league = $request->league;
             $result = $request->result;
             $status = $request->status;
+
+             $home_score = $request->home_score;
+              $away_score = $request->away_score;
             
 
 
@@ -250,6 +253,9 @@ class MatchController extends Controller
             $match->endTime = $endTime;
             $match->league = $league;
             $match->result = $result;
+
+            $match->home_score = $home_score;
+            $match->away_score = $away_score;
 
             $match->status = $status;
 
