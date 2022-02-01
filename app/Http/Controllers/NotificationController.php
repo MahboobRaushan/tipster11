@@ -27,9 +27,9 @@ class NotificationController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
-        return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
-        //return view('/content/table/table-bootstrap/table-bootstrap',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/ui-pages/icons-feather',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
 
 

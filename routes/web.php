@@ -312,6 +312,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('agent/settlement', [AgentController::class,'settlement_list'])->name('settlement');
 
     Route::get('member/details', [MemberController::class,'details_list'])->name('details');
+
+    Route::get('member/details/add', [MemberController::class,'details_add'])->name('member_details_add');
+    Route::get('member/details/edit/{id}', [MemberController::class,'details_edit'])->name('member_details_edit');
+    Route::get('member/details_data', [MemberController::class,'details_data_list'])->name('details_data');
     Route::get('member/winloss', [MemberController::class,'winloss_list'])->name('winloss');
     Route::get('member/adjust_credit', [MemberController::class,'adjust_credit_list'])->name('adjust_credit');
 
