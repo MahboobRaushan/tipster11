@@ -4,7 +4,7 @@
           <thead>
             <tr>
               <th>Sl No</th>
-              <th>Individual Member ID</th>
+              <th>Individual Player ID</th>
               <th>Name</th>
               <th>Email</th>
               <th>Registration Date</th>
@@ -53,7 +53,7 @@
                   <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="details/edit/{{ $row->id }}">
                       <i data-feather="edit-2" class="me-50"></i>
-                      <span>Edit Member</span>
+                      <span>Edit Player</span>
                     </a>
                     
                     <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#inlineForm">

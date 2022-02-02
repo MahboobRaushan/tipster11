@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Member Details Edit')
+@section('title', 'Player Details Edit')
 @section('vendor-style')
   <!-- vendor css files -->
   
@@ -10,9 +10,7 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/pickadate/pickadate.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
+
 
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/wizard/bs-stepper.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css'))}}">
@@ -20,9 +18,8 @@
 
 @endsection
 @section('page-style')
-<link rel="stylesheet" href="{{asset('css/base/pages/ui-feather.css')}}">
-<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
-<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-pickadate.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/base/pages/ui-feather.css') }}">
+
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-wizard.css')) }}">
 
 
@@ -32,7 +29,7 @@
 <div class="card">     
   <div class="card-body">   
     <div class="card-header">
-      <h4 class="card-title">Member Edit</h4>
+      <h4 class="card-title">Player Edit</h4>
     </div>
   </div>
 </div>
@@ -72,7 +69,7 @@
           </span>
         </button>
       </div>
-      
+    
       
     </div>
     <div class="bs-stepper-content">
@@ -84,11 +81,13 @@
       >
         <div class="content-header">
           <h5 class="mb-0">Basic Details</h5>
-          <small class="text-muted">Enter Member's Basic Details.</small>
+          <small class="text-muted">Enter Player's Basic Details.</small>
         </div>
          <div class="row">
           <div class="mb-1 col-md-4">
-            <label class="form-label" for="vertical-modern-name"><i data-feather="user" class=""></i> Individual member ID : 14</label>
+            <label class="form-label" for="vertical-modern-name"><i data-feather="user" class=""></i> Individual Player ID : 14</label>
+
+            
            
           </div>
            
@@ -220,7 +219,7 @@
       >
         <div class="content-header">
           <h5 class="mb-0">Credit Balance</h5>
-          <small>Give credits to Member.</small>
+          <small>Give credits to Player.</small>
         </div>
         <div class="row">
           <div class="mb-1 col-md-6">
@@ -261,18 +260,29 @@
           </button>
 
         </div>
+
+        
+
       </div>
       
-      
+       
     </div>
+
   </div>
+
 </section>
+
+
+
 <!-- Bordered table start -->
-<div class="row" id="table-bordered">
+<div class="row" >
   <div class="col-12">
    
 
       <div class="card">
+
+      
+
      
       <div class="card-body">
         <div class="card-text">
@@ -281,16 +291,27 @@
               <div class="card-header">
                 <h4 class="card-title">Bank Details</h4>
               </div>
-              Turtle Bank
-              <br>
-              XXXXXXXX4346
+
+              
+                      
+              <table class="table table-striped" width="100%">
+                <tbody>
+                <tr><td><i data-feather="user" class=""></i> Account Name</td><td>: Mr Abc James</td></tr>
+                <tr><td><i data-feather="globe" class=""></i> Country</td><td>: Singapore</td></tr>
+                <tr><td><i data-feather="home" class=""></i> Bank Name</td><td>: Turtle Bank</td></tr>
+                <tr><td><i data-feather="home" class=""></i> Account Number</td><td>: XXXXXXXX4346</td></tr>
+                <tr><td><i data-feather="user" class=""></i> Account Type</td><td>: Savings</td></tr>
+              </tbody>
+              </table>
+             
+              
             </div>
             <div class="col-lg-7">
               <div class="card-header">
                 <h4 class="card-title">Desposit Withdrawal Details</h4>
               </div>
               <div class="table-responsive">
-              <table class="datatables-basic table table-stripped" id="mydepositwithdrawlTable">
+              <table class="table table-striped" id="mydepositwithdrawlTable">
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -620,9 +641,9 @@
 <script src="{{asset('js/scripts/jquery.dataTables.min.js')}}"></script>
 
 <script src="{{asset('js/scripts/ui/ui-feather.js')}}"></script>
-<script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
+
 <script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
-<script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
+
 <script src="{{ asset(mix('js/scripts/forms/form-wizard.js')) }}"></script>
 <script src="{{ asset(mix('js/scripts/forms/form-number-input.js'))}}"></script>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "Players" => "Players",
     "League" => "League",
     "Notifications" => "Notifications",
     "Announcements" => "Announcements",

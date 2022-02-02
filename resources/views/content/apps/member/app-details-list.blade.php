@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Member Details List')
+@section('title', 'Player Details List')
 @section('vendor-style')
   <!-- vendor css files -->
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/pickadate/pickadate.css')) }}">
@@ -22,7 +22,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Member Details List</h4>
+        <h4 class="card-title">Player Details List</h4>
       </div>
       <div class="card-body">
         <div class="card-text">
@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="col-lg-3 mt-2">
-              <a href="details/add" class="dt-button add-new btn btn-primary" style="float:right;">Add Member</a>
+              <a href="details/add" class="dt-button add-new btn btn-primary" style="float:right;">Add Player</a>
             </div>
           </div>
         </div>
