@@ -41,7 +41,7 @@
         <thead class="table-light">
           <tr>
             <th></th>
-            <th>Individual Member Id</th>
+            <th>Individual Player Id</th>
             <th>Total Bet Amount</th>            
             <th>Today Win Loss</th>
             <th>Agent</th>
@@ -62,13 +62,13 @@
           </div>
           <div class="modal-body flex-grow-1">
             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Individual Member Id</label>
+              <label class="form-label" for="basic-icon-default-fullname">Individual Player Id</label>
               <input
                 type="text"
                 class="form-control dt-full-name"
-                id="basic-icon-default-individualMemberId"
+                id="basic-icon-default-individualPlayerId"
                 placeholder="test01"
-                name="individualMemberId"
+                name="individualPlayerId"
               />
             </div>
 

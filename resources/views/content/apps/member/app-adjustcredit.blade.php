@@ -38,7 +38,7 @@
     
     <div class="card-body">
        <div class="my-auto">
-          <h6 class="mb-0">Member M001</h6>
+          <h6 class="mb-0">Player M001</h6>
           <small>July 22, 2021</small>
         </div>
          <div class="my-auto mt-2">
