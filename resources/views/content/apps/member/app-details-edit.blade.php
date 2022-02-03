@@ -272,7 +272,44 @@
 
 </section>
 
+<section >
+ <div class="row" >
+  <div class="col-12">
+   
 
+      <div class="card">
+
+      
+
+     
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            
+            <div class="col-lg-12">
+              <div class="card-header">
+                <h4 class="card-title">Bank Details</h4>
+              </div>
+              <div class="card-body">
+                 <table class="table table-striped" width="100%">
+                      <tbody>
+                      <tr><td>Account Name</td><td>: Mr Abc James</td></tr>
+                      <tr><td>Country</td><td>: Singapore</td></tr>
+                      <tr><td>Bank Name</td><td>: Turtle Bank</td></tr>
+                      <tr><td>Account Number</td><td>: XXXXXXXX4346</td></tr>
+                      <tr><td>Account Type</td><td>: Savings</td></tr>
+                    </tbody>
+                    </table>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+   </div>
+  </div>
+</section>
 
 <!-- Bordered table start -->
 <div class="row" >
@@ -287,26 +324,8 @@
       <div class="card-body">
         <div class="card-text">
           <div class="row">
-            <div class="col-lg-5">
-              <div class="card-header">
-                <h4 class="card-title">Bank Details</h4>
-              </div>
-
-              
-                      
-              <table class="table table-striped" width="100%">
-                <tbody>
-                <tr><td><i data-feather="user" class=""></i> Account Name</td><td>: Mr Abc James</td></tr>
-                <tr><td><i data-feather="globe" class=""></i> Country</td><td>: Singapore</td></tr>
-                <tr><td><i data-feather="home" class=""></i> Bank Name</td><td>: Turtle Bank</td></tr>
-                <tr><td><i data-feather="home" class=""></i> Account Number</td><td>: XXXXXXXX4346</td></tr>
-                <tr><td><i data-feather="user" class=""></i> Account Type</td><td>: Savings</td></tr>
-              </tbody>
-              </table>
-             
-              
-            </div>
-            <div class="col-lg-7">
+            
+            <div class="col-lg-12">
               <div class="card-header">
                 <h4 class="card-title">Desposit Withdrawal Details</h4>
               </div>
@@ -605,7 +624,15 @@
 @section('page-script')
   {{-- Page js files --}}
   
-  <script>
+ 
+
+
+<script src="{{asset('js/scripts/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
+<script src="{{ asset(mix('js/scripts/forms/form-wizard.js')) }}"></script>
+<script src="{{ asset(mix('js/scripts/forms/form-number-input.js'))}}"></script>
+
+ <script>
   $(document).ready( function () {
     $('#mydepositwithdrawlTable').DataTable();
     $('#mystatementTable').DataTable();
@@ -637,13 +664,4 @@
   } );
 </script> 
 
-
-<script src="{{asset('js/scripts/jquery.dataTables.min.js')}}"></script>
-
-<script src="{{asset('js/scripts/ui/ui-feather.js')}}"></script>
-
-<script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
-
-<script src="{{ asset(mix('js/scripts/forms/form-wizard.js')) }}"></script>
-<script src="{{ asset(mix('js/scripts/forms/form-number-input.js'))}}"></script>
 @endsection
