@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Player Details Add')
+@section('title', 'Add / View Player')
 @section('vendor-style')
   <!-- vendor css files -->
   
@@ -28,7 +28,7 @@
 <div class="card">     
   <div class="card-body">   
     <div class="card-header">
-      <h4 class="card-title">Player Add</h4>
+      <h4 class="card-title">Add / View Player</h4>
     </div>
   </div>
 </div>
