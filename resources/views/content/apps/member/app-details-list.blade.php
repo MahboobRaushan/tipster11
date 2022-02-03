@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="col-lg-3 mt-2">
-              <a href="details/add" class="dt-button add-new btn btn-primary" style="float:right;">Add Player</a>
+              <a href="details/add" class="dt-button add-new btn btn-primary" style="float:right;">Add / View Player</a>
             </div>
           </div>
         </div>
