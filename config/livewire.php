@@ -55,7 +55,7 @@ return [
     */
 
     //'asset_url' => null,
-    'asset_url' => \Illuminate\Support\Facades\URL::to('/'),
+    'asset_url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
