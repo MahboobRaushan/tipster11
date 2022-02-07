@@ -16,7 +16,7 @@
 
 @section('content')
 
-
+<input type="hidden" id="site_base_url" value=" <?php echo config('app.url'); ?>/" />
 <!-- Bordered table start -->
 <div class="row" id="table-bordered">
   <div class="col-12">
