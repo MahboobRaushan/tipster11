@@ -312,16 +312,47 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('agent/settlement', [AgentController::class,'settlement_list'])->name('settlement');
 
     Route::get('member/details', [MemberController::class,'details_list'])->name('details');
+    Route::post('member/passwordchange', [MemberController::class,'passwordchange'])->name('member.password.change');
+
+     Route::post('member/direct_credit', [MemberController::class,'directcredit'])->name('member.direct.credit');
+
+     Route::get('member/details_edit_list_data', [MemberController::class,'details_edit_data_list'])->name('edit_details_data');
+  
+
+    
+
+
+     Route::post('member/basic_detailsupdate', [MemberController::class,'basic_detailsupdate'])->name('member.basic_details.update');
+      Route::post('member/newplayeradd', [MemberController::class,'basic_detailsadd'])->name('member.basic_details.add');
+     
+
+      Route::post('member/bank_detailsupdate', [MemberController::class,'bank_detailsupdate'])->name('member.bank_details.update');
+
+    
 
     Route::get('member/details/add', [MemberController::class,'details_add'])->name('member_details_add');
     Route::get('member/details/edit/{id}', [MemberController::class,'details_edit'])->name('member_details_edit');
     Route::get('member/details_data', [MemberController::class,'details_data_list'])->name('details_data');
+    Route::delete('member/delete/{id}', [MemberController::class,'destroy'])->name('delete');
+    
     Route::get('member/winloss', [MemberController::class,'winloss_list'])->name('winloss');
     Route::get('member/adjust_credit', [MemberController::class,'adjust_credit_list'])->name('adjust_credit');
 
     Route::get('deposit', [DepositController::class,'deposit_list'])->name('deposit');
+     Route::get('deposit/details_data', [DepositController::class,'deposit_data_list'])->name('deposit.details_data');
+     Route::post('deposit/detailsview/{id}', [DepositController::class,'detailsview'])->name('detailsview');
+     Route::post('deposit/approvalsubmit', [DepositController::class,'approvalsubmit'])->name('deposit.approval.submit');
+     Route::delete('deposit/delete/{id}', [DepositController::class,'destroy'])->name('delete');
 
     Route::get('withdrawal', [WithdrawalController::class,'withdrawal_list'])->name('withdrawal');
+
+
+     Route::get('withdrawal/details_data', [WithdrawalController::class,'withdrawal_data_list'])->name('withdrawal.details_data');
+     Route::post('withdrawal/detailsview/{id}', [WithdrawalController::class,'detailsview'])->name('detailsview');
+     Route::post('withdrawal/approvalsubmit', [WithdrawalController::class,'approvalsubmit'])->name('withdrawal.approval.submit');
+     Route::delete('withdrawal/delete/{id}', [WithdrawalController::class,'destroy'])->name('delete');
+
+     
 
     Route::get('transaction', [TransactionController::class,'transaction_list'])->name('transaction');
 

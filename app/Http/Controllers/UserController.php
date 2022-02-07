@@ -166,6 +166,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required',
+            'user_type' => 'required',
         ]);
 
         if ($v->fails())
@@ -176,9 +177,10 @@ class UserController extends Controller
         {
              $name = $request->name;
             $email = $request->email;
+            $user_type = $request->user_type;
             $password = Hash::make($request->password);
 
-            $userData = array('name'=>$name,'email'=>$email,'password'=>$password);
+            $userData = array('name'=>$name,'email'=>$email,'password'=>$password,'user_type'=>$user_type);
 
           
             $user = User::create($userData);
@@ -242,9 +244,9 @@ class UserController extends Controller
     {
          $v = Validator::make($request->all(),[
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$request->edit_id,
-           
+            'email' => 'required|email|unique:users,email,'.$request->edit_id,           
             'status' => 'required',
+            'user_type' => 'required',
         ]);
 
         if ($v->fails())
@@ -256,6 +258,7 @@ class UserController extends Controller
              $name = $request->name;
             $email = $request->email;
              $status = $request->status;
+              $user_type = $request->user_type;
 
 
             $user = User::where('id',$request->edit_id)->first();
@@ -268,6 +271,7 @@ class UserController extends Controller
                 $user->email = $email;
                 $user->status = $status;
                 $user->password = $password;
+                 $user->user_type = $user_type;
 
               
                 $user->save();
@@ -277,6 +281,7 @@ class UserController extends Controller
                 $user->name = $name;
                 $user->email = $email;
                 $user->status = $status;
+                 $user->user_type = $user_type;
               
                 $user->save();
              }

@@ -68,7 +68,6 @@ return array(
     'App\\Models\\Game' => $baseDir . '/app/Models/Game.php',
     'App\\Models\\League' => $baseDir . '/app/Models/League.php',
     'App\\Models\\Match' => $baseDir . '/app/Models/Match.php',
-    'App\\Models\\Members' => $baseDir . '/app/Models/Members.php',
     'App\\Models\\Membership' => $baseDir . '/app/Models/Membership.php',
     'App\\Models\\Pool' => $baseDir . '/app/Models/Pool.php',
     'App\\Models\\Team' => $baseDir . '/app/Models/Team.php',

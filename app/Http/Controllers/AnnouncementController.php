@@ -27,8 +27,8 @@ class AnnouncementController extends Controller
         $pageConfigs = ['pageHeader' => false];  
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
         // return view('/content/table/table-datatable/table-datatable-advance',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
-        //return view('/content/forms/form-elements/form-number-input',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
-        return view('/content/components/component-modals',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/forms/form-elements/form-number-input',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+       // return view('/content/components/component-modals',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
         
     }
 }

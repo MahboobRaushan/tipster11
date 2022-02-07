@@ -82,6 +82,9 @@
           <h5 class="mb-0">Basic Details</h5>
           <small class="text-muted">Enter Player's Basic Details.</small>
         </div>
+         <input type="hidden" id="site_base_url" value=" <?php echo config('app.url'); ?>/" />
+         <form action="#" id="basic_detailsForm">
+          @csrf
          <div class="row">
           <div class="mb-1 col-md-4">
             <label class="form-label" for="vertical-modern-name"><i data-feather="user" class=""></i> Individual Player ID : XXXX</label>
@@ -107,9 +110,9 @@
             
               <span class="input-group-text" id="basic-addon1"><i data-feather="user" class=""></i></span>
               <input
-                name="name"
+               name="name"
+                id="name"
                 type="text"
-                id="vertical-modern-name"
                 class="form-control"
                 placeholder="Name"
                 aria-label="Name"
@@ -136,52 +139,55 @@
             </div>
           </div>
         </div>
+
         <div class="row">
-         <div class="mb-1 col-md-6">
-            <label class="form-label" for="vertical-modern-password">Password</label>
+          <div class="mb-1 col-md-6">
+            <label class="form-label" for="vertical-modern-name">Password</label>
             <div class="input-group mb-1">
             
-              <span class="input-group-text" id="basic-addon3"><i data-feather="lock" class=""></i></span>
+              <span class="input-group-text" id="basic-addon5"><i data-feather="key" class=""></i></span>
               <input
-                name="password"
+               name="password"
+                id="password"
                 type="password"
-                id="vertical-modern-password"
                 class="form-control"
                 placeholder="Password"
                 aria-label="Password"
-                aria-describedby="basic-addon3"
+                aria-describedby="basic-addon5"
               />
             </div>
           </div>
+           
           <div class="mb-1 col-md-6">
-            <label class="form-label" for="vertical-modern-password_confirmation">Confirm Password</label>
+            <label class="form-label" for="vertical-modern-name">Confirm Password</label>
             <div class="input-group mb-1">
             
-              <span class="input-group-text" id="basic-addon4"><i data-feather="lock" class=""></i></span>
+              <span class="input-group-text" id="basic-addon6"><i data-feather="key" class=""></i></span>
               <input
-                name="password_confirmation"
+               name="password_confirmation"
+                id="password_confirmation"
                 type="password"
-                id="vertical-modern-password_confirmation"
                 class="form-control"
                 placeholder="Confirm Password"
                 aria-label="Confirm Password"
-                aria-describedby="basic-addon4"
+                aria-describedby="basic-addon6"
               />
             </div>
           </div>
         </div>
+        
         <div class="row">
          <div class="mb-1 col-md-6">
             <label class="form-label" for="vertical-modern-agent_id">Agent</label>
              <select
                 name="agent_id"               
-                id="vertical-modern-agent_id"
+                id="agent_id"
                 class="select2 form-select"               
                 aria-describedby="basic-addon5"
               >
-              <option value="Agent 1">Agent 1</option>
-              <option value="Agent 2">Agent 2</option>
-              <option value="Agent 3">Agent 3</option>
+              <?php foreach($agents as $agent){?>
+              <option value="{{$agent->id}}"  >{{$agent->name}}</option>
+             <?php } ?>
             </select>
             
           </div>
@@ -199,6 +205,12 @@
             
           </div>
         </div>
+         <div class="row">
+         <div class="mb-1 col-md-6">
+           <button type="submit" id="basic_details_submit" class="btn btn-primary"> Submit</button>            
+          </div>
+        </div>
+      </form>
         <div class="d-flex justify-content-between">
           <button class="btn btn-outline-secondary btn-prev" disabled>
             <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
@@ -430,6 +442,84 @@
             credits = credits+2000;
             $('#credit_result').html(credits);
         });
+
+          var site_base_url = $('#site_base_url').val();
+
+
+$(document).on('click', '#basic_details_submit', function(event){
+
+  event.preventDefault();
+  var agent_id = $('#agent_id').val();
+  var name = $('#name').val();
+  var status = $('#status').val();
+
+  var email = $('#email').val();
+  var password = $('#password').val();
+  var password_confirmation = $('#password_confirmation').val();
+
+ 
+     
+      if((name!='') && (status!='') && (email!='')  && (password!='')  && (password==password_confirmation))
+      {
+          $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+             
+              url:  site_base_url+'member/newplayeradd',
+              method: "POST",
+               data:$('#basic_detailsForm').serialize(),
+               dataType:'JSON',
+               
+              success: function (data) {
+                 
+               
+                 // alert(JSON.stringify(data));
+                 //console.log( data);                 
+
+                 if(data.status=='ok')
+
+                    {                     
+
+                      toastr_message_show('success',data.message);
+                    }
+
+                    else 
+
+                    {                    
+
+                      toastr_message_show('error',Object.values(data.message));
+
+                    }
+
+                    $('#agent_id').val('');
+                   $('#name').val('');
+                   $('#status').val('');
+
+                   $('#email').val('');
+                   $('#password').val('');
+                   $('#password_confirmation').val('');                           
+               
+                  
+              },
+              error: function (data) {
+                 alert(JSON.stringify(data));
+                  //$('#btn-save_edit').html('Save Changes');
+                 
+                  
+              }
+          });
+
+        
+
+
+      }
+      else 
+      {
+        toastr_message_show('error','Name,Email, Status and Password should be field up');
+      }
+
+    });  
 
   } );
 </script> 

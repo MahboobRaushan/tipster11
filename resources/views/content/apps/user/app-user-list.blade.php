@@ -111,6 +111,7 @@
             <th>ID</th>
             <th>Photo</th>
             <th>Name</th>
+            <th>User Type</th>
             <th>Email</th>           
             <th>Status</th>
             <th>Actions</th>
@@ -147,7 +148,20 @@
                 placeholder="john.doe@example.com"
                 name="email"
               />
-            </div>   
+            </div> 
+             <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-user_type">User Type</label>
+              <select
+                id="basic-icon-default-user_type"
+                class="form-control select2"
+                name="user_type"
+               >
+               <option value="agent">Agent</option>
+               <option value="admin">Admin</option>
+               <option value="super_admin">Super Admin</option>
+               
+             </select>
+            </div>     
 
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-password">Password</label>
@@ -201,7 +215,19 @@
                 name="email"
               />
             </div> 
-
+             <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-user_type_edit">User Type</label>
+              <select
+                id="basic-icon-default-user_type_edit"
+                class="form-control select2"
+                name="user_type"
+               >
+               <option value="agent">Agent</option>
+               <option value="admin">Admin</option>
+               <option value="super_admin">Super Admin</option>
+               
+             </select>
+            </div>   
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-status_edit">Status</label>
               <select

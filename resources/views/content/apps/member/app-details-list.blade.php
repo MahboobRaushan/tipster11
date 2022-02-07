@@ -41,15 +41,14 @@
                  <div class="col-md-4 ">
                   <label class="form-label" for="fp-range">Agent</label>
                   <select class="select2 form-select" id="agent_id">
-                      <option value="AK">Agent 1</option>
-                      <option value="HI">Agent 2</option>
-                      <option value="CA">Agent 3</option>
-                      <option value="NV">Agent 4</option>
-                      <option value="OR">Agent 5</option>
+                    <option value="">Select Agent</option>
+                      <?php foreach($agents as $agent){?>
+                      <option value="{{$agent->id}}"  >{{$agent->name}}</option>
+                     <?php } ?>
                     </select>
                 </div>
                 <div class="col-md-4 mt-2">
-                  <button class="dt-button add-new btn btn-info" >Search</button>
+                  <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
                   
                 </div>
 

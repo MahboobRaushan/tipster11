@@ -79,8 +79,7 @@ class GameController extends Controller
                 $time =time();
                  $input['image'] = $time.'.'.$request->image->extension();
                 $request->image->move(public_path('images/game'), $input['image']);
-                //$request->file('image')->storeAs('public/images/game/',$input['image']);
-                 //$request->image->move(base_path('images\game'), $input['image']);
+                
 
                 $gameData = array('name'=>$name,'status'=>$status,'order_no'=>$order_no,'icon_path'=>'images/game/'.$input['image']);
 

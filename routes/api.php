@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('testing', [AuthController::class, 'testing']);
+    Route::post('deposit', [AuthController::class, 'deposit']);
+    Route::post('withdraw', [AuthController::class, 'withdraw']);
 });
 
 

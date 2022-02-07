@@ -4,15 +4,14 @@
           <thead>
             <tr>
               <th>Sl No</th>
-              <th>Individual Player ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Registration Date</th>
-              <th>Agent</th>
-              <th>This Week Bet Amount</th>
-              <th>Credit Balance</th>
-              <th>This Week WinLoss</th>
-
+                <th>Date and Time</th>
+              <th>Player ID</th>
+              <th>Player Name</th>
+              <th>Player Email</th>
+              <th>Agent Name</th>
+              <th>Documents</th>
+              <th>Current Balance</th>
+              <th>Amount</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -27,23 +26,29 @@
                 {{ ++$i }}
               </td>
               <td>
-                {{ $row->id }}
+                {{ $row->deposit_time }}
               </td>
+              
                <td>
-                {{ $row->name }}
+                {{ $row->player_id }}
+              </td>
+              
+              <td>
+                {{ $row->player_name }}
               </td>
               <td>
-                {{ $row->email }}
+                {{ $row->player_email }}
               </td>
-               <td>
-                {{ $row->created_at }}
-              </td>
+               
               <td>
                 {{ $row->agent_name }}
               </td>
-              <td>10</td>
+              <td> <img src="{{ $row->transaction_document }}" class="viewdetails" width="30" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineFormdetails" /></td>
               <td> {{ $row->credits }}</td>
-              <td>20</td>
+              <td> {{ $row->amount }}</td>
+
+
+             
                
               <td>
                 <div class="dropdown">
@@ -51,16 +56,13 @@
                     <i data-feather="more-vertical"></i>
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="details/edit/{{ $row->id }}">
-                      <i data-feather="edit-2" class="me-50"></i>
-                      <span>Edit Player</span>
-                    </a>
+                   
                     
-                    <a class="dropdown-item reset_password" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                      <i data-feather="key" class="me-50"></i>
-                      <span>Reset Password and ID</span>
+                    <a class="dropdown-item approval" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                      <i data-feather="check-square" class="me-50"></i>
+                      <span>Approval</span>
                     </a>
-                    <a class="dropdown-item deleteitem"  data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#myModal_delete">
+                    <a class="dropdown-item deleteitem"  data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#myModal_delete" >
                       <i data-feather="trash" class="me-50"></i>
                       <span>Delete</span>
                     </a>
@@ -89,10 +91,10 @@
                 aria-labelledby="myModalLabel33"
                 aria-hidden="true"
               >
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h4 class="modal-title" id="myModalLabel33">Reset Password Form</h4>
+                      <h4 class="modal-title" id="myModalLabel33">Approval Panel</h4>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
@@ -102,26 +104,60 @@
                       <div class="modal-body">
                         <div id="password_message"></div>
 
-                         <label>Password: </label>
+                         <label>Amount: </label>
                         <div class="mb-1">
+                          <input type="hidden"  name="deposit_id" id="deposit_id" value=""/>
                           <input type="hidden"  name="user_id" id="user_id" value=""/>
-                          <input name="password" id="password" type="password" placeholder="Password" class="form-control" />
+                          <input name="amount" id="amount" type="text" placeholder="Amount" class="form-control" />
                         </div>
-
-                        <label>Confirm Password: </label>
+                         <label>Status: </label>
                         <div class="mb-1">
-                          <input type="password" id="confirm_password" placeholder="Confirm Password" class="form-control" />
+                          <select class="form-control select2" id="status" name="status" >
+                            <option value="Approved">Approved</option>
+                            <option value="Reject">Reject</option>
+                          </select>
+                        </div>
+                        <label>Message: </label>
+                        <div class="mb-1">
+                          <textarea id="status_change_message" name="status_change_message" placeholder="Comments" class="form-control" ></textarea>
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" id="password_submit" class="btn btn-primary" >Save</button>
+                        <button type="submit" id="approval_submit" class="btn btn-primary" >Submit</button>
                       </div>
+                      <div id="approvaldetailsdiv"></div>
                     </form>
                   </div>
                 </div>
-              </div>      
+              </div>  
 
-<!-- Modal to delete game start-->
+     <div
+        class="modal fade text-start"
+        id="inlineFormdetails"
+        tabindex="-1"
+        aria-labelledby="myModalLabel17"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel17">Deposit Request Details</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @csrf
+            <input type="hidden" id="deposit_id_text" value="" />
+            <div class="modal-body" id="viewdetailsdiv">
+             ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Modal to delete game start-->
     <div class="modal fade" id="myModal_delete" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -130,7 +166,7 @@
           </div>
           <div class="modal-body p-3 pt-0">
             <div class="text-center mb-2">
-              <h1 class="mb-1">Delete Player</h1>
+              <h1 class="mb-1">Delete Deposit</h1>
               <p>Are you sure?</p>
             </div>
 
@@ -155,3 +191,4 @@
       </div>
     </div>
     <!-- Modal to delete game Ends-->  
+                            

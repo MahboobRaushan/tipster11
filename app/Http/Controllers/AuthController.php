@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Credit;
+use App\Models\Withdraw;
+use App\Models\Deposit;
 
 use DB;
 
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -44,12 +48,110 @@ public function register(Request $request)
         ]);
 
         if($user->save()){
-            $tokenResult = $user->createToken('Personal Access Token');
+            $tokenResult = $user->createToken('LaravelSanctumAuth');
             $token = $tokenResult->plainTextToken;
 
             return response()->json([
             'message' => 'Successfully created user!',
             'accessToken'=> $token,
+            ],201);
+        }
+        else{
+            return response()->json(['error'=>'Provide proper details']);
+        }
+     }
+
+    
+  }
+
+  
+public function deposit(Request $request)
+{
+   
+    $user_id = Auth::id();
+        
+   //return response()->json(['error'=>$request->all()]);
+
+    $v = Validator::make($request->all(),[
+            'amount' => 'required|integer|min:1',           
+            'transaction_no'=>'required|string',
+            'transaction_details'=>'required|string',
+            'transaction_document'=>'required|mimes:jpg,png,jpeg',
+
+        ]);
+
+     if ($v->fails())
+     {
+        return response()->json(['error'=>'Provide proper details']);
+     }
+     else 
+     {
+        $current_date_time = Carbon::now()->toDateTimeString();
+
+        $time =$user_id.'_'.time();
+         $input['transaction_document'] = $time.'.'.$request->transaction_document->extension();
+        $request->transaction_document->move(public_path('images/transaction_document'), $input['transaction_document']);
+
+        $deposit = new Deposit([
+            'user_id'=>$user_id,
+            'deposit_time'=>$current_date_time,
+            'amount'  => $request->amount,
+            'transaction_no' => $request->transaction_no,
+            'transaction_document'=>'images/transaction_document/'.$input['transaction_document'],
+            'transaction_details' => $request->transaction_details,
+            'createdBy'=>$user_id
+            
+        ]);
+
+        if($deposit->save()){
+           
+
+            return response()->json([
+            'message' => 'Successfully deposit!',            
+            ],201);
+        }
+        else{
+            return response()->json(['error'=>'Provide proper details']);
+        }
+     }
+
+    
+  }
+
+  
+  public function withdraw(Request $request)
+{
+   
+    $user_id = Auth::id();
+        
+   //return response()->json(['error'=>$request->all()]);
+
+    $v = Validator::make($request->all(),[
+            'amount' => 'required|integer|min:1',           
+                        
+        ]);
+
+     if ($v->fails())
+     {
+        return response()->json(['error'=>'Provide proper details']);
+     }
+     else 
+     {
+        $current_date_time = Carbon::now()->toDateTimeString();
+
+        $withdraw = new Withdraw([
+            'user_id'=>$user_id,
+            'withdraw_time'=>$current_date_time,
+            'amount'  => $request->amount,           
+            'createdBy'=>$user_id
+            
+        ]);
+
+        if($withdraw->save()){
+           
+
+            return response()->json([
+            'message' => 'Successfully withdraw submit!',            
             ],201);
         }
         else{
@@ -77,12 +179,13 @@ public function register(Request $request)
   }
 
   $user = $request->user();
-  $tokenResult = $user->createToken('Personal Access Token');
+  $tokenResult = $user->createToken('LaravelSanctumAuth');
   $token = $tokenResult->plainTextToken;
 
   return response()->json([
   'accessToken' =>$token,
   'token_type' => 'Bearer',
+
   ]);
 }
 public function user(Request $request)
