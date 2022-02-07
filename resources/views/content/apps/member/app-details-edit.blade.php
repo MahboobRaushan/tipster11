@@ -556,7 +556,7 @@
  <script>
   $(document).ready( function () {
     
-
+     var site_base_url = $('#site_base_url').val();
   $(document).on('click', '.pagination a', function(event){
 
   event.preventDefault(); 
@@ -570,7 +570,7 @@ function fetch_data(page)
   var user_id = $('#user_id').val();
   //alert(user_id);
   $.ajax({
-   url:"/member/details_edit_list_data?page="+page+'&user_id='+user_id,
+   url:site_base_url+"member/details_edit_list_data?page="+page+'&user_id='+user_id,
    success:function(data)
    {    
     //alert(data);
@@ -582,7 +582,8 @@ function fetch_data(page)
 
     $('#mystatementTable').DataTable();
 
-     
+
+
           //credits
           //credit_result
          
@@ -620,7 +621,7 @@ function fetch_data(page)
         });
 
 
-var site_base_url = $('#site_base_url').val();
+
 
 $(document).on('click', '.confirmitem', function(event){
     event.preventDefault(); 
