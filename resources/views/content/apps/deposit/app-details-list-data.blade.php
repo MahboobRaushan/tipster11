@@ -11,7 +11,8 @@
               <th>Agent Name</th>
               <th>Documents</th>
               <th>Current Balance</th>
-              <th>Amount</th>
+              <th>Deposit Amount</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -46,7 +47,8 @@
               <td> <img src="{{ $row->transaction_document }}" class="viewdetails" width="30" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineFormdetails" /></td>
               <td> {{ $row->credits }}</td>
               <td> {{ $row->amount }}</td>
-
+              <td><span class="badge rounded-pill badge-light-<?php if($row->status=='Approved'){echo 'success';} ?><?php if($row->status=='Reject'){echo 'danger';} ?><?php if($row->status=='Pending'){echo 'info';} ?>">{{ $row->status }}</span>
+              </td>
 
              
                
@@ -57,15 +59,20 @@
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">
                    
-                    
+                    <?php if($row->status=='Pending'){ ?>
+                       <?php if(in_array('deposit.approval',$custom_get_all_permissions_access->toArray())){?>
                     <a class="dropdown-item approval" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineForm">
                       <i data-feather="check-square" class="me-50"></i>
                       <span>Approval</span>
                     </a>
+                     <?php } ?>
+                  <?php } ?>
+                  <?php if(in_array('deposit.delete',$custom_get_all_permissions_access->toArray())){?>
                     <a class="dropdown-item deleteitem"  data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#myModal_delete" >
                       <i data-feather="trash" class="me-50"></i>
                       <span>Delete</span>
                     </a>
+                     <?php } ?>
                   </div>
                 </div>
               </td>
@@ -77,7 +84,11 @@
        
       </div>
        
-
+<?php 
+//echo '<pre>';
+//print_r($custom_get_all_permissions_access->toArray());
+//echo '</pre>';
+?>
        
         <div class="d-flex justify-content-between mx-0 row dataTables_wrapper "><div class="col-sm-12 col-md-6"><div class="dataTables_info" id="DataTables_Table_1_info" >Showing {{$start_no}} to {{$end_no}} of {{$data->total()}} entries</div></div><div class="col-sm-12 col-md-6"><div class="dataTables_paginate paging_simple_numbers" ><div class="pagination" >
           {!! $data->links() !!}
@@ -104,11 +115,11 @@
                       <div class="modal-body">
                         <div id="password_message"></div>
 
-                         <label>Amount: </label>
+                         <label>Deposit Amount: </label>
                         <div class="mb-1">
                           <input type="hidden"  name="deposit_id" id="deposit_id" value=""/>
                           <input type="hidden"  name="user_id" id="user_id" value=""/>
-                          <input name="amount" id="amount" type="text" placeholder="Amount" class="form-control" />
+                          <input name="amount" id="amount" type="text" placeholder="Deposit Amount" class="form-control" />
                         </div>
                          <label>Status: </label>
                         <div class="mb-1">
@@ -155,6 +166,7 @@
           </div>
         </div>
       </div>
+
 
 
     <!-- Modal to delete game start-->

@@ -33,9 +33,9 @@
       <div class="card-body">
         <div class="card-text">
           <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
               <div class="row">
-                <div class="col-md-4 ">
+                <div class="col-md-3 ">
                   <label class="form-label" for="fp-range">Date Range</label>
                   <input
                     type="text"
@@ -44,7 +44,7 @@
                     placeholder="YYYY-MM-DD to YYYY-MM-DD"
                   />
                 </div>
-                 <div class="col-md-4 ">
+                 <div class="col-md-3 ">
                   <label class="form-label" for="fp-range">Agent</label>
                   <select class="select2 form-select" id="agent_id">
                     <option value="">Select Agent</option>
@@ -53,7 +53,29 @@
                      <?php } ?>
                     </select>
                 </div>
-                <div class="col-md-4 mt-2">
+                 <div class="col-md-2 ">
+                  <label class="form-label" for="status">Status</label>
+                  <select class="select2 form-select"  name="status_2" id="status_2">
+                    <option value="">Select Status</option>
+                      
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      
+                    
+                    </select>
+                </div>
+                <div class="col-md-2 ">
+                  <label class="form-label" for="status">Transferred</label>
+                  <select class="select2 form-select"  name="is_transferred_2" id="is_transferred_2">
+                    <option value="">Select Status</option>
+                      
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                      
+                    
+                    </select>
+                </div>
+                <div class="col-md-2 mt-2">
                   <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
                   
                 </div>

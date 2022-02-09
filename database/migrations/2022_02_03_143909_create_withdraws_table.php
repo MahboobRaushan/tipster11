@@ -29,6 +29,11 @@ class CreateWithdrawsTable extends Migration
             $table->enum('status', ['Pending', 'Approved','Reject'])->default('Pending');            
             $table->integer('createdBy')->default(0); 
             $table->integer('responsedBy')->default(0); 
+            $table->enum('is_transferred', ['0','1'])->default('0');  
+
+            $table->dateTime('transferred_time', $precision = 0)->nullable();
+            $table->integer('transferredBy')->default(0); 
+
             $table->timestamps();
         });
     }

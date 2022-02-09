@@ -35,7 +35,7 @@
           <div class="row">
             <div class="col-lg-9">
               <div class="row">
-                <div class="col-md-4 ">
+                <div class="col-md-3 ">
                   <label class="form-label" for="fp-range">Date Range</label>
                   <input
                     type="text"
@@ -44,7 +44,7 @@
                     placeholder="YYYY-MM-DD to YYYY-MM-DD"
                   />
                 </div>
-                 <div class="col-md-4 ">
+                 <div class="col-md-3 ">
                   <label class="form-label" for="fp-range">Agent</label>
                   <select class="select2 form-select" id="agent_id">
                     <option value="">Select Agent</option>
@@ -53,7 +53,18 @@
                      <?php } ?>
                     </select>
                 </div>
-                <div class="col-md-4 mt-2">
+                <div class="col-md-3 ">
+                  <label class="form-label" for="status">Status</label>
+                  <select class="select2 form-select"  name="status_2" id="status_2">
+                    <option value="">Select Status</option>
+                      
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Reject">Reject</option>
+                    
+                    </select>
+                </div>
+                <div class="col-md-3 mt-2">
                   <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
                   
                 </div>

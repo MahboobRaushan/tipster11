@@ -39,7 +39,7 @@ class MenuServiceProvider extends ServiceProvider
 
           $v_menu_array[] = (object) array("name"=> "Players","icon"=> "user","slug"=> "","permission"=>"member.details.list","submenu"=> array((object) array("url"=> "member/details","name"=> "Details","icon"=> "circle","slug"=> "details","permission"=>"member.details.list"),(object) array("url"=> "member/winloss","name"=> "Win Loss","icon"=> "circle","slug"=> "winloss","permission"=>"member.winloss.list"),(object) array("url"=> "member/adjust_credit","name"=> "Adjust Credit","icon"=> "circle","slug"=> "adjust_credit","permission"=>"member.adjust_credit.list")));
 
-       $v_menu_array[] = (object) array("url"=> "deposit","name"=> "Deposit","icon"=> "copy","slug"=> "deposit","permission"=>"deposit.list");
+       $v_menu_array[] = (object) array("url"=> "deposit","name"=> "Deposits","icon"=> "copy","slug"=> "deposit","permission"=>"deposit.list");
 
        $v_menu_array[] = (object) array("url"=> "withdrawal","name"=> "Withdrawals","icon"=> "copy","slug"=> "withdrawal","permission"=>"withdrawal.list");
 

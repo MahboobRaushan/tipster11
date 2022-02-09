@@ -12,6 +12,9 @@
              
               <th>Current Balance</th>
               <th>Amount</th>
+              <th>Status</th>             
+              <th>Bank Details</th>
+               <th>Transferred</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -47,7 +50,16 @@
               <td> {{ $row->credits }}</td>
               <td> {{ $row->amount }}</td>
 
+              <td><span class="badge rounded-pill badge-light-<?php if($row->status=='Approved'){echo 'success';} ?><?php if($row->status=='Reject'){echo 'danger';} ?><?php if($row->status=='Pending'){echo 'info';} ?>">{{ $row->status }}</span>
+              </td>
 
+              <td><center><button  type="button" class="btn btn-info btn-sm bankdetails" data-id="{{ $row->id }}" ><i  data-feather="file"></i></button></center></td>
+
+              <td> 
+                <center> <?php if($row->is_transferred==1){?><i data-feather="check-square"></i><?php } ?>
+              </center>
+
+              </td>
              
                
               <td>
@@ -59,15 +71,32 @@
                    
                   <?php 
                   if($row->credits >= $row->amount)  {?>
+                    <?php if($row->status=='Pending'){ ?>
+                      <?php if(in_array('withdrawal.approval',$custom_get_all_permissions_access->toArray())){?>
                     <a class="dropdown-item approval" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineForm">
                       <i data-feather="check-square" class="me-50"></i>
                       <span>Approval</span>
                     </a>
+                    <?php } ?>
+                     <?php } ?>
                   <?php } ?>
+
+                   <?php if($row->status=='Approved'){ ?>
+                    <?php if($row->is_transferred==0){ ?>
+                      <?php if(in_array('withdrawal.transferred',$custom_get_all_permissions_access->toArray())){?>
+                    <a class="dropdown-item transferred" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlinetransferredForm">
+                      <i data-feather="check-square" class="me-50"></i>
+                      <span>Transferred</span>
+                    </a>
+                    <?php } ?>
+                    <?php } ?>
+                     <?php } ?>
+                      <?php if(in_array('withdrawal.delete',$custom_get_all_permissions_access->toArray())){?>
                     <a class="dropdown-item deleteitem"  data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#myModal_delete" >
                       <i data-feather="trash" class="me-50"></i>
                       <span>Delete</span>
                     </a>
+                     <?php } ?>
                   </div>
                 </div>
               </td>
@@ -79,7 +108,11 @@
        
       </div>
        
-
+<?php 
+//echo '<pre>';
+//print_r($custom_get_all_permissions_access->toArray());
+//echo '</pre>';
+?>
        
         <div class="d-flex justify-content-between mx-0 row dataTables_wrapper "><div class="col-sm-12 col-md-6"><div class="dataTables_info" id="DataTables_Table_1_info" >Showing {{$start_no}} to {{$end_no}} of {{$data->total()}} entries</div></div><div class="col-sm-12 col-md-6"><div class="dataTables_paginate paging_simple_numbers" ><div class="pagination" >
           {!! $data->links() !!}
@@ -112,54 +145,56 @@
                         </div>
 
 
-                         <label>Amount: </label>
-                        <div class="mb-1">
-                          <input type="hidden"  name="withdraw_id" id="withdraw_id" value=""/>
-                          <input type="hidden"  name="user_id" id="user_id" value=""/>
-                          <input name="amount" id="amount" type="text" placeholder="Amount" class="form-control" />
-                        </div>
-                         <label>Bank Account Name: </label>
-                        <div class="mb-1">
-                         
-                          <input name="bank_account_name" id="bank_account_name" type="text" placeholder="Bank Account Name" class="form-control" />
-                        </div>
-
-                        <label>Bank Country: </label>
-                        <div class="mb-1">
-                         
-                          <input name="bank_country" id="bank_country" type="text" placeholder="Bank Country" class="form-control" />
-                        </div>
-
-                         <label>Bank Name: </label>
-                        <div class="mb-1">
-                         
-                          <input name="bank_name" id="bank_name" type="text" placeholder="Bank Name" class="form-control" />
-                        </div>
-
-                         <label>Bank Account Number: </label>
-                        <div class="mb-1">
-                         
-                          <input name="bank_account_number" id="bank_account_number" type="text" placeholder="Bank Account Number" class="form-control" />
-                        </div>
-
-                        <label>Bank Account Type: </label>
-                        <div class="mb-1">
-                         
-                          <input name="bank_account_type" id="bank_account_type" type="text" placeholder="Bank Account Type" class="form-control" />
-                        </div>
-
+                        
 
                          <label>Status: </label>
                         <div class="mb-1">
                           <select class="form-control select2" id="status" name="status" >
                             <option value="Approved">Approved</option>
-                            <option value="Reject">Reject</option>
+                           
                           </select>
                         </div>
                         <label>Message: </label>
                         <div class="mb-1">
                           <textarea id="status_change_message" name="status_change_message" placeholder="Comments" class="form-control" ></textarea>
                         </div>
+
+                         <label>Amount: </label>
+                        <div class="mb-1">
+                          <input type="hidden"  name="withdraw_id" id="withdraw_id" value=""/>
+                          <input type="hidden"  name="user_id" id="user_id" value=""/>
+                          <input name="amount" id="amount" type="text" placeholder="Amount" class="form-control" readonly />
+                        </div>
+                         <label>Bank Account Name: </label>
+                        <div class="mb-1">
+                         
+                          <input name="bank_account_name" id="bank_account_name" type="text" placeholder="Bank Account Name" class="form-control" readonly/>
+                        </div>
+
+                        <label>Bank Country: </label>
+                        <div class="mb-1">
+                         
+                          <input name="bank_country" id="bank_country" type="text" placeholder="Bank Country" class="form-control" readonly/>
+                        </div>
+
+                         <label>Bank Name: </label>
+                        <div class="mb-1">
+                         
+                          <input name="bank_name" id="bank_name" type="text" placeholder="Bank Name" class="form-control" readonly/>
+                        </div>
+
+                         <label>Bank Account Number: </label>
+                        <div class="mb-1">
+                         
+                          <input name="bank_account_number" id="bank_account_number" type="text" placeholder="Bank Account Number" class="form-control" readonly/>
+                        </div>
+
+                        <label>Bank Account Type: </label>
+                        <div class="mb-1">
+                         
+                          <input name="bank_account_type" id="bank_account_type" type="text" placeholder="Bank Account Type" class="form-control" readonly/>
+                        </div>
+
                       </div>
                       <div class="modal-footer">
                         <button type="submit" id="approval_submit" class="btn btn-primary" >Submit</button>
@@ -170,6 +205,124 @@
                 </div>
               </div>  
 
+
+
+ <div
+                class="modal fade text-start"
+                id="inlinebankdetailsForm"
+                tabindex="-1"
+                aria-labelledby="myModalLabel99"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel33">Bank Details</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    
+                   <form action="#" id="postbankdetailsForm">
+                      @csrf
+                      <div class="modal-body">
+                        
+                        
+
+                         <label>Player Name: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="name_bankdetails" type="text" placeholder="Player Name" class="form-control" readonly/>
+                        </div>
+
+                         <label>Bank Account Name: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="bank_account_name_bankdetails" type="text" placeholder="Bank Account Name" class="form-control" readonly/>
+                        </div>
+
+                        <label>Bank Country: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="bank_country_bankdetails" type="text" placeholder="Bank Country" class="form-control" readonly/>
+                        </div>
+
+                         <label>Bank Name: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="bank_name_bankdetails" type="text" placeholder="Bank Name" class="form-control" readonly/>
+                        </div>
+
+                         <label>Bank Account Number: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="bank_account_number_bankdetails" type="text" placeholder="Bank Account Number" class="form-control" readonly/>
+                        </div>
+
+                        <label>Bank Account Type: </label>
+                        <div class="mb-1">
+                         
+                          <input  id="bank_account_type_bankdetails" type="text" placeholder="Bank Account Type" class="form-control" readonly/>
+                        </div>
+
+                      </div>
+                    </form>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                     
+                  
+                  </div>
+                </div>
+              </div>  
+
+
+<div
+                class="modal fade text-start"
+                id="inlinetransferredForm"
+                tabindex="-1"
+                aria-labelledby="myModalLabel66"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel66">Transferred Panel</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    
+                    <form action="#" id="posttransferredForm">
+                      @csrf
+                      <div class="modal-body">
+                        
+                        
+
+                        
+                          <input type="hidden"  name="withdraw_id" id="withdraw_id_2" value=""/>
+                          <input type="hidden"  name="user_id" id="user_id_2" value=""/>
+                          
+                                          
+                    
+
+
+
+                         <label>Transferred: </label>
+                        <div class="mb-1">
+                          <select class="form-control" id="is_transferred" name="is_transferred" >
+                            <option value="1">Yes</option>
+                           
+                          </select>
+                        </div>
+                       
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" id="transferred_submit" class="btn btn-primary" >Confirm</button>
+                      </div>
+                      
+                    </form>
+                  </div>
+                </div>
+              </div>  
      <div
         class="modal fade text-start"
         id="inlineFormdetails"

@@ -46,7 +46,7 @@ class DepositController extends Controller
          $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
 
 
-        $data = Deposit::where('deposits.status','Pending')->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('deposits.id','desc')->paginate($this->per_page);
+        $data = Deposit::whereIn('deposits.status',['Pending','Approved','Reject'])->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('deposits.id','desc')->paginate($this->per_page);
 
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
          return view('/content/apps/deposit/app-deposit-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data,'agents'=>$agents]);
@@ -69,20 +69,33 @@ class DepositController extends Controller
 
             $pageConfigs = ['pageHeader' => false];
              $agent_id = $request->agent_id;
-             $daterange = $request->daterange;  
+             $daterange = $request->daterange;
+             $status = $request->status;  
+
+             
 
             $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
 
 
            
 
-             $data = Deposit::where('deposits.status','Pending');
+             
+
+            if($status !='')
+            {
+                $data = Deposit::where('deposits.status',$status);
+            }
+            else
+            {
+                $data = Deposit::whereIn('deposits.status',['Pending','Approved','Reject']);
+            }
 
        
             if($agent_id > 0)
             {
                  $data = $data->where('player.agent_id',$agent_id);
             }
+
             if($daterange !='')
             {
                  $daterangearray = explode(' to ',$daterange);

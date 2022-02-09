@@ -137,26 +137,73 @@ public function deposit(Request $request)
      }
      else 
      {
-        $current_date_time = Carbon::now()->toDateTimeString();
+        $amount = $request->amount;
+        $user_2 =  User:: where('id',$user_id)->first();
+        $credits = $user_2->credits;
+        $final_credits =  $credits - $amount;
 
-        $withdraw = new Withdraw([
-            'user_id'=>$user_id,
-            'withdraw_time'=>$current_date_time,
-            'amount'  => $request->amount,           
-            'createdBy'=>$user_id
-            
-        ]);
+        $bank_account_name = $user_2->bank_account_name;
+        $bank_country = $user_2->bank_country;
+        $bank_name = $user_2->bank_name;
+        $bank_account_number = $user_2->bank_account_number;
+        $bank_account_type = $user_2->bank_account_type;
 
-        if($withdraw->save()){
-           
+        if($final_credits >= 0)
+            {
+                 $current_date_time = Carbon::now()->toDateTimeString();
 
-            return response()->json([
-            'message' => 'Successfully withdraw submit!',            
-            ],201);
-        }
-        else{
-            return response()->json(['error'=>'Provide proper details']);
-        }
+                $withdraw = new Withdraw([
+                    'user_id'=>$user_id,
+                    'withdraw_time'=>$current_date_time,
+                    'amount'  => $request->amount, 
+                    'status' => 'Pending',
+                    'before_withdraw_amount' => $credits,
+                    'current_balance' => $final_credits, 
+                    
+                    'bank_account_name' => $bank_account_name,  
+                    'bank_country' => $bank_country,  
+                    'bank_name' => $bank_name,  
+                    'bank_account_number' => $bank_account_number,  
+                    'bank_account_type' => $bank_account_type,  
+
+                    'createdBy'=>$user_id
+                    
+                ]);
+
+                if($withdraw->save()){
+
+                    $withdraw_id = $withdraw->id;
+
+                      $user_2->credits = $final_credits;
+                        $user_2->save(); 
+
+                         $credit = new Credit([
+                            'user_id'  => $user_id,
+                            'before_deposit_withdraw_amount' => $credits,
+                            'amount' => $request->amount,
+                            'current_balance' => $final_credits,
+                            'type'=>'Withdraw',
+                            'reference_by'=>'Self',
+                            'deposit_withdraw_id' => $withdraw_id,               
+                            'createdBy'=>$user_id
+                        ]);
+                        $credit->save();
+                   
+
+                    return response()->json([
+                    'message' => 'Successfully withdraw submit!',            
+                    ],201);
+                }
+                else{
+                    return response()->json(['error'=>'Provide proper details']);
+                }
+            }
+            else 
+            {
+                return response()->json(['error'=>'You have not enough money, can maximum '.$credits]);
+            }
+
+       
      }
 
     

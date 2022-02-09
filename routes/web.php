@@ -342,6 +342,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
      Route::get('deposit/details_data', [DepositController::class,'deposit_data_list'])->name('deposit.details_data');
      Route::post('deposit/detailsview/{id}', [DepositController::class,'detailsview'])->name('detailsview');
      Route::post('deposit/approvalsubmit', [DepositController::class,'approvalsubmit'])->name('deposit.approval.submit');
+
+     
+
      Route::delete('deposit/delete/{id}', [DepositController::class,'destroy'])->name('delete');
 
     Route::get('withdrawal', [WithdrawalController::class,'withdrawal_list'])->name('withdrawal');
@@ -350,6 +353,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
      Route::get('withdrawal/details_data', [WithdrawalController::class,'withdrawal_data_list'])->name('withdrawal.details_data');
      Route::post('withdrawal/detailsview/{id}', [WithdrawalController::class,'detailsview'])->name('detailsview');
      Route::post('withdrawal/approvalsubmit', [WithdrawalController::class,'approvalsubmit'])->name('withdrawal.approval.submit');
+     Route::post('withdrawal/transferredsubmit', [WithdrawalController::class,'transferredsubmit'])->name('withdrawal.transferred.submit');
      Route::delete('withdrawal/delete/{id}', [WithdrawalController::class,'destroy'])->name('delete');
 
      
