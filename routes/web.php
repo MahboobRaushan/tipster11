@@ -32,6 +32,7 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\SchedulingController;
 
 
 
@@ -49,6 +50,9 @@ use App\Http\Controllers\LeagueController;
 */
 
 // Main Page Route
+
+Route::get('scheduling', [SchedulingController::class,'scheduling'])->name('scheduling');
+
 Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
 
 
