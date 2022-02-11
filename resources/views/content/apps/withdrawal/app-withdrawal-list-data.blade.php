@@ -69,8 +69,7 @@
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">
                    
-                  <?php 
-                  if($row->credits >= $row->amount)  {?>
+                 
                     <?php if($row->status=='Pending'){ ?>
                       <?php if(in_array('withdrawal.approval',$custom_get_all_permissions_access->toArray())){?>
                     <a class="dropdown-item approval" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineForm">
@@ -79,7 +78,7 @@
                     </a>
                     <?php } ?>
                      <?php } ?>
-                  <?php } ?>
+                  
 
                    <?php if($row->status=='Approved'){ ?>
                     <?php if($row->is_transferred==0){ ?>

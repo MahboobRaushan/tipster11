@@ -129,16 +129,7 @@
                 name="name"
               />
             </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Order No</label>
-              <input
-                type="number"
-                class="form-control dt-full-order_no"
-                id="basic-icon-default-order_no"
-                placeholder=""
-                name="order_no"
-              />
-            </div>
+           
 
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-icon">Icon</label>
@@ -178,16 +169,7 @@ alt="preview image" style="max-height: 100px;">
             </div>
 
 
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname_edit">Order No</label>
-              <input
-                type="number"
-                class="form-control dt-full-order_no"
-                id="basic-icon-default-order_no_edit"
-                placeholder=""
-                name="order_no"
-              />
-            </div>
+         
 
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-icon">Icon</label>

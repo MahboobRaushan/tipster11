@@ -112,7 +112,8 @@
              <th>Start Time</th>
              <th>End Time</th>
              <th>League</th>
-             <th>Result</th>                
+             <th>Result</th> 
+             <th>Score</th>                  
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -351,6 +352,7 @@
                 class="form-control select2"
                 name="result"
                >
+               <option value="">Select</option>
                <option value="home">Home</option>
                <option value="draw">Draw</option>
                <option value="away">Away</option>
@@ -384,8 +386,9 @@
                 class="form-control select2"
                 name="status"
                >
-               <option value="1">Active</option>
-               <option value="0">Inactive</option>
+               <option value="Running">Running</option>
+               <option value="Finished">Finished</option>
+               <option value="Void">Void</option>
              </select>
             </div>    
 

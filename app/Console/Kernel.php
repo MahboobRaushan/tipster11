@@ -13,8 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+       Commands\PullRunning::class,
     ];
+
 
     /**
      * Define the application's command schedule.
@@ -25,8 +26,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+         $schedule->command('pool:running')
+            ->everyMinute();
     }
-
+    
     /**
      * Register the commands for the application.
      *

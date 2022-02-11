@@ -55,9 +55,7 @@ class PoolController extends Controller
             'name' => 'required',           
             'startTimedate' => 'required',
             'startTimetime' => 'required',
-            'endTimedate' => 'required',
-            'endTimetime' => 'required',
-
+            
             'perBetAmount' => 'required',
             'basePrice' => 'required',
             'megaPercentage' => 'required',
@@ -84,7 +82,6 @@ class PoolController extends Controller
         {
             $name = $request->name;          
             $startTime = $request->startTimedate.' '.$request->startTimetime;
-            $endTime = $request->endTimedate.' '.$request->endTimetime;
             $perBetAmount = $request->perBetAmount;
             $basePrice = $request->basePrice;
             $megaPercentage = $request->megaPercentage;
@@ -103,7 +100,7 @@ class PoolController extends Controller
            
 
            
-            $poolData = array('name'=>$name,'startTime'=>$startTime,'endTime'=>$endTime,'perBetAmount'=>$perBetAmount  ,'basePrice'=>$basePrice  ,'megaPercentage'=>$megaPercentage  ,'poolPercentage'=>$poolPercentage  ,'comPercentage'=>$comPercentage  ,'agentPercentage'=>$agentPercentage
+            $poolData = array('name'=>$name,'startTime'=>$startTime,'perBetAmount'=>$perBetAmount  ,'basePrice'=>$basePrice  ,'megaPercentage'=>$megaPercentage  ,'poolPercentage'=>$poolPercentage  ,'comPercentage'=>$comPercentage  ,'agentPercentage'=>$agentPercentage
                 ,'group1Percentage'=>$group1Percentage ,'group2Percentage'=>$group2Percentage   ,'group3Percentage'=>$group3Percentage   ,'createdBy'=>$createdBy,'isJackpotPool'=>$isJackpotPool);
             
 
@@ -137,7 +134,7 @@ class PoolController extends Controller
                 ->leftJoin('tims as t1', 'match.homeTeam', '=', 't1.id')
                 ->leftJoin('leagues as l', 't1.league_id', '=', 'l.id')
                 ->leftJoin('tims as t2', 'match.awayTeam', '=', 't2.id')
-                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result','match.home_score','match.away_score')
+                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result','match.home_score','match.away_score','match.startTime','match.endTime')
                 ->where('pool_match.pool_id',$id)
                 ->get();
 
@@ -158,10 +155,10 @@ class PoolController extends Controller
 
             $match = DB::table('match')
                 ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
-                ->select('match.id','t1.name as homeTeam_name','t2.name as awayTeam_name')
+                ->select('match.id','t1.name as homeTeam_name','t2.name as awayTeam_name','match.startTime','match.endTime')
                 ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
                 ->where('match.league',$league_id)
-                ->where('match.status',1)
+               // ->where('match.status','Running')
                 ->get();
 
             
@@ -182,12 +179,10 @@ class PoolController extends Controller
     {
          $v = Validator::make($request->all(),[
             'name' => 'required',  
-            'status' => 'required',          
+                   
             'startTimedate' => 'required',
             'startTimetime' => 'required',
-            'endTimedate' => 'required',
-            'endTimetime' => 'required',
-
+           
             'perBetAmount' => 'required',
             'basePrice' => 'required',
             'megaPercentage' => 'required',
@@ -214,7 +209,6 @@ class PoolController extends Controller
         {
             $name = $request->name;          
             $startTime = $request->startTimedate.' '.$request->startTimetime;
-            $endTime = $request->endTimedate.' '.$request->endTimetime;
             $perBetAmount = $request->perBetAmount;
             $basePrice = $request->basePrice;
             $megaPercentage = $request->megaPercentage;
@@ -229,10 +223,6 @@ class PoolController extends Controller
 
             
 
-            $status = $request->status;
-            
-
-
             $pool = Pool::where('id',$request->edit_id)->first();
 
             $updatedBy = Auth::user()->id;
@@ -241,7 +231,7 @@ class PoolController extends Controller
 
             $pool->name = $name;          
             $pool->startTime = $startTime;
-            $pool->endTime = $endTime;
+           
             $pool->perBetAmount = $perBetAmount;
             $pool->basePrice = $basePrice;
 
@@ -255,10 +245,7 @@ class PoolController extends Controller
 
             $pool->isJackpotPool = $isJackpotPool;
 
-            
-
-            $pool->status = $status;
-
+           
             $pool->updatedBy = $updatedBy;
                       
             $pool->save();
@@ -322,10 +309,47 @@ class PoolController extends Controller
 
             }
             
+            $this->recalculatePoolEndtime($request->pool_id);
+           
+                
             return json_encode(array('status'=>'ok','message'=>'Successfully added !'));       
           
         }
     }
+
+    
+     public function recalculatePoolEndtime($pool_id){
+
+        $beforeOneHour = null;
+
+        $allcount = DB::table('pool_match')
+                ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+                ->select('match.startTime')
+                ->orderBy('match.startTime','asc')
+                ->limit(1)
+                ->where('pool_match.pool_id',$pool_id)
+                 ->count();
+                 if($allcount > 0){
+                     $matchs = DB::table('pool_match')
+                            ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+                            ->select('match.startTime')
+                            ->orderBy('match.startTime','asc')
+                            ->limit(1)
+                            ->where('pool_match.pool_id',$pool_id)               
+                            ->get();
+
+                            $end_time = $matchs[0]->startTime;
+                            
+                            $time   = strtotime($end_time);
+                            $time   = $time - (60*60); //one hour
+                            $beforeOneHour = date("Y-m-d H:i:s", $time);
+                        }
+                
+                $pool = Pool::where('id',$pool_id)->first();
+                $pool->endTime = $beforeOneHour;
+                $pool->save();
+
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -369,9 +393,11 @@ class PoolController extends Controller
                 ->leftJoin('tims as t1', 'match.homeTeam', '=', 't1.id')
                 ->leftJoin('leagues as l', 't1.league_id', '=', 'l.id')
                 ->leftJoin('tims as t2', 'match.awayTeam', '=', 't2.id')
-                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result')
+                ->select('pool_match.id','pool_match.match_id','pool_match.pool_id','l.name as league_name','t1.name as homeTeam_name','t2.name as awayTeam_name','match.result','match.startTime','match.endTime')
                 ->where('pool_match.pool_id',$pullid)
                 ->get();
+
+         $this->recalculatePoolEndtime($pullid);       
                     
         return json_encode(array('status'=>'ok','message'=>'Successfully deleted !','match_details'=>$match_details));
     }

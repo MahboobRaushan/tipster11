@@ -66,14 +66,14 @@ class GameController extends Controller
         {
             $name = $request->name;
             $status = $request->status;
-            $order_no = $request->order_no;
+           
 
             $file = $request->file('image');
 
             $uploadstatus = false;
 
             if(!$request->image) {
-                $gameData = array('name'=>$name,'status'=>$status,'order_no'=>$order_no);
+                $gameData = array('name'=>$name,'status'=>$status);
             }
             else{
                 $time =time();
@@ -81,7 +81,7 @@ class GameController extends Controller
                 $request->image->move(public_path('images/game'), $input['image']);
                 
 
-                $gameData = array('name'=>$name,'status'=>$status,'order_no'=>$order_no,'icon_path'=>'images/game/'.$input['image']);
+                $gameData = array('name'=>$name,'status'=>$status,'icon_path'=>'images/game/'.$input['image']);
 
             }
             
@@ -136,7 +136,7 @@ class GameController extends Controller
         {
             $name = $request->name;
             $status = $request->status;
-            $order_no = $request->order_no;
+           
 
 
             $game = Game::where('id',$request->edit_id)->first();
@@ -162,7 +162,7 @@ class GameController extends Controller
 
             $game->name = $name;
             $game->status = $status;
-            $game->order_no = $order_no;              
+                      
             $game->save();
 
             return json_encode(array('status'=>'ok','message'=>'Successfully updated!','gm'=>$game));

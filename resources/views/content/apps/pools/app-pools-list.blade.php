@@ -112,36 +112,7 @@
                </div>
               
             </div>
-            <div class="mb-1">
-              <div class="row">
-                 <div class="col-sm-6">
-                  <label class="form-label" for="basic-icon-default-fullname">End Date</label>
-                    <input
-                      type="text"
-                     
-                      class="form-control flatpickr-basic"
-                       placeholder="YYYY-MM-DD"
-                      id="basic-icon-default-endTimedate"
-                     
-                      name="endTimedate"
-                    />
-                 </div>
-                  <div class="col-sm-6">
-                    <label class="form-label" for="basic-icon-default-fullname">End Time</label>
-                      <input
-                        type="text"
-                       
-                        class="form-control flatpickr-time text-start" 
-                        placeholder="HH:MM"
-                       
-                        id="basic-icon-default-endTimetime"
-                       
-                        name="endTimetime"
-                      />
-                 </div>
-               </div>
-              
-            </div>
+            
 
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Per Bet Amount</label>
@@ -312,38 +283,7 @@
                </div>
               
             </div>
-            <div class="mb-1">
-              <div class="row">
-                 <div class="col-sm-6">
-                  <label class="form-label" for="basic-icon-default-fullname">End Date</label>
-                    <input
-                      type="text"
-                     
-                      class="form-control flatpickr-basic"
-                       placeholder="YYYY-MM-DD"
-                      id="basic-icon-default-endTimedate_edit"
-                     
-                      name="endTimedate"
-                    />
-                 </div>
-                  <div class="col-sm-6">
-                    <label class="form-label" for="basic-icon-default-fullname">End Time</label>
-                      <input
-                        type="text"
-                       
-                        class="form-control flatpickr-time text-start" 
-                        placeholder="HH:MM"
-                       
-                        id="basic-icon-default-endTimetime_edit"
-                       
-                        name="endTimetime"
-                      />
-                 </div>
-               </div>
-              
-            </div>
-
-          
+                      
              <div class="mb-1">
               <label class="form-label" for="basic-icon-default-fullname">Per Bet Amount</label>
               <input
@@ -448,23 +388,6 @@
              </select>
             </div> 
                    
-          
-
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-status_edit">Status</label>
-              <select
-                id="basic-icon-default-status_edit"
-                class="form-control select2"
-                name="status"
-               >
-               <option value="1">Active</option>
-               <option value="0">Inactive</option>
-             </select>
-            </div>    
-
-             
-          
-            
           
            
             <button type="submit" id="btn-save_edit" class="btn btn-primary me-1 data-submit">Update</button>

@@ -16,8 +16,8 @@ class CreatePoolsTable extends Migration
         Schema::create('pools', function (Blueprint $table) {
             $table->id(); 
             $table->string('name',255);          
-            $table->timestamp('startTime')->useCurrent();
-            $table->timestamp('endTime')->useCurrent();
+            $table->timestamp('startTime');
+            $table->timestamp('endTime');
             $table->integer('perBetAmount');
             $table->integer('basePrice');
             $table->double('megaPercentage', 8, 2);
@@ -27,8 +27,8 @@ class CreatePoolsTable extends Migration
             $table->double('group1Percentage', 8, 2); 
             $table->double('group2Percentage', 8, 2);
             $table->double('group3Percentage', 8, 2);
-            $table->boolean('isJackpotPool')->default(false); 
-            $table->integer('status')->default(1); 
+            $table->boolean('isJackpotPool')->default(false);            
+            $table->enum('status', ['Inactive', 'Active','Finished'])->default('Inactive'); 
             $table->integer('createdBy')->default(0); 
             $table->integer('updatedBy')->default(0); 
             $table->timestamps();

@@ -9,6 +9,7 @@ use Auth;
 use DB;
 use App\Models\League;
 use App\Models\Tim;
+use App\Models\Pool;
 
 
 class MatchController extends Controller
@@ -242,6 +243,7 @@ class MatchController extends Controller
 
 
             $match = Match::where('id',$request->edit_id)->first();
+            $originalstartTime=$match->startTime;
 
             $updatedBy = Auth::user()->id;
 
@@ -257,17 +259,84 @@ class MatchController extends Controller
             $match->home_score = $home_score;
             $match->away_score = $away_score;
 
+            if($status=='Void')
+            {
+                $status = 'Void';
+            }
+            else
+            {
+                if($result!='')
+                {
+                    $status = 'Finished';
+                }
+                else
+                {
+                    $status = 'Running';
+                }
+            }
             $match->status = $status;
 
             $match->updatedBy = $updatedBy;
                       
             $match->save();
 
+            if($originalstartTime!=$startTime)
+            {
+                // every pool where match_id exist and status != Finished to update  endTime <1 hour
+                $match_id = $request->edit_id;
+
+                $pools = DB::table('pools')
+                    ->select('pools.id')
+                    ->leftJoin('pool_match', 'pools.id', '=', 'pool_match.pool_id')                   
+                    ->where('pool_match.match_id',$match_id)
+                    ->get();
+
+                    foreach($pools as $pool)
+                    {
+                        $pool_id = $pool->id;
+                        $this->recalculatePoolEndtime($pool_id);
+                    }
+
+            }
+
             return json_encode(array('status'=>'ok','message'=>'Successfully updated!','gm'=>$match));
          
           
         }
     }
+
+    public function recalculatePoolEndtime($pool_id){
+
+        $beforeOneHour = null;
+
+        $allcount = DB::table('pool_match')
+                ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+                ->select('match.startTime')
+                ->orderBy('match.startTime','asc')
+                ->limit(1)
+                ->where('pool_match.pool_id',$pool_id)
+                 ->count();
+                 if($allcount > 0){
+                     $matchs = DB::table('pool_match')
+                            ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+                            ->select('match.startTime')
+                            ->orderBy('match.startTime','asc')
+                            ->limit(1)
+                            ->where('pool_match.pool_id',$pool_id)               
+                            ->get();
+
+                            $end_time = $matchs[0]->startTime;
+                            
+                            $time   = strtotime($end_time);
+                            $time   = $time - (60*60); //one hour
+                            $beforeOneHour = date("Y-m-d H:i:s", $time);
+                        }
+                
+                $pool = Pool::where('id',$pool_id)->first();
+                $pool->endTime = $beforeOneHour;
+                $pool->save();
+
+     }
 
     /**
      * Remove the specified resource from storage.

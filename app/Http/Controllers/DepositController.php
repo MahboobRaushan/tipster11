@@ -120,7 +120,7 @@ class DepositController extends Controller
      public function detailsview(Request $request)
     { 
             $id = $request->id;
-            $data = Deposit::leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('deposits.id',$id)->where('deposits.status','Pending')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->first();
+            $data = Deposit::leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('deposits.id',$id)->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->first();
             /*
              $data = Deposit::where('id',$id)->where('deposits.status','Pending');
 
