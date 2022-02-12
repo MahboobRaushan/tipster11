@@ -28,7 +28,7 @@ class CreatePoolsTable extends Migration
             $table->double('group2Percentage', 8, 2);
             $table->double('group3Percentage', 8, 2);
             $table->boolean('isJackpotPool')->default(false);            
-            $table->enum('status', ['Inactive', 'Active','Finished'])->default('Inactive'); 
+            $table->enum('status', ['Inactive', 'Active','Calculating','Finished'])->default('Inactive'); 
             $table->integer('createdBy')->default(0); 
             $table->integer('updatedBy')->default(0); 
             $table->timestamps();

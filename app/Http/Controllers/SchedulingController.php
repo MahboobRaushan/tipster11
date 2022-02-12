@@ -13,7 +13,7 @@ class SchedulingController extends Controller
      public function scheduling()
     {
         //return 0;
-        
+        /*
         DB::table('testing')->insert(
             ['name' => rand(100,999), 'description'=>date('Y-m-d H:i:s')]
         );
@@ -82,6 +82,8 @@ class SchedulingController extends Controller
 
             }
         }
+
+        */
                
     }
 }
