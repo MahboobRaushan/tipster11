@@ -95,6 +95,7 @@
     "/js/scripts/forms/form-file-uploader.js": "/js/scripts/forms/form-file-uploader.js",
     "/js/scripts/forms/form-input-mask.js": "/js/scripts/forms/form-input-mask.js",
     "/js/scripts/forms/form-number-input.js": "/js/scripts/forms/form-number-input.js",
+    "/js/scripts/forms/form-number-input-zero-lacs.js": "/js/scripts/forms/form-number-input-zero-lacs.js",
     "/js/scripts/forms/form-quill-editor.js": "/js/scripts/forms/form-quill-editor.js",
     "/js/scripts/forms/form-repeater.js": "/js/scripts/forms/form-repeater.js",
     "/js/scripts/forms/form-select2.js": "/js/scripts/forms/form-select2.js",
