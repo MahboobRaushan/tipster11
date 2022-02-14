@@ -201,6 +201,7 @@
               >
               <option value="1">Active</option>
               <option value="0">Inactive</option>
+              <option value="2" >Suspended</option>
             </select>
             
           </div>

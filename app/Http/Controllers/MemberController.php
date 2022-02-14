@@ -46,7 +46,7 @@ class MemberController extends Controller
         $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
 
         
-       $data = User::where('users.user_type','user')->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name' )->orderBy('users.id','desc')->paginate($this->per_page);
+       $data = User::where('users.user_type','user')->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name','agent.email as agent_email' )->orderBy('users.id','desc')->paginate($this->per_page);
 
          return view('/content/apps/member/app-details-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data,'agents'=>$agents]);
     }
@@ -95,7 +95,7 @@ class MemberController extends Controller
             $data = $data->where('users.created_at', '>=', $start_date);
             $data = $data->where('users.created_at', '<=', $end_date);
         }
-        $data = $data->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name' )->orderBy('users.id','desc')->paginate($this->per_page);
+        $data = $data->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name','agent.email as agent_email' )->orderBy('users.id','desc')->paginate($this->per_page);
 
       return view('/content/apps/member/app-details-list-data', ['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data])->render();
      }

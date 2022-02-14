@@ -1,5 +1,6 @@
 <div class="table-responsive" >
-        
+
+       
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -12,7 +13,7 @@
               <th>This Week Bet Amount</th>
               <th>Credit Balance</th>
               <th>This Week WinLoss</th>
-
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -39,12 +40,22 @@
                 {{ $row->created_at }}
               </td>
               <td>
-                {{ $row->agent_name }}
+                {{ $row->agent_name }} ({{ $row->agent_email }})
               </td>
               <td>10</td>
               <td> {{ $row->credits }}</td>
               <td>20</td>
-               
+              <td> 
+                <?php if($row->status ==1){?>
+              <span class="badge rounded-pill badge-light-success" text-capitalized="">Active</span>
+              <?php } ?>
+              <?php if($row->status ==0){?>
+              <span class="badge rounded-pill badge-light-warning" text-capitalized="">Inactive</span>
+              <?php } ?>
+              <?php if($row->status ==2){?>
+              <span class="badge rounded-pill badge-light-danger" text-capitalized="">Suspended</span>
+              <?php } ?>
+            </td> 
               <td>
                 <div class="dropdown">
                   <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
@@ -60,10 +71,7 @@
                       <i data-feather="key" class="me-50"></i>
                       <span>Reset Password and ID</span>
                     </a>
-                    <a class="dropdown-item deleteitem"  data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#myModal_delete">
-                      <i data-feather="trash" class="me-50"></i>
-                      <span>Delete</span>
-                    </a>
+                    
                   </div>
                 </div>
               </td>

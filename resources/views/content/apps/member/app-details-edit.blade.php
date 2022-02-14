@@ -175,6 +175,7 @@
               >
               <option value="1" <?php echo $data->status==1?'selected':'' ;?>>Active</option>
               <option value="0" <?php echo $data->status==0?'selected':'' ;?>>Inactive</option>
+              <option value="2" <?php echo $data->status==2?'selected':'' ;?>>Suspended</option>
             </select>
             
           </div>

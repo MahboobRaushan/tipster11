@@ -43,7 +43,7 @@
                   <select class="select2 form-select" id="agent_id">
                     <option value="">Select Agent</option>
                       <?php foreach($agents as $agent){?>
-                      <option value="{{$agent->id}}"  >{{$agent->name}}</option>
+                      <option value="{{$agent->id}}"  >{{$agent->name}} ({{$agent->email}})</option>
                      <?php } ?>
                     </select>
                 </div>
