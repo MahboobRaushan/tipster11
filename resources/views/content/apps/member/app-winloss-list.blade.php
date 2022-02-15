@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
+  <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/pickadate/pickadate.css')) }}">
+  <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
 
 
 
@@ -17,6 +19,9 @@
 @section('page-style')
   {{-- Page Css files --}}
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
+  <link rel="stylesheet" href="{{asset('css/base/pages/ui-feather.css')}}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-pickadate.css')) }}">
 
 @endsection
 
@@ -35,6 +40,42 @@
   
   <!-- list and filter start -->
   <div class="card">
+
+    <div class="card-text m-2">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-md-4 ">
+                  <label class="form-label" for="fp-range">Date Range</label>
+                  <input
+                    type="text"
+                    id="fp-range"
+                    class="form-control flatpickr-range"
+                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                  />
+                </div>
+                 <div class="col-md-4 ">
+                  <label class="form-label" for="fp-range">Agent</label>
+                  <select class="select2 form-select" id="agent_id">
+                    <option value="">Select Agent</option>
+                     <option>A1001</option>
+                     <option>A1002</option>
+                     <option>A1003</option>
+                     <option>A1004</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mt-2">
+                  <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
+                  
+                </div>
+
+                
+
+              </div>
+            </div>
+           
+          </div>
+        </div>
     
     <div class="card-datatable table-responsive pt-0">
       <table class="details-list-table table">
@@ -43,8 +84,8 @@
             <th></th>
             <th>Individual Player Id</th>
             <th>Total Bet Amount</th>            
-            <th>Today Win Loss</th>
-            <th>Agent</th>
+            <th>Win Loss</th>
+            <th>Agent ID</th>
             <th>Status</th>
           
             <th>Actions</th>
@@ -52,90 +93,7 @@
         </thead>
       </table>
     </div>
-    <!-- Modal to add new details starts-->
-    <div class="modal modal-slide-in new-details-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-details modal-content pt-0"  id="postForm" name="postForm" >
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Details</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Individual Player Id</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-individualPlayerId"
-                placeholder="test01"
-                name="individualPlayerId"
-              />
-            </div>
-
-            <div class="mb-1">
-             
-                  <label class="form-label" for="basic-icon-default-fullname">Total Bet Amount</label>
-                     <input
-                        type="number"
-                        class="form-control dt-full-name"
-                        id="basic-icon-default-totalBetAmount"
-                        placeholder="A012"
-                        name="totalBetAmount"
-                      />
-                
-            </div>
-             <div class="mb-1">
-             
-                  <label class="form-label" for="basic-icon-default-fullname">Today Win Loss</label>
-                     <input
-                        type="number"
-                        class="form-control dt-full-name"
-                        id="basic-icon-default-todayWinLoss"
-                        placeholder="A012"
-                        name="todayWinLoss"
-                      />
-                
-            </div>
-             <div class="mb-1">
-             
-                  <label class="form-label" for="basic-icon-default-fullname">Agent</label>
-                     <input
-                        type="text"
-                        class="form-control dt-full-name"
-                        id="basic-icon-default-agent"
-                        placeholder="A012"
-                        name="agent"
-                      />
-                
-            </div>
-            
-
-         
-           
-           
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-isJackpotPool">Status</label>
-              <select
-                id="basic-icon-default-status"
-                class="form-control select2"
-                name="status"
-               >
-               <option value="Active">Active</option>
-               <option value="Inactive">Inactive</option>
-             </select>
-            </div> 
-            
-           
-
-          
-           
-            <button type="button" id="btn-save" class="btn btn-primary me-1 data-submit">Save</button>
-            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new details Ends-->
+    
     
 
   </div>
@@ -161,6 +119,7 @@
   <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/forms/cleave/cleave.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
 
   
 
@@ -174,6 +133,8 @@
 
 
   <script src="{{ asset(mix('js/scripts/pages/app-memberwinloss-list.js')) }}"></script>
-  }
+  <script src="{{asset('js/scripts/ui/ui-feather.js')}}"></script>
+<script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
+
 @endsection
 

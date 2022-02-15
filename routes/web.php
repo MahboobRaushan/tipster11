@@ -340,6 +340,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::delete('member/delete/{id}', [MemberController::class,'destroy'])->name('delete');
     
     Route::get('member/winloss', [MemberController::class,'winloss_list'])->name('winloss');
+    Route::get('member/winloss/{id}', [MemberController::class,'winloss_details_list'])->name('winloss_details');
     Route::get('member/adjust_credit', [MemberController::class,'adjust_credit_list'])->name('adjust_credit');
 
     Route::get('deposit', [DepositController::class,'deposit_list'])->name('deposit');

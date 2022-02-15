@@ -127,6 +127,7 @@
     "/js/scripts/pages/app-statementcompanywinloss-list.js": "/js/scripts/pages/app-statementcompanywinloss-list.js",
     "/js/scripts/pages/app-memberdetails-list.js": "/js/scripts/pages/app-memberdetails-list.js",
     "/js/scripts/pages/app-memberwinloss-list.js": "/js/scripts/pages/app-memberwinloss-list.js",
+    "/js/scripts/pages/app-memberwinlossdetails-list.js": "/js/scripts/pages/app-memberwinlossdetails-list.js",
     "/js/scripts/pages/app-agentdetails-list.js": "/js/scripts/pages/app-agentdetails-list.js",
     "/js/scripts/pages/app-agentstatement-list.js": "/js/scripts/pages/app-agentstatement-list.js",
     "/js/scripts/pages/app-agentsettlement-list.js": "/js/scripts/pages/app-agentsettlement-list.js",

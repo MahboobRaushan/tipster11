@@ -193,6 +193,25 @@ class MemberController extends Controller
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
         return view('/content/apps/member/app-winloss-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
     }
+
+    public function winloss_details_list(Request $request)
+    { 
+         $custom_permission_controller = new CustomPermissionController;
+        $custom_permission_access = $custom_permission_controller->custom_permission('member.winloss.list');
+        if(!$custom_permission_access)
+        {
+            abort(401,'Not authorised');
+        }
+
+        
+        $custom_get_all_permissions_access = $custom_permission_controller->custom_get_all_permissions();
+
+
+        $pageConfigs = ['pageHeader' => false];  
+        
+        //echo $request->id;
+        return view('/content/apps/member/app-winloss-details-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+    }
     
     public function adjust_credit_list()
     { 
