@@ -311,15 +311,32 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('settings/companysave', [SettingsController::class,'companysave'])->name('companysave');
 
 
-    Route::get('agent/agentdetails', [AgentController::class,'details_list'])->name('agentdetails');
+   // Route::get('agent/agentdetails', [AgentController::class,'details_list'])->name('agentdetails');
+     Route::get('agent/agentdetails', [AgentController::class,'details_list'])->name('agentdetails');
+    Route::post('agent/passwordchange', [AgentController::class,'passwordchange'])->name('agent.password.change');
+     Route::post('agent/direct_credit', [AgentController::class,'directcredit'])->name('agent.direct.credit');
+     Route::get('agent/details_edit_list_data', [AgentController::class,'details_edit_data_list'])->name('agent_edit_details_data');
+
+     Route::post('agent/basic_detailsupdate', [AgentController::class,'basic_detailsupdate'])->name('agent.basic_details.update');
+      Route::post('agent/newagentadd', [AgentController::class,'basic_detailsadd'])->name('agent.basic_details.add');
+      Route::post('agent/bank_detailsupdate', [AgentController::class,'bank_detailsupdate'])->name('agent.bank_details.update');  
+    Route::get('agent/details/add', [AgentController::class,'details_add'])->name('agent_details_add');
+    Route::get('agent/details/edit/{id}', [AgentController::class,'details_edit'])->name('agent_details_edit');
+    Route::get('agent/details_data', [AgentController::class,'details_data_list'])->name('details_data');
+    Route::delete('agent/delete/{id}', [AgentController::class,'destroy'])->name('delete');
+
+
+
+
+
+
+
     Route::get('agent/statement', [AgentController::class,'statement_list'])->name('statement');
     Route::get('agent/settlement', [AgentController::class,'settlement_list'])->name('settlement');
 
     Route::get('member/details', [MemberController::class,'details_list'])->name('details');
     Route::post('member/passwordchange', [MemberController::class,'passwordchange'])->name('member.password.change');
-
      Route::post('member/direct_credit', [MemberController::class,'directcredit'])->name('member.direct.credit');
-
      Route::get('member/details_edit_list_data', [MemberController::class,'details_edit_data_list'])->name('edit_details_data');
   
 

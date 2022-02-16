@@ -1,211 +1,84 @@
+
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Details List')
-
+@section('title', 'Agent Details List')
 @section('vendor-style')
-  {{-- Page Css files --}}
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
-
+  <!-- vendor css files -->
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/pickadate/pickadate.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
-
+  <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
 @endsection
-
 @section('page-style')
-  {{-- Page Css files --}}
-  <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
-   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
+<link rel="stylesheet" href="{{asset('css/base/pages/ui-feather.css')}}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-pickadate.css')) }}">
 @endsection
 
 @section('content')
 
-<?php 
- //print_r($custom_get_all_permissions_access);
- // die();
-  ?>
-
-   
-
-
-<!-- detailss list start -->
-<section class="app-details-list">
-  
-  <!-- list and filter start -->
-  <div class="card">
-    
-    <div class="card-datatable table-responsive pt-0">
-      <table class="details-list-table table">
-        <thead class="table-light">
-          <tr>
-            <th></th>
-            <th>Individual Agent Id</th>
-            <th>Registration Date</th>  
-            <th>Email</th>
-            <th>Contact</th>
-            <th>Percentage</th>
-            <th>No Of Members</th>
-            <th>Credit Given</th>
-             <th>Credit Balance</th>
-            <th>Status</th>
-          
-            <th>Actions</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- Modal to add new details starts-->
-    <div class="modal modal-slide-in new-details-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-details modal-content pt-0"  id="postForm" name="postForm" >
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Details</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Name</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-name"
-                placeholder="test01"
-                name="name"
-              />
-            </div>
-
-            <div class="mb-1">
-             
-                  <label class="form-label" for="basic-icon-default-fullname">Email</label>
-                     <input
-                  type="email"
-                  class="form-control dt-full-name"
-                  id="basic-icon-default-email"
-                  placeholder="test01@email.com"
-                  name="email"
-                />
+<input type="hidden" id="site_base_url" value=" <?php echo config('app.url'); ?>/" />
+<!-- Bordered table start -->
+<div class="row" id="table-bordered">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Agent Details List</h4>
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <div class="col-lg-9">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <label class="form-label" for="fp-range">Date Range</label>
+                  <input
+                    type="text"
+                    id="fp-range"
+                    class="form-control flatpickr-range"
+                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                  />
+                </div>
                 
-            </div>
-            
+                <div class="col-md-6 mt-2">
+                  <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
+                  
+                </div>
 
-         
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Contact</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-contact"
-                placeholder="7654987601"
-                name="contact"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Company</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-company"
-                placeholder="Company ABC"
-                name="company"
-              />
-            </div>
-           
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-isJackpotPool">Country</label>
-              <select
-                id="basic-icon-default-country"
-                class="form-control select2"
-                name="country"
-               >
-               <option value="Singapore">Singapore</option>
-               <option value="China">China</option>
-             </select>
-            </div> 
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-isJackpotPool">User Role</label>
-              <select
-                id="basic-icon-default-userrole"
-                class="form-control select2"
-                name="userrole"
-               >
-               <option value="Superadmin">Superadmin</option>
-               <option value="Admin">Admin</option>
-             </select>
-            </div> 
+                
 
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-isJackpotPool">Plan</label>
-              <select
-                id="basic-icon-default-plan"
-                class="form-control select2"
-                name="plan"
-               >
-               <option value="Basic">Basic</option>
-               <option value="Company">Company</option>
-               <option value="Enterprise">Enterprise</option>
-               <option value="Team">Team</option>
-             </select>
-            </div> 
-            
-           
-
-          
-           
-            <button type="button" id="btn-save" class="btn btn-primary me-1 data-submit">Save</button>
-            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+            <div class="col-lg-3 mt-2">
+              <a href="details/add" class="dt-button add-new btn btn-primary" style="float:right;">Add / View Agent</a>
+            </div>
           </div>
-        </form>
+        </div>
+      </div>
+      <div id="table_data">
+      @include('/content/apps/agent/app-details-list-data')
       </div>
     </div>
-    <!-- Modal to add new details Ends-->
-    
-
   </div>
-  <!-- list and filter end -->
-</section>
-<!-- detailss list ends -->
+</div>
+<!-- Bordered table end -->
+
+
 @endsection
+
 
 @section('vendor-script')
   {{-- Vendor js files --}}
-  <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap5.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/forms/cleave/cleave.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
-
-  
-  <script src="{{ asset(mix('vendors/js/pickers/pickadate/picker.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/pickers/pickadate/picker.date.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/pickers/pickadate/picker.time.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/pickers/pickadate/legacy.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
-
-
-
+<script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
 
 @endsection
 
 @section('page-script')
   {{-- Page js files --}}
    
- <script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
 
-  <script src="{{ asset(mix('js/scripts/pages/app-agentdetails-list.js')) }}"></script>
-  }
+<script src="{{ asset('js/scripts/pages/app_agentdetails_list.js') }}"></script>
+<script src="{{asset('js/scripts/ui/ui-feather.js')}}"></script>
+<script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
+<script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
 @endsection
-

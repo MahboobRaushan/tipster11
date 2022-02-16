@@ -37,6 +37,33 @@
   
   <!-- list and filter start -->
   <div class="card">
+
+     <div class="card-text m-2">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <label class="form-label" for="fp-range">Date Range</label>
+                  <input
+                    type="text"
+                    id="fp-range"
+                    class="form-control flatpickr-range"
+                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                  />
+                </div>
+                
+                <div class="col-md-6 mt-2">
+                  <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
+                  
+                </div>
+
+                
+
+              </div>
+            </div>
+           
+          </div>
+        </div>
     
     <div class="card-datatable table-responsive pt-0">
       <table class="details-list-table table">
@@ -44,7 +71,8 @@
           <tr>
             <th></th>
             <th>Individual Agent Id</th>
-            <th>Today Bet Amount</th>  
+            <th>Date</th> 
+            <th>Bet Amount</th>  
             <th>Percentage</th>
             <th>Commission</th>        
           
@@ -158,6 +186,6 @@
  <script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
 
   <script src="{{ asset(mix('js/scripts/pages/app-agentstatement-list.js')) }}"></script>
-  }
+  
 @endsection
 
