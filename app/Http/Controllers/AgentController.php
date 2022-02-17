@@ -265,7 +265,7 @@ class AgentController extends Controller
         $withdraw_id = 999999;
         $status = 'Approved';
 
-                
+         $remarks = $request->remarks;       
         
 
         if($type=='Deposit')
@@ -282,6 +282,7 @@ class AgentController extends Controller
                 'amount' => $amount,
                 'current_balance' => $final_credits,
                 'type'=>'Deposit',
+                'remarks' => $remarks,
                 'reference_by'=>'Company',
                 'deposit_withdraw_id' => $deposit_id,               
                 'createdBy'=>$responsedBy
@@ -307,6 +308,7 @@ class AgentController extends Controller
                         'amount' => $amount,
                         'current_balance' => $final_credits,
                         'type'=>'Withdraw',
+                        'remarks' => $remarks,
                         'reference_by'=>'Company',
                         'deposit_withdraw_id' => $withdraw_id,               
                         'createdBy'=>$responsedBy

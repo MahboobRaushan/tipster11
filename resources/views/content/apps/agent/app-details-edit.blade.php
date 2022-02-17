@@ -193,7 +193,7 @@
           <small>Give credits to Agent.</small>
         </div>
         <div class="row">
-          <div class="mb-1 col-md-6">
+          <div class="mb-1 col-md-3">
             <input type="hidden" id="initial_credits" value="<?php echo $data->credits ;?>" />
             <label class="form-label" for="vertical-modern-first-name"><span>Credits $</span><span id="original_credits"><?php echo $data->credits ;?></span></label>
             <div class="input-group">
@@ -212,7 +212,17 @@
               <span>$</span><span id="credit_result"><?php echo $data->credits ;?></span>
           </div>
 
-
+           <div class="mb-1 col-md-5">
+            <label class="form-label" for="vertical-modern-first-name">Remarks</label>
+            
+              <textarea
+              name="remarks_form"
+              id="remarks_form"
+              placeholder="Remarks" 
+              class="form-control"
+              ></textarea>
+            
+          </div>
 
           <div class="mb-1 col-md-3 mt-2">
               <button class="btn btn-info confirmitem"  data-bs-toggle="modal" data-bs-target="#myModal_directcredits">Confirm</button>
@@ -502,6 +512,7 @@
               <div class="col-sm-12 ps-sm-0">
                 <input type="hidden" name="user_id" id="user_id" value="{{ $data->id }}" />
                 <input type="hidden" name="amount" id="amount" value="" />
+                <input type="hidden" name="remarks" id="remarks" value="" />
                 <input type="hidden" name="type" id="type" value="" />
 
                 <button type="submit" id="btn_save_confirm" class="btn btn-warning data-delete">Submit</button>
@@ -658,6 +669,9 @@ $(document).on('click', '.confirmitem', function(event){
      credits = Math.abs(credits);
       $('#amount').val(credits);
 
+       var remarks_form =$('#remarks_form').val();
+       $('#remarks').val(remarks_form);
+
       $('#confirm_message_div').html(outputhtml);
 
    });
@@ -709,6 +723,8 @@ $(document).on('click', '#btn_save_confirm', function(event){
                    $('#original_credits').html(credit_result) ;
                     $('#initial_credits').val(credit_result) ;
                    
+                    $('#remarks_form').val('');
+
                    $('#credits').val(0) ;
 
                       
@@ -716,7 +732,7 @@ $(document).on('click', '#btn_save_confirm', function(event){
                   
               },
               error: function (data) {
-                 alert(JSON.stringify(data));
+                // alert(JSON.stringify(data));
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
@@ -771,7 +787,7 @@ $(document).on('click', '#basic_details_submit', function(event){
                   
               },
               error: function (data) {
-                 alert(JSON.stringify(data));
+                // alert(JSON.stringify(data));
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
@@ -831,7 +847,7 @@ $(document).on('click', '#bank_details_submit', function(event){
                   
               },
               error: function (data) {
-                 alert(JSON.stringify(data));
+                 //alert(JSON.stringify(data));
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
