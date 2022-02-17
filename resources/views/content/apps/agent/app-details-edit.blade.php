@@ -208,7 +208,7 @@
               />
             </div>
           </div>
-          <div class="mb-1 col-md-3 mt-2">
+          <div class="mb-1 col-md-2 mt-2">
               <span>$</span><span id="credit_result"><?php echo $data->credits ;?></span>
           </div>
 
@@ -224,7 +224,7 @@
             
           </div>
 
-          <div class="mb-1 col-md-3 mt-2">
+          <div class="mb-1 col-md-2 mt-2">
               <button class="btn btn-info confirmitem"  data-bs-toggle="modal" data-bs-target="#myModal_directcredits">Confirm</button>
           </div>
          
