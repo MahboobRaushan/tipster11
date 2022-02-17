@@ -43,10 +43,10 @@ class WithdrawalController extends Controller
         
         //return view('/content/apps/withdrawal/app-withdrawal-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
-        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
 
-        $data = Withdraw::whereIn('withdraws.status',['Pending','Approved'])->leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('withdraws.id','desc')->paginate($this->per_page);
+        $data = Withdraw::whereIn('withdraws.status',['Pending','Approved'])->leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','agent.unique_id as agent_unique_id','player.credits','player.unique_id as user_unique_id' )->orderBy('withdraws.id','desc')->paginate($this->per_page);
 
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
          return view('/content/apps/withdrawal/app-withdrawal-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data,'agents'=>$agents]);
@@ -75,7 +75,7 @@ class WithdrawalController extends Controller
 
 
 
-            $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+            $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
        
 
@@ -109,7 +109,7 @@ class WithdrawalController extends Controller
                 $data = $data->where('withdraws.withdraw_time', '>=', $start_date);
                 $data = $data->where('withdraws.withdraw_time', '<=', $end_date);
             }
-            $data = $data->leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('withdraws.id','desc')->paginate($this->per_page);
+            $data = $data->leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','agent.unique_id as agent_unique_id','player.credits' ,'player.unique_id as user_unique_id')->orderBy('withdraws.id','desc')->paginate($this->per_page);
 
 
             //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
@@ -121,7 +121,7 @@ class WithdrawalController extends Controller
      public function detailsview(Request $request)
     { 
             $id = $request->id;
-            $data = Withdraw::leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('withdraws.id',$id)->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','player.bank_account_name as player_bank_account_name','player.bank_country as player_bank_country','player.bank_name as player_bank_name','player.bank_account_number as player_bank_account_number','player.bank_account_type as player_bank_account_type','agent.name as agent_name','player.credits' )->first();
+            $data = Withdraw::leftJoin('users as player','withdraws.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('withdraws.id',$id)->select('withdraws.*','player.name as player_name','player.email as player_email','player.id as player_id','player.bank_account_name as player_bank_account_name','player.bank_country as player_bank_country','player.bank_name as player_bank_name','player.bank_account_number as player_bank_account_number','player.bank_account_type as player_bank_account_type','agent.name as agent_name','agent.unique_id as agent_unique_id','player.credits','player.unique_id as user_unique_id' )->first();
             /*
              $data = Withdraw::where('id',$id)->where('withdraws.status','Pending');
 

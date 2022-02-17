@@ -8,7 +8,7 @@
               <th>Player ID</th>
               <th>Player Name</th>
               <th>Player Email</th>
-              <th>Agent Name</th>
+              <th>Agent ID</th>
               <th>Documents</th>
               <th>Current Balance</th>
               <th>Deposit Amount</th>
@@ -31,7 +31,7 @@
               </td>
               
                <td>
-                {{ $row->player_id }}
+                {{ $row->user_unique_id }}
               </td>
               
               <td>
@@ -42,7 +42,7 @@
               </td>
                
               <td>
-                {{ $row->agent_name }}
+                {{ $row->agent_unique_id }}
               </td>
               <td> <img src="{{ $row->transaction_document }}" class="viewdetails" width="30" data-id="{{ $row->id }}" data-bs-toggle="modal" data-bs-target="#inlineFormdetails" /></td>
               <td> {{ $row->credits }}</td>

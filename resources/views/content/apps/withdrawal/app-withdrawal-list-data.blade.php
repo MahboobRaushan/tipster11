@@ -8,7 +8,7 @@
               <th>Player ID</th>
               <th>Player Name</th>
               <th>Player Email</th>
-              <th>Agent Name</th>
+              <th>Agent ID</th>
              
               <th>Current Balance</th>
               <th>Amount</th>
@@ -33,7 +33,7 @@
               </td>
               
                <td>
-                {{ $row->player_id }}
+                {{ $row->user_unique_id }}
               </td>
               
               <td>
@@ -44,7 +44,7 @@
               </td>
                
               <td>
-                {{ $row->agent_name }}
+                {{ $row->agent_unique_id }}
               </td>
              
               <td> {{ $row->credits }}</td>

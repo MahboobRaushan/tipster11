@@ -43,10 +43,10 @@ class DepositController extends Controller
 
         $pageConfigs = ['pageHeader' => false];  
 
-         $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+         $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
 
-        $data = Deposit::whereIn('deposits.status',['Pending','Approved','Reject'])->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('deposits.id','desc')->paginate($this->per_page);
+        $data = Deposit::whereIn('deposits.status',['Pending','Approved','Reject'])->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','agent.unique_id as agent_unique_id','player.credits','player.unique_id as user_unique_id' )->orderBy('deposits.id','desc')->paginate($this->per_page);
 
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
          return view('/content/apps/deposit/app-deposit-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data,'agents'=>$agents]);
@@ -74,7 +74,7 @@ class DepositController extends Controller
 
              
 
-            $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+            $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
 
            
@@ -108,7 +108,7 @@ class DepositController extends Controller
                 $data = $data->where('deposits.deposit_time', '>=', $start_date);
                 $data = $data->where('deposits.deposit_time', '<=', $end_date);
             }
-            $data = $data->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->orderBy('deposits.id','desc')->paginate($this->per_page);
+            $data = $data->leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.unique_id as user_unique_id','agent.unique_id as agent_unique_id','player.credits' )->orderBy('deposits.id','desc')->paginate($this->per_page);
 
 
             //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
@@ -120,7 +120,7 @@ class DepositController extends Controller
      public function detailsview(Request $request)
     { 
             $id = $request->id;
-            $data = Deposit::leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('deposits.id',$id)->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.credits' )->first();
+            $data = Deposit::leftJoin('users as player','deposits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->where('deposits.id',$id)->select('deposits.*','player.name as player_name','player.email as player_email','player.id as player_id','agent.name as agent_name','player.unique_id as user_unique_id','agent.unique_id as agent_unique_id','player.credits' )->first();
             /*
              $data = Deposit::where('id',$id)->where('deposits.status','Pending');
 

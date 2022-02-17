@@ -35,7 +35,7 @@
               </td>
 
               <td>
-                {{ $row->reference_by }}
+                {{ $row->reference_by }} {{$row->reference_by=='Company'?'( '.$row->remarks.' )':''}}
               </td>
                <td>
                 {{ $row->current_balance }}
