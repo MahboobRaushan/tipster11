@@ -55,13 +55,13 @@
                   />
                 </div>
                  <div class="col-md-4 ">
-                  <label class="form-label" for="fp-range">Agent</label>
+                  <label class="form-label" for="fp-range">Agent ID</label>
                   <select class="select2 form-select" id="agent_id">
-                    <option value="">Select Agent</option>
-                     <option>A1001</option>
-                     <option>A1002</option>
-                     <option>A1003</option>
-                     <option>A1004</option>
+                    <option value="">Select Agent ID</option>
+                     <option>A645631</option>
+                     <option>A57545</option>
+                     <option>A99754</option>
+                     <option>A007457</option>
                     </select>
                 </div>
                 <div class="col-md-4 mt-2">

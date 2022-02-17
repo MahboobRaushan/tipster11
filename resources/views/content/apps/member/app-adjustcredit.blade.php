@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Adjust Credit')
+@section('title', 'Adjust Credit Log')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -32,13 +32,13 @@
 
 <!-- detailss list start -->
 <section class="app-details-list">
-  
+   <input type="hidden" id="site_base_url" value=" <?php echo config('app.url'); ?>/" />
   <!-- list and filter start -->
   <div class="card">
     
     <div class="card-body">
        <div class="my-auto">
-          <h6 class="mb-0">Player M001</h6>
+          <h6 class="mb-0">Player P023343</h6>
           <small>July 22, 2021</small>
         </div>
          <div class="my-auto mt-2">
@@ -61,7 +61,31 @@
               </div>
             </div>
 
-    </div>  
+    </div> 
+
+     <div class="card">
+
+      
+
+     
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            
+            <div class="col-lg-12">
+              <div class="card-header">
+                <h4 class="card-title">Adjustment Log  ( Desposit Withdrawal ) Details</h4>
+              </div>
+              <div id="table_data" class="table-responsive">
+              @include('/content/apps/member/app-details-adjustcredit-list-data')
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+     </div> 
     
 
   </div>
@@ -98,7 +122,33 @@
   {{-- Page js files --}}
    
 <script src="{{ asset(mix('js/scripts/forms/form-number-input.js'))}}"></script>
+<script>
+   $(document).ready( function () {
+    
+     var site_base_url = $('#site_base_url').val();
+  $(document).on('click', '.pagination a', function(event){
 
-  }
+  event.preventDefault(); 
+
+  var page = $(this).attr('href').split('page=')[1];
+  fetch_data(page);
+ });
+
+function fetch_data(page)
+ {
+  var user_id = $('#user_id').val();
+  //alert(user_id);
+  $.ajax({
+   url:site_base_url+"member/details_adjustcreditlog_list_data?page="+page,
+   success:function(data)
+   {    
+    //alert(data);
+    $('#table_data').html(data);
+    
+   }
+  });
+ }
+});
+</script>
 @endsection
 

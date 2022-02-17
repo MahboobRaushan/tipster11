@@ -23,6 +23,8 @@ class CreateCreditsTable extends Migration
             $table->enum('reference_by', ['Self', 'Company'])->default('Self'); 
             $table->integer('deposit_withdraw_id')->default(0); 
             $table->integer('createdBy')->default(0); 
+            $table->text('remarks')->nullable(); 
+
             $table->timestamps();
         });
     }

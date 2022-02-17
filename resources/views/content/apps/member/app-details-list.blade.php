@@ -39,11 +39,11 @@
                   />
                 </div>
                  <div class="col-md-4 ">
-                  <label class="form-label" for="fp-range">Agent</label>
+                  <label class="form-label" for="fp-range">Agent ID</label>
                   <select class="select2 form-select" id="agent_id">
-                    <option value="">Select Agent</option>
+                    <option value="">Select Agent ID</option>
                       <?php foreach($agents as $agent){?>
-                      <option value="{{$agent->id}}"  >{{$agent->name}} ({{$agent->email}})</option>
+                      <option value="{{$agent->id}}"  >{{$agent->unique_id}}</option>
                      <?php } ?>
                     </select>
                 </div>

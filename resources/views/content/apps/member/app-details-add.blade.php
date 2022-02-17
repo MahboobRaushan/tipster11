@@ -178,7 +178,7 @@
         
         <div class="row">
          <div class="mb-1 col-md-6">
-            <label class="form-label" for="vertical-modern-agent_id">Agent</label>
+            <label class="form-label" for="vertical-modern-agent_id">Agent ID</label>
              <select
                 name="agent_id"               
                 id="agent_id"
@@ -186,7 +186,7 @@
                 aria-describedby="basic-addon5"
               >
               <?php foreach($agents as $agent){?>
-              <option value="{{$agent->id}}"  >{{$agent->name}}</option>
+              <option value="{{$agent->id}}"  >{{$agent->unique_id}}</option>
              <?php } ?>
             </select>
             
@@ -234,7 +234,7 @@
           <small>Give credits to Player.</small>
         </div>
         <div class="row">
-          <div class="mb-1 col-md-6">
+          <div class="mb-1 col-md-3">
             <label class="form-label" for="vertical-modern-first-name">Credits $2000</label>
             <div class="input-group">
               <input
@@ -248,13 +248,24 @@
               />
             </div>
           </div>
-          <div class="mb-1 col-md-3 mt-2">
+          <div class="mb-1 col-md-2 mt-2">
               <span>$</span><span id="credit_result">2060</span>
+          </div>
+          <div class="mb-1 col-md-5">
+            <label class="form-label" for="vertical-modern-first-name">Remarks</label>
+            
+              <textarea
+              name="remarks"
+              id="remarks"
+              placeholder="Remarks" 
+              class="form-control"
+              ></textarea>
+            
           </div>
 
 
 
-          <div class="mb-1 col-md-3 mt-2">
+          <div class="mb-1 col-md-2 mt-2">
               <button class="btn btn-info" >Confirm</button>
           </div>
          

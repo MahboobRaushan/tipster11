@@ -25,7 +25,7 @@
                 {{ ++$i }}
               </td>
               <td>
-                {{ $row->id }}
+                {{ $row->unique_id }}
               </td>
                <td>
                 {{ $row->name }}

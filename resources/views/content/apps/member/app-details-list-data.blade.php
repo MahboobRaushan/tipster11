@@ -9,7 +9,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Registration Date</th>
-              <th>Agent</th>
+              <th>Agent ID</th>
               <th>This Week Bet Amount</th>
               <th>Credit Balance</th>
               <th>This Week WinLoss</th>
@@ -28,7 +28,7 @@
                 {{ ++$i }}
               </td>
               <td>
-                {{ $row->id }}
+                {{ $row->unique_id }}
               </td>
                <td>
                 {{ $row->name }}
@@ -40,7 +40,7 @@
                 {{ $row->created_at }}
               </td>
               <td>
-                {{ $row->agent_name }} ({{ $row->agent_email }})
+                {{ $row->agent_unique_id }}
               </td>
               <td>10</td>
               <td> {{ $row->credits }}</td>

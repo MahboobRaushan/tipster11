@@ -5,9 +5,12 @@
             <tr>
               <th>Sl No</th>
               <th>Date</th>
+              <th>Player ID</th>
+              <th>Agent ID</th>
               <th>Desposit</th>
               <th>Withdrawal</th>
-              <th>By</th>
+              <th>Remarks</th>
+              <th>Adjust By</th>
               <th>Balance Amount</th>
 
               
@@ -26,6 +29,12 @@
               <td>
                 {{ $row->created_at }}
               </td>
+              <td>
+              {{ $row->player_unique_id }}
+            </td>
+            <td>
+              {{ $row->agent_unique_id }}
+            </td>
 
               <td>
                 {{ $row->type=='Deposit'?$row->amount:'' }}
@@ -35,8 +44,11 @@
               </td>
 
               <td>
-                {{ $row->reference_by }} {{$row->reference_by=='Company'?'( '.$row->remarks.' )':''}}
+                 {{$row->remarks}}
               </td>
+              <td>
+              {{ $row->admin_name }}
+            </td>
                <td>
                 {{ $row->current_balance }}
               </td>

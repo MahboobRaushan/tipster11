@@ -24,7 +24,7 @@ class AgentController extends Controller
 {
     public $per_page;
     public function __construct() {
-        $this->per_page = 2;
+        $this->per_page = 10;
       }
 
     /**
@@ -207,10 +207,12 @@ class AgentController extends Controller
          else 
          {
             $user_id = Auth::id();
+            $unique_id = "A".rand(100000,999999);
              $user = new User([
                 'name'  => $request->name,
                 'email' => $request->email,
                 'status' => $request->status,
+                'unique_id'=>$unique_id,
                 'user_type'=>'agent',
                
                 'password' => bcrypt($request->password),

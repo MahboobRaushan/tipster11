@@ -89,7 +89,7 @@
           @csrf
          <div class="row">
           <div class="mb-1 col-md-4">
-            <label class="form-label" for="vertical-modern-name"><i data-feather="user" class=""></i> Individual Agent ID : {{ $data->id }}</label>
+            <label class="form-label" for="vertical-modern-name"><i data-feather="user" class=""></i> Individual Agent ID : {{ $data->unique_id }}</label>
 
             
            

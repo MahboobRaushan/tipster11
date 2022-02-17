@@ -10,7 +10,7 @@ class Credit extends Model
     use HasFactory;
 
      protected $fillable = [
-        'user_id','before_deposit_withdraw_amount','amount','current_balance','type','reference_by','deposit_withdraw_id','createdBy'
+        'user_id','before_deposit_withdraw_amount','amount','current_balance','type','reference_by','deposit_withdraw_id','createdBy','remarks'
     ];
     protected $table = 'credits';
 }

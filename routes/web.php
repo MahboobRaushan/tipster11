@@ -338,6 +338,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('member/passwordchange', [MemberController::class,'passwordchange'])->name('member.password.change');
      Route::post('member/direct_credit', [MemberController::class,'directcredit'])->name('member.direct.credit');
      Route::get('member/details_edit_list_data', [MemberController::class,'details_edit_data_list'])->name('edit_details_data');
+
+      Route::get('member/details_adjustcreditlog_list_data', [MemberController::class,'details_adjustcreditlog_list_data'])->name('details_adjustcreditlog_list_data');
   
 
     

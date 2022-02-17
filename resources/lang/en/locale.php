@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "Adjust Log" => "Adjust Log",
     "Deposits" => "Deposits",
     "Players" => "Players",
     "League" => "League",

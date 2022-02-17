@@ -41,9 +41,11 @@ public function register(Request $request)
      }
      else 
      {
+        $unique_id = "P".rand(100000,999999);
         $user = new User([
             'name'  => $request->name,
             'email' => $request->email,
+            'unique_id'=>$unique_id,
             'password' => bcrypt($request->password),
         ]);
 

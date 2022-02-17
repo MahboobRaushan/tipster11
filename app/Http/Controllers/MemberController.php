@@ -19,7 +19,7 @@ class MemberController extends Controller
 {
     public $per_page;
     public function __construct() {
-        $this->per_page = 2;
+        $this->per_page = 10;
       }
 
      /**
@@ -43,10 +43,10 @@ class MemberController extends Controller
         $pageConfigs = ['pageHeader' => false];  
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
-        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
         
-       $data = User::where('users.user_type','user')->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name','agent.email as agent_email' )->orderBy('users.id','desc')->paginate($this->per_page);
+       $data = User::where('users.user_type','user')->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.unique_id as agent_unique_id' )->orderBy('users.id','desc')->paginate($this->per_page);
 
          return view('/content/apps/member/app-details-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data,'agents'=>$agents]);
     }
@@ -74,7 +74,7 @@ class MemberController extends Controller
         
 
 
-        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
        $data = User::where('users.user_type','user');
 
@@ -95,7 +95,7 @@ class MemberController extends Controller
             $data = $data->where('users.created_at', '>=', $start_date);
             $data = $data->where('users.created_at', '<=', $end_date);
         }
-        $data = $data->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.name as agent_name','agent.email as agent_email' )->orderBy('users.id','desc')->paginate($this->per_page);
+        $data = $data->leftJoin('users as agent','users.agent_id', '=', 'agent.id')->select('users.*','agent.unique_id as agent_unique_id' )->orderBy('users.id','desc')->paginate($this->per_page);
 
       return view('/content/apps/member/app-details-list-data', ['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data'=>$data])->render();
      }
@@ -120,7 +120,7 @@ class MemberController extends Controller
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
         
-        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+        $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
          return view('/content/apps/member/app-details-add',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'agents'=>$agents]);
     }
@@ -143,7 +143,7 @@ class MemberController extends Controller
         
         $data = User::where('id',$id)->first();
 
-         $agents = User::where('user_type','agent')->Where('status',1)->orderBy('name','asc')->get();
+         $agents = User::where('user_type','agent')->Where('status',1)->orderBy('unique_id','asc')->get();
 
          $data_credits = Credit::where('user_id',$id)->orderBy('id','desc')->paginate($this->per_page);
 
@@ -175,6 +175,32 @@ class MemberController extends Controller
          }
      }
 
+
+     public function details_adjustcreditlog_list_data(Request $request)
+        {
+        
+         if($request->ajax())
+         {
+             $custom_permission_controller = new CustomPermissionController;
+            $custom_permission_access = $custom_permission_controller->custom_permission('member.adjust_credit.list');
+            if(!$custom_permission_access)
+            {
+                abort(401,'Not authorised');
+            }
+
+            
+            $custom_get_all_permissions_access = $custom_permission_controller->custom_get_all_permissions();
+
+
+            $pageConfigs = ['pageHeader' => false]; 
+            // $data_credits = Credit::where('reference_by','Company')->orderBy('id','desc')->paginate($this->per_page);
+
+              $data_credits = Credit::where('credits.reference_by','Company')->leftJoin('users as player','credits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->leftJoin('users as admin','credits.createdBy', '=', 'admin.id')->select('credits.*','player.unique_id as player_unique_id','agent.unique_id as agent_unique_id','admin.name as admin_name')->orderBy('credits.id','desc')->paginate($this->per_page);
+
+              return view('/content/apps/member/app-details-adjustcredit-list-data', ['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data_credits'=>$data_credits])->render();
+
+         }
+     }
     
     public function winloss_list()
     { 
@@ -227,8 +253,11 @@ class MemberController extends Controller
 
 
         $pageConfigs = ['pageHeader' => false];  
+
+        $data_credits = Credit::where('credits.reference_by','Company')->leftJoin('users as player','credits.user_id', '=', 'player.id')->leftJoin('users as agent','player.agent_id', '=', 'agent.id')->leftJoin('users as admin','credits.createdBy', '=', 'admin.id')->select('credits.*','player.unique_id as player_unique_id','agent.unique_id as agent_unique_id','admin.name as admin_name')->orderBy('credits.id','desc')->paginate($this->per_page);
+
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
-        return view('/content/apps/member/app-adjustcredit',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+        return view('/content/apps/member/app-adjustcredit',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'data_credits'=>$data_credits]);
     }
 
     
@@ -270,12 +299,14 @@ class MemberController extends Controller
          else 
          {
             $user_id = Auth::id();
+            $unique_id = "P".rand(100000,999999);
              $user = new User([
                 'name'  => $request->name,
                 'email' => $request->email,
                 'status' => $request->status,
                 'agent_id' => $request->agent_id,
                 'password' => bcrypt($request->password),
+                 'unique_id'=>$unique_id,
                 'createdBy'=>$user_id
             ]);
              if($user->save())
@@ -325,6 +356,7 @@ class MemberController extends Controller
         $withdraw_id = 999999;
         $status = 'Approved';
 
+        $remarks = $request->remarks;
                 
         
 
@@ -340,6 +372,7 @@ class MemberController extends Controller
                 'user_id'  => $user_id,
                 'before_deposit_withdraw_amount' => $credits,
                 'amount' => $amount,
+                'remarks' => $remarks,                
                 'current_balance' => $final_credits,
                 'type'=>'Deposit',
                 'reference_by'=>'Company',
@@ -365,6 +398,7 @@ class MemberController extends Controller
                         'user_id'  => $user_id,
                         'before_deposit_withdraw_amount' => $credits,
                         'amount' => $amount,
+                        'remarks' => $remarks,
                         'current_balance' => $final_credits,
                         'type'=>'Withdraw',
                         'reference_by'=>'Company',

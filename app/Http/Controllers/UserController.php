@@ -179,8 +179,17 @@ class UserController extends Controller
             $email = $request->email;
             $user_type = $request->user_type;
             $password = Hash::make($request->password);
+            $unique_id='';
+            if($user_type=='agent')
+            {
+                $unique_id = "A".rand(100000,999999);
+            }
+            if($user_type=='user')
+            {
+                $unique_id = "P".rand(100000,999999);
+            }
 
-            $userData = array('name'=>$name,'email'=>$email,'password'=>$password,'user_type'=>$user_type);
+            $userData = array('name'=>$name,'email'=>$email,'password'=>$password,'user_type'=>$user_type,'unique_id'=>$unique_id);
 
           
             $user = User::create($userData);
