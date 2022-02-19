@@ -153,14 +153,27 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 1</h4>
+                            <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 1</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 07</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
+
+                            
+                            
                             
                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
                            
@@ -171,15 +184,24 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 2</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 2</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 12</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                            
-                            <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                             <table class="table table-responsive table-striped table-border">
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Hyderabad vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                <tr><td>2</td><td>CSK vs Punjab</td><td><span class="text-success">CSK</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                <tr><td>3</td><td>Punjab vs CSK</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                 <tr><td>4</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 
                               </tbody>
                             </table>
                            
@@ -190,16 +212,24 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 3</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 3</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">34</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 17</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                         
 
-                            <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                             <table class="table table-responsive table-striped table-border">
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>DC vs Hyderabad</td><td><span class="text-success">DC</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-success">KKR</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                               
-                                 <tr><td>3</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
+                                <tr><td>1</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 <tr><td>2</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
                            
@@ -210,17 +240,25 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 4</h4>
-                            
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 4</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">09</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 20</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                             
                              <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                
-                                 <tr><td>1</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 20:09</td></tr>
+                                 <tr><td>1</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 
                               </tbody>
                             </table>
-                           
                            
                           </div>
                         </div>
@@ -271,14 +309,24 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 1</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 1</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 07</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                             
                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                               
                               </tbody>
                             </table>
                            
@@ -329,14 +377,24 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 1</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 1</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 08</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                             
                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
                            
@@ -347,15 +405,23 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 2</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 2</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 11</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                            
                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Hyderabad vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                <tr><td>2</td><td>CSK vs Punjab</td><td><span class="text-success">CSK</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                <tr><td>3</td><td>Punjab vs CSK</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
-                                 <tr><td>4</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 12:05</td></tr>
+                              
+                                 <tr><td>1</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
                            
@@ -366,16 +432,25 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 3</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 3</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 13</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                         
 
-                            <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                             <table class="table table-responsive table-striped table-border">
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>DC vs Hyderabad</td><td><span class="text-success">DC</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-success">KKR</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                               
-                                 <tr><td>3</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                
                               </tbody>
                             </table>
                            
@@ -386,17 +461,27 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 4</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 2</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 16</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                             
                             
-                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                            <table class="table table-responsive table-striped table-border">
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                
-                                 <tr><td>1</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 20:09</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                               
+                                 <tr><td>2</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
-                           
                            
                           </div>
                         </div>
@@ -444,14 +529,24 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 1</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 1</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 07</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                             
                             <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
-                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 07:00</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                 <tr><td>3</td><td>CSK vs Mumbai</td><td><span class="text-info">CSK</span></td><td>Home</td><td>4:2</td></tr>
                               </tbody>
                             </table>
                            
@@ -463,16 +558,25 @@
                         <div class="card">
                           
                           <div class="card-body">
-                            <h4 class="card-title">Bet 2</h4>
+                             <div class="row">
+                              <div class="col-md-6 col-lg-6">
+                                <h4 class="card-title">Bet 2</h4>
+                              </div>
+                              <div class="col-md-6 col-lg-6" >
+                                  <span style="float:right;">00</span>
+                                  <span class="blink_me text-success" style="float:right;    font-size: 20px;    font-weight: bold;    margin-top: -4px;        padding-left: 5px;    padding-right: 5px;">:</span>
+                                  <span style="float:right;"> 08</span>
+                                  <span style="float:right;"><i data-feather="clock" class="me-50"></i></span>
+                              </div>
+                            </div>
                         
 
-                            <table class="table table-responsive table-striped table-border">
-                              <thead><tr><th>Match</th><th>Team</th><th>Selection</th><th>Time at</th></tr></thead>
+                             <table class="table table-responsive table-striped table-border">
+                              <thead><tr><th>No</th><th>Matches</th><th>Selection</th><th>Result</th><th>Score</th></tr></thead>
                               <tbody>
-                                <tr><td>1</td><td>DC vs Hyderabad</td><td><span class="text-success">DC</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-success">KKR</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
-                               
-                                 <tr><td>3</td><td>RR vs Mumbai</td><td><span class="text-warning">Mumbai</span></td><td><i data-feather="clock" class="me-50"></i> 17:34</td></tr>
+                                <tr><td>1</td><td>Bangalore vs CSK</td><td><span class="text-success">Bangalore</span></td><td>Away</td><td>0:1</td></tr>
+                                <tr><td>2</td><td>KKR vs Mumbai</td><td><span class="text-info">Draw</span></td><td>Draw</td><td>2:2</td></tr>
+                                
                               </tbody>
                             </table>
                            

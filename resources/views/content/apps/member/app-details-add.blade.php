@@ -185,6 +185,7 @@
                 class="select2 form-select"               
                 aria-describedby="basic-addon5"
               >
+              <option value="0">Select Agent ID</option>
               <?php foreach($agents as $agent){?>
               <option value="{{$agent->id}}"  >{{$agent->unique_id}}</option>
              <?php } ?>
