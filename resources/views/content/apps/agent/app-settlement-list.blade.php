@@ -37,6 +37,41 @@
   
   <!-- list and filter start -->
   <div class="card">
+    <div class="card-text m-2">
+          <div class="row">
+            <div class="col-lg-12">
+             <div class="row">
+                <div class="col-md-4 ">
+                  <label class="form-label" for="fp-range">Date Range</label>
+                  <input
+                    type="text"
+                    id="fp-range"
+                    class="form-control flatpickr-range"
+                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                  />
+                </div>
+                 <div class="col-md-4 ">
+                  <label class="form-label" for="fp-range">Agent ID</label>
+                  <select class="select2 form-select" id="agent_id">
+                    <option value="">Select Agent ID</option>
+                     <option>A645631</option>
+                     <option>A57545</option>
+                     <option>A99754</option>
+                     <option>A007457</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mt-2">
+                  <button id="search_data_result" class="dt-button add-new btn btn-info" >Search</button>
+                  
+                </div>
+
+                
+
+              </div>
+            </div>
+           
+          </div>
+        </div>
     
     <div class="card-datatable table-responsive pt-0">
       <table class="details-list-table table">
