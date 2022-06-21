@@ -14,7 +14,7 @@ class Match extends Model
      * @var string[]
      */
     protected $fillable = [
-        'homeTeam','awayTeam','startTime','endTime','league','result','createdBy','updatedBy'
+        'homeTeam','awayTeam','startTime','endTime','league','result','createdBy','updatedBy','home_percentage','draw_percentage','away_percentage'
     ];
 
     protected $table = 'match';

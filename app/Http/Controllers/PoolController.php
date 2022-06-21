@@ -98,10 +98,23 @@ class PoolController extends Controller
 
             //updatedBy
            
-
-           
+            $file = $request->file('image');
+            if(!$request->image) {
             $poolData = array('name'=>$name,'startTime'=>$startTime,'perBetAmount'=>$perBetAmount  ,'basePrice'=>$basePrice  ,'megaPercentage'=>$megaPercentage  ,'poolPercentage'=>$poolPercentage  ,'comPercentage'=>$comPercentage  ,'agentPercentage'=>$agentPercentage
                 ,'group1Percentage'=>$group1Percentage ,'group2Percentage'=>$group2Percentage   ,'group3Percentage'=>$group3Percentage   ,'createdBy'=>$createdBy,'isJackpotPool'=>$isJackpotPool);
+            }
+            else{
+                $time =time();
+                 $input['image'] = $time.'.'.$request->image->extension();
+                $request->image->move(public_path('images/pool'), $input['image']);
+                
+
+               
+                 $poolData = array('name'=>$name,'startTime'=>$startTime,'perBetAmount'=>$perBetAmount  ,'basePrice'=>$basePrice  ,'megaPercentage'=>$megaPercentage  ,'poolPercentage'=>$poolPercentage  ,'comPercentage'=>$comPercentage  ,'agentPercentage'=>$agentPercentage
+                ,'group1Percentage'=>$group1Percentage ,'group2Percentage'=>$group2Percentage   ,'group3Percentage'=>$group3Percentage   ,'createdBy'=>$createdBy,'isJackpotPool'=>$isJackpotPool,'icon_path'=>'images/pool/'.$input['image']);
+
+
+            }
             
 
           
@@ -227,7 +240,25 @@ class PoolController extends Controller
 
             $updatedBy = Auth::user()->id;
 
-            //updatedBy
+           
+            if(!$request->image) {
+                
+            }
+            else{
+
+                $time =time();
+                 $input['image'] = $time.'.'.$request->image->extension();
+                   $request->image->move(public_path('images/pool'), $input['image']);
+
+
+                 if($pool->icon_path)
+                {
+                    unlink($pool->icon_path);
+                }
+
+                 $pool->icon_path = 'images/pool/'.$input['image'];
+
+            }
 
             $pool->name = $name;          
             $pool->startTime = $startTime;

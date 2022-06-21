@@ -25,8 +25,15 @@ class CreateUsersTable extends Migration
             $table->string('bank_account_name', 255)->nullable();
             $table->string('bank_country', 100)->nullable();
             $table->string('bank_name', 255)->nullable();
+
+
+
+            
+
             $table->string('bank_account_number', 32)->nullable();
             $table->string('bank_account_type', 32)->nullable();
+
+            $table->string('referal_id', 20)->nullable();
 
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

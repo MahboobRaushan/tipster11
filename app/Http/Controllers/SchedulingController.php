@@ -17,10 +17,15 @@ class SchedulingController extends Controller
         DB::table('testing')->insert(
             ['name' => rand(100,999), 'description'=>date('Y-m-d H:i:s')]
         );
-        
+        */
+
         $current_date_time = Carbon::now()->toDateTimeString();
         $currentTime = strtotime($current_date_time);
         $pools = DB::table('pools')->whereIn('status',['Inactive','Active'])->get();
+
+        //echo "<pre>";
+       // print_r($pools);
+        //echo "</pre>";
 
         foreach($pools as $pool)
         {
@@ -83,7 +88,7 @@ class SchedulingController extends Controller
             }
         }
 
-        */
+        
                
     }
 }

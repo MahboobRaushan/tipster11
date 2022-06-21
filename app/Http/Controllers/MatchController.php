@@ -10,6 +10,8 @@ use DB;
 use App\Models\League;
 use App\Models\Tim;
 use App\Models\Pool;
+use App\Models\Betdetails;
+
 
 
 class MatchController extends Controller
@@ -268,6 +270,9 @@ class MatchController extends Controller
                 if($result!='')
                 {
                     $status = 'Finished';
+
+                    
+
                 }
                 else
                 {
@@ -278,7 +283,74 @@ class MatchController extends Controller
 
             $match->updatedBy = $updatedBy;
                       
-            $match->save();
+            $match_save_result = $match->save();
+
+
+           
+
+            if($match_save_result)
+            {
+
+              
+                // bet_details table match_result and result column should update
+                $matchall = DB::table('bet_details')->select('id','match_id','match_result','player_result')->where('match_id',$request->edit_id)->get();
+                if(!empty($matchall))
+                    {
+                        foreach($matchall as $thismatch)
+                        {
+                            
+
+                            $this_id = $thismatch->id;
+                            $this_match_id = $thismatch->match_id;
+                            $this_match_result = $thismatch->match_result;
+                            $this_player_result = $thismatch->player_result;
+
+                           // $description = 'this_id='.$this_id.' :: '.'this_match_id='.$this_match_id.' :: '.'this_match_result='.$this_match_result.' :: '.'this_player_result='.$this_player_result.' :: '  ;
+
+
+                           
+
+                            $final_result = 'void';
+
+                           
+
+                             if($status == 'Finished')
+                             {
+                                if($result==$this_player_result)
+                                {
+                                   $final_result = 'win'; 
+                                }
+                                else 
+                                {
+                                    $final_result = 'loss';
+                                }
+                             }
+                             $final_match_result = $result;
+
+                            
+
+
+
+                              //$currentbetdetailsmatch = Betdetails::where('id',$this_id)->first();
+                              $currentbetdetailsmatch = DB::table('bet_details')
+                               ->where('id',$this_id)               
+                                ->first();
+
+
+                              //$currentbetdetailsmatch->save();
+
+                            
+                              DB::table('bet_details')
+                                ->where('id',$this_id)
+                                ->update(['result' => $final_result, 'match_result' => $final_match_result]);
+
+
+                            
+                        }
+                    }
+
+               $this->recalculatePoolResultByMatchId($request->edit_id); 
+            }
 
             if($originalstartTime!=$startTime)
             {
@@ -290,12 +362,15 @@ class MatchController extends Controller
                     ->leftJoin('pool_match', 'pools.id', '=', 'pool_match.pool_id')                   
                     ->where('pool_match.match_id',$match_id)
                     ->get();
-
-                    foreach($pools as $pool)
+                    if(!empty($pools))
                     {
-                        $pool_id = $pool->id;
-                        $this->recalculatePoolEndtime($pool_id);
+                        foreach($pools as $pool)
+                        {
+                            $pool_id = $pool->id;
+                            $this->recalculatePoolEndtime($pool_id);
+                        }
                     }
+                    
 
             }
 
@@ -337,6 +412,402 @@ class MatchController extends Controller
                 $pool->save();
 
      }
+
+     
+     public function recalculatePoolResultByMatchId($match_id){
+        // all pools call for recalculatePoolResultByPoolId
+
+         $pools = DB::table('pools')
+            ->select('pools.id','pools.perBetAmount')
+            ->leftJoin('pool_match', 'pools.id', '=', 'pool_match.pool_id')                   
+            ->where('pool_match.match_id',$match_id)
+            //->whereIn('pools.status',['Active'])
+            ->get();
+
+            if(!empty($pools))
+            {
+                foreach($pools as $pool)
+                {
+                    $pool_id = $pool->id;
+                    $perBetAmount = $pool->perBetAmount;
+                    $this->recalculatePoolResultByPoolId($pool_id,$perBetAmount);
+                }
+            }
+            
+
+     }
+
+      public function recalculatePoolResultByPoolId($pool_id,$perBetAmount){
+
+        
+
+
+
+        DB::table('pools')
+            ->where('id',$pool_id)
+            ->update([
+                'status' => 'Calculating'
+             ]);
+
+       
+
+        // for every match of this pool status should be Void / Finished
+         $matchs = DB::table('pool_match')
+            ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+            ->select('match.status')
+            ->orderBy('match.id','asc')
+            ->where('pool_match.pool_id',$pool_id)               
+            ->get();
+
+            $allmatchresultneeupdate = 0;
+
+            $no_of_matches_of_pool = 0;
+           
+            
+            if(!empty($matchs))
+            {
+                foreach($matchs as $match)
+                {
+                    
+                    $no_of_matches_of_pool++;
+                   
+                    $match_status = $match->status;
+
+                    if(($match_status=='Void') || ($match_status=='Finished'))
+                    {
+                        // this match result is updated
+
+                       
+                    }
+                    else
+                    {
+                       
+
+                        $allmatchresultneeupdate++;
+                    }
+
+                }
+            }
+
+            if($allmatchresultneeupdate==0)
+            {
+                //pool / jackpot results to calculate
+
+                //A
+
+               
+
+                $bets_A = DB::table('bets')
+                    ->select('id')
+                    ->orderBy('id','asc')
+                    ->where('pool_id',$pool_id)               
+                    ->get();
+
+                    if(!empty($bets_A))
+                    {
+                        foreach($bets_A as $bet)
+                        {                           
+                            $bet_id = $bet->id;
+
+                             $total_win = DB::table('bet_details')                   
+                            ->where('bet_id',$bet_id)
+                            ->where('pool_id',$pool_id)
+                            ->where('result','win')
+                            ->count();
+
+                            DB::table('bets')
+                                ->where('id',$bet_id)
+                                ->update(['total_win' => $total_win]);
+
+                        }
+                    }
+
+                //B
+
+                   
+                     $bets_B = DB::table('bets')
+                    ->select('total_win')
+                    ->orderBy('total_win','desc')
+                    ->where('pool_id',$pool_id)               
+                    ->get();
+
+                    $total_win_array = [];
+
+                    if(!empty($bets_B))
+                    {
+                        foreach($bets_B as $bet)
+                        {  
+                            $total_win = $bet->total_win;
+                            if(!in_array($total_win,$total_win_array))
+                            {
+                                 
+                                $total_win_array[]=$total_win;
+                            }
+
+                        }
+                    }
+
+                    
+                    
+
+
+                  
+                    $group1maxwin = 0;
+                    $group2maxwin = 0;
+                    $group3maxwin = 0;
+                    if(count($total_win_array) >= 3)
+                    {
+                        
+
+                        $group1maxwin = $total_win_array[0];
+                        $group2maxwin = $total_win_array[1];
+                        $group3maxwin = $total_win_array[2];
+
+                        
+                    }
+                    else if(count($total_win_array) == 2)
+                    {
+                       
+
+                        $group1maxwin = $total_win_array[0];
+                        $group2maxwin = $total_win_array[1];
+                        $group3maxwin = $no_of_matches_of_pool;
+
+                        
+                    }
+                    else if(count($total_win_array) == 1)
+                    {
+                        
+
+                        $group1maxwin = $total_win_array[0];
+                        $group2maxwin = $no_of_matches_of_pool;
+                        $group3maxwin = $no_of_matches_of_pool;
+
+                        
+
+                    }
+                     else 
+                    {
+                         
+
+                        $group1maxwin = $no_of_matches_of_pool;
+                        $group2maxwin = $no_of_matches_of_pool;
+                        $group3maxwin = $no_of_matches_of_pool;
+
+                       
+                    }
+
+                   
+
+                //C
+                     $bets_C = DB::table('bets')
+                    ->select('total_win','id')
+                    ->orderBy('id','asc')
+                    ->where('pool_id',$pool_id)               
+                    ->get();
+
+                   
+
+                    if(!empty($bets_C))
+                    {
+                        foreach($bets_C as $bet)
+                        {
+
+                       
+
+                            $isGroup1=0;
+                            $isGroup2=0;
+                            $isGroup3=0;
+                            $losswinType='Loss';
+
+                            $bet_id = $bet->id;
+                            $total_win = $bet->total_win;
+
+                            if($total_win==$group1maxwin)
+                            {
+                                $isGroup1=1;
+                                $losswinType='Win';
+                            }
+                            else if($total_win==$group2maxwin)
+                            {
+                                $isGroup2=1;
+                                $losswinType='Win';
+                            }
+                            else if($total_win==$group3maxwin)
+                            {
+                                $isGroup3=1;
+                                $losswinType='Win';
+                            }
+
+                            if($losswinType=='Win')
+                            {
+
+                                
+
+                             
+
+                                     $query5 = "UPDATE `bets` SET 
+                                      `isGroup1` = '".$isGroup1."'
+                                     ,`isGroup2` = '".$isGroup2."'
+                                     ,`isGroup3` = '".$isGroup3."'
+                                     ,`losswinType` = '".$losswinType."'
+                                     ,`losswinValue` = '".$perBetAmount."'
+                                    
+
+                                      where `id` = '".$bet_id."' ";
+                                       
+
+                                    DB::statement($query5);                                
+
+
+                                   
+                            }
+                            else 
+                            {
+                                 $query6 = "UPDATE `bets` SET 
+                                      
+                                     `losswinType` = '".$losswinType."'
+                                     ,`losswinValue` = '".$perBetAmount."'
+                                    
+
+                                      where `id` = '".$bet_id."' ";
+                                       
+
+                                    DB::statement($query6);
+                            }
+
+                        }
+                    }
+
+                //D
+
+                   
+
+                                     
+                
+                    $group1TotalPlayer = DB::table("bets")->where('pool_id', '=',$pool_id)->where('isGroup1', '=','1')->count();
+
+                    $group2TotalPlayer = DB::table("bets")->where('pool_id', '=',$pool_id)->where('isGroup2', '=','1')->count();
+
+                    $group3TotalPlayer = DB::table("bets")->where('pool_id', '=',$pool_id)->where('isGroup3', '=','1')->count();
+
+                  
+                  
+                    
+
+                       
+
+                     DB::table('pools')
+                                ->where('id',$pool_id)
+                                ->update([
+                                    'group1TotalPlayer' => $group1TotalPlayer,
+                                    'group2TotalPlayer' => $group2TotalPlayer,
+                                    'group3TotalPlayer' => $group3TotalPlayer
+                                 ]);
+
+
+                   
+
+                //E
+                        
+                        
+                        
+                        
+
+
+                        $pool_E = DB::table('pools')
+                        ->select('group1TotalPrize','group2TotalPrize','group3TotalPrize','basePrice','group1Percentage','group2Percentage','group3Percentage')
+                         ->where('id',$pool_id)
+                        ->get();
+                        $group1TotalPrize = $pool_E[0]->group1TotalPrize;
+                        $group2TotalPrize = $pool_E[0]->group2TotalPrize;
+                        $group3TotalPrize = $pool_E[0]->group3TotalPrize;
+
+                        $thisbasePrice = $pool_E[0]->basePrice;
+                        $thisgroup1Percentage = $pool_E[0]->group1Percentage;
+                        $thisgroup2Percentage = $pool_E[0]->group2Percentage;
+                        $thisgroup3Percentage = $pool_E[0]->group3Percentage;
+
+                        $group1baseprice = ($thisbasePrice * $thisgroup1Percentage)/100;
+                        $group1TotalPrize = $group1TotalPrize + $group1baseprice;
+
+                         $group2baseprice = ($thisbasePrice * $thisgroup2Percentage)/100;
+                        $group2TotalPrize = $group2TotalPrize + $group2baseprice;
+
+                         $group3baseprice = ($thisbasePrice * $thisgroup3Percentage)/100;
+                        $group3TotalPrize = $group3TotalPrize + $group3baseprice;
+
+
+                        $group1winValue = 0;
+                        $group2winValue = 0;
+                        $group3winValue = 0;
+
+                        if($group1TotalPlayer > 0)
+                        {
+                            $group1winValue = $group1TotalPrize / $group1TotalPlayer;
+                        }
+
+                        if($group2TotalPlayer > 0)
+                        {
+                            $group2winValue = $group2TotalPrize / $group2TotalPlayer;
+                        }
+
+                        if($group3TotalPlayer > 0)
+                        {
+                            $group3winValue = $group3TotalPrize / $group3TotalPlayer;
+                        }
+
+                       /*
+                        $description='just insert = 17';
+                        DB::table('testing')->insert(
+                            [ 'description'=>$description]
+                        );
+                        */
+
+                //F
+
+                        DB::table('bets')
+                                ->where('pool_id',$pool_id)
+                                ->where('isGroup1', '=','1')
+                                ->update([
+                                    'losswinValue' => $group1winValue
+                                 ]);
+
+                        
+
+
+                        DB::table('bets')
+                                ->where('pool_id',$pool_id)
+                                ->where('isGroup2', '=','1')
+                                ->update([
+                                    'losswinValue' => $group2winValue
+                                 ]);
+                        DB::table('bets')
+                                ->where('pool_id',$pool_id)
+                                ->where('isGroup3', '=','1')
+                                ->update([
+                                    'losswinValue' => $group3winValue
+                                 ]);
+
+                //G
+
+                       
+
+
+                                DB::table('pools')
+                                ->where('id',$pool_id)
+                                ->update([
+                                    'status' => 'Finished',
+                                    'currentStatus' => 'Finished'
+                                 ]);
+
+                       
+               
+
+            }
+
+
+      }
 
     /**
      * Remove the specified resource from storage.

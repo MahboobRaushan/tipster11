@@ -21,6 +21,12 @@ class CreateMatchTable extends Migration
             $table->timestamp('endTime')->useCurrent();
             $table->integer('league');
             $table->enum('result', ['home', 'away'])->nullable();
+            $table->string('home_score', 30)->nullable();
+            $table->string('away_score', 30)->nullable();
+            $table->integer('home_percentage')->default(0);
+            $table->integer('draw_percentage')->default(0);
+            $table->integer('away_percentage')->default(0);
+
             $table->enum('status', ['Running', 'Finished','Void'])->default('Running');           
             $table->integer('createdBy'); 
             $table->integer('updatedBy')->default(0); 

@@ -48,6 +48,7 @@
           <tr>
             <th></th>
             <th>ID</th>
+            <th>Icon</th>
             <th>Name</th>
             <th>Start Time</th>           
             <th>End Time</th>
@@ -65,7 +66,7 @@
     <!-- Modal to add new pools starts-->
     <div class="modal modal-slide-in new-pools-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-pools modal-content pt-0"  id="postForm" name="postForm" >
+        <form class="add-new-pools modal-content pt-0"  id="postForm" name="postForm" enctype="multipart/form-data">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">Add New Pool</h5>
@@ -80,6 +81,15 @@
                 placeholder="Pool 1"
                 name="name"
               />
+            </div>
+
+              <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-icon">Icon</label>
+               <input  class="form-label" type="file" name="image" placeholder="Choose image" id="basic-icon-default-icon">
+
+               <img id="preview-image-before-upload" src="images/icons/file-icons/onedrive.png"
+alt="preview image" style="max-height: 100px;">
+              
             </div>
 
             <div class="mb-1">
@@ -251,6 +261,16 @@
                 name="name"
               />
             </div>
+
+             <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-icon">Icon</label>
+               <input  class="form-label" type="file" name="image" placeholder="Choose image" id="basic-icon-default-icon_edit">
+              
+               <img id="preview-image-before-upload_edit" src="images/icons/file-icons/onedrive.png"
+alt="preview image" style="max-height: 100px;">
+              
+            </div>
+            
 
 
            <div class="mb-1">
