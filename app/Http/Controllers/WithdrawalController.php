@@ -19,7 +19,7 @@ class WithdrawalController extends Controller
 {
     public $per_page;
     public function __construct() {
-        $this->per_page = 2;
+        $this->per_page = 10;
       }
      /**
      * Display a listing of the details.

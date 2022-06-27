@@ -10,6 +10,8 @@ use Validator;
 use Auth;
 use DB;
 
+use Mail;
+
 use Illuminate\Support\Facades\Hash;
 
 use Carbon\Carbon;
@@ -19,7 +21,7 @@ class DepositController extends Controller
 {
     public $per_page;
     public function __construct() {
-        $this->per_page = 4;
+        $this->per_page = 10;
       }
      /**
      * Display a listing of the details.
@@ -28,7 +30,8 @@ class DepositController extends Controller
      */
     public function deposit_list()
     { 
-        
+
+       
 
           $custom_permission_controller = new CustomPermissionController;
         $custom_permission_access = $custom_permission_controller->custom_permission('deposit.list');

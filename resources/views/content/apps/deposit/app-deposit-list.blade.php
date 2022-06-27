@@ -28,7 +28,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Deposit Details List</h4>
+        <h4 class="card-title">Deposit Details List ...</h4>
       </div>
       <div class="card-body">
         <div class="card-text">

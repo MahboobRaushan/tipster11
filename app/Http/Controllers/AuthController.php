@@ -428,8 +428,16 @@ public function deposit(Request $request)
 
          
          $megajackpot =  DB::table('mega_jackpot')->where('status','Active')->first();
-        $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
-        $megajackpot_accumulatedPrize = $megajackpot_accumulatedPrize + $pool_megaAmount;
+         if(!empty($megajackpot))
+        {
+            $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
+            $megajackpot_accumulatedPrize = $megajackpot_accumulatedPrize + $pool_megaAmount;
+        }
+        else 
+        {
+            $megajackpot_accumulatedPrize = 0;
+           
+        }
         
         DB::table('mega_jackpot')->where('status','Active')->update(['accumulatedPrize' => $megajackpot_accumulatedPrize]); 
 
@@ -600,8 +608,17 @@ public function deposit(Request $request)
                             }
 
                              $megajackpot =  DB::table('mega_jackpot')->where('status','Active')->first();
-                            $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
-                            $megajackpot_basePrize = $megajackpot->basePrize;
+                             if(!empty($megajackpot))
+                             {
+                                 $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
+                                 $megajackpot_basePrize = $megajackpot->basePrize;
+                             }
+                             else 
+                             {
+                                 $megajackpot_accumulatedPrize = 0;
+                                 $megajackpot_basePrize = 0;
+                             }
+                           
                             $megajackpot_Prize = $megajackpot_accumulatedPrize+$megajackpot_basePrize;
 
                             $megajackpot_Prize = floor($megajackpot_Prize);
@@ -697,8 +714,17 @@ public function deposit(Request $request)
     {
          
                 $megajackpot =  DB::table('mega_jackpot')->where('status','Active')->first();
-                $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
-                $megajackpot_basePrize = $megajackpot->basePrize;
+                if(!empty($megajackpot))
+                {
+                    $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
+                     $megajackpot_basePrize = $megajackpot->basePrize;
+                }
+                else 
+                {
+                     $megajackpot_accumulatedPrize = 0;
+                     $megajackpot_basePrize = 0;
+                }
+                
                  $megajackpot_Prize = $megajackpot_accumulatedPrize + $megajackpot_basePrize;
                 $megajackpot_Prize = floor($megajackpot_Prize);
 
@@ -805,10 +831,22 @@ public function deposit(Request $request)
     }
 public function getalljackpot(Request $request)
     {
+
          
                 $megajackpot =  DB::table('mega_jackpot')->where('status','Active')->first();
-                $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
-                $megajackpot_basePrize = $megajackpot->basePrize;
+                if(!empty($megajackpot))
+                {
+                     $megajackpot_accumulatedPrize = $megajackpot->accumulatedPrize;
+                    $megajackpot_basePrize = $megajackpot->basePrize;
+                }
+                else 
+                {
+                     $megajackpot_accumulatedPrize = 0;
+                     $megajackpot_basePrize = 0;
+                }
+
+
+               
                  $megajackpot_Prize = $megajackpot_accumulatedPrize + $megajackpot_basePrize;
                 $megajackpot_Prize = floor($megajackpot_Prize);
 
@@ -839,7 +877,15 @@ public function getalljackpot(Request $request)
                     $group2TotalPrize=$value_1->group2TotalPrize;
                     $group3TotalPrize=$value_1->group3TotalPrize;
                     $endTime=$value_1->endTime;
-                    $endTimearray= explode(' ',$endTime);
+                    $endTimedate='';
+                    $endTimetime = '';
+                    if($endTime!='')
+                    {
+                        $endTimearray= explode(' ',$endTime);
+                        $endTimedate=$endTimearray[0];
+                        $endTimetime=$endTimearray[1];
+                    }
+                    
 
 
                     $total_price=$basePrice+$group1TotalPrize+$group2TotalPrize+$group3TotalPrize;
@@ -847,7 +893,7 @@ public function getalljackpot(Request $request)
                   
                
                     
-                    $jackpot[]=array('megajackpot_Prize'=>$megajackpot_Prize,'id'=>$value_1->id,'perBetAmount'=>$perBetAmount,'total_price'=>floor($total_price),'endTimedate'=>$endTimearray[0],'endTimetime'=>$endTimearray[1],'icon_path'=>$icon_path,'name'=>$value_1->name,'isJackpotPool'=>$value_1->isJackpotPool,'status'=>$value_1->status);
+                    $jackpot[]=array('megajackpot_Prize'=>$megajackpot_Prize,'id'=>$value_1->id,'perBetAmount'=>$perBetAmount,'total_price'=>floor($total_price),'endTimedate'=>$endTimedate,'endTimetime'=>$endTimetime,'icon_path'=>$icon_path,'name'=>$value_1->name,'isJackpotPool'=>$value_1->isJackpotPool,'status'=>$value_1->status);
                 }
              }
              
@@ -904,12 +950,21 @@ public function getalljackpot(Request $request)
 
     // mail to user with this two_factor_recovery_codes code for reset his account
 
-    $details = [
-        'title' => 'Tipster 17 Reset Code forForgot Password',
-        'body' => 'Hello '.$request->email.',<br>Your code is '.$two_factor_recovery_codes
-    ];
+    //$details = [
+     //   'title' => 'Tipster 17 Reset Code forForgot Password',
+     //   'body' => 'Hello '.$request->email.',<br>Your code is '.$two_factor_recovery_codes
+   // ];
    
-      \Mail::to($request->email)->send(new \App\Mail\MyTestMail($details));
+     // \Mail::to($request->email)->send(new \App\Mail\MyTestMail($details));
+
+    //\Mail::to($request->email)->send($details);
+
+     $data=['email'=>$request->email, 'code'=> $two_factor_recovery_codes];
+        $user['to']=$request->email;
+        Mail::send('emails.forgotmail',$data,function ($messages) use ($user){
+            $messages->to($user['to']);
+            $messages->subject('Tipster 17 Reset Code for Forgot Password');
+        });
 
      return response()->json([
       'two_factor_recovery_codes' =>$two_factor_recovery_codes,      
