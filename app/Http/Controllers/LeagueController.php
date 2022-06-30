@@ -136,7 +136,7 @@ class LeagueController extends Controller
                  {
                      $timData = array('name'=>$name,'league_id'=>$league_id,'createdBy'=>$createdBy);
                       $team = Tim::create($timData); 
-                      return json_encode(array('status'=>'ok','message'=>'Successfully added!')); 
+                      return json_encode(array('status'=>'ok','message'=>'Team Successfully added!')); 
                  }
 
             
@@ -158,15 +158,30 @@ class LeagueController extends Controller
                     $tim->name = $name;
                     $tim->updatedBy = $updatedBy;
                     $tim->save(); 
-                    return json_encode(array('status'=>'ok','message'=>'Successfully updated!'));
+                    return json_encode(array('status'=>'ok','message'=>'Team Successfully updated!'));
                  }
                
             }
             if($type=='delete')
             {
-                $tim = Tim::where('id',$id)->first();               
-                $tim->delete(); 
-                return json_encode(array('status'=>'ok','message'=>'Successfully deleted!'));
+                 $dataexisthome = DB::table('match')
+                 ->where('homeTeam',$id)
+                ->count();
+
+                $dataexistaway = DB::table('match')
+                 ->where('awayTeam',$id)
+                ->count();
+
+                 if(($dataexisthome > 0) || ($dataexistaway > 0))
+                {
+                    return json_encode(array('status'=>'notok','message'=>'You can\'t delete this team, because it is already assign with some matches'));
+                }
+                else
+                {
+                    $tim = Tim::where('id',$id)->first();               
+                    $tim->delete(); 
+                    return json_encode(array('status'=>'ok','message'=>'Team Successfully deleted!'));
+                }
             }
             
                  
@@ -268,21 +283,32 @@ class LeagueController extends Controller
     
     public function destroy($id){
         
-        $tim =Tim::where('league_id',$id);
-        if($tim)
-        {
-            $tim->delete();
+          $dataexist = DB::table('match')
+             ->where('league',$id)
+            ->count();
+
+             if($dataexist > 0) 
+            {
+                return json_encode(array('status'=>'notok','message'=>'You can\'t delete this league, because it is already assign with some matches'));
+            }
+            else
+            {
+               $tim =Tim::where('league_id',$id);
+            if($tim)
+            {
+                $tim->delete();
+            }
+
+            $league = League::where('id',$id);
+                   
+            if($league)
+            {
+                $league->delete();
+            }
+
+
+                 
+            return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
         }
-
-        $league = League::where('id',$id);
-               
-        if($league)
-        {
-            $league->delete();
-        }
-
-
-             
-        return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
     }
 }

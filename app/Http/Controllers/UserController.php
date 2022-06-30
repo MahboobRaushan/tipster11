@@ -344,19 +344,29 @@ class UserController extends Controller
      */
     
     public function destroy($id){
-       
-        $user = User::where('id',$id);
-        if($user)
+
+         $dataexist = DB::table('users')
+             ->where('agent_id',$id)
+            ->count();
+       if($dataexist > 0)
         {
-            $user->delete();
+            return json_encode(array('status'=>'notok','message'=>'You can\'t delete this Agent, because it is already assigned to Player/s '));
         }
-        $team = Team::where('user_id',$id);
-        if($team)
+        else
         {
-            $team->delete();
+            $user = User::where('id',$id);
+            if($user)
+            {
+                $user->delete();
+            }
+            $team = Team::where('user_id',$id);
+            if($team)
+            {
+                $team->delete();
+            }
+          
+            return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
         }
-      
-        return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
     }
 
 }

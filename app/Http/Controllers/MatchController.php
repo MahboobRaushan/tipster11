@@ -820,12 +820,24 @@ class MatchController extends Controller
        
         $match = Match::where('id',$id);
         
-        
-        if($match)
+         $dataexist = DB::table('pool_match')
+             ->where('match_id',$id)
+            ->count();
+        if($dataexist > 0)
         {
-            $match->delete();
+            return json_encode(array('status'=>'notok','message'=>'You can\'t delete this match, because it is already with Jackpot / Pool'));
         }
-             
-        return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
+        else
+        {
+            if($match)
+            {
+                $match->delete();
+            }
+                 
+            return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
+        }
+
+
+        
     }
 }

@@ -156,7 +156,32 @@ class PoolController extends Controller
             ->where('status',1)
             ->get();
 
-        return json_encode(array('pool'=>$pool,'match'=>$match,'league'=>$league));
+             $firstWinnergroup = DB::table('bets')
+                ->leftJoin('users', 'bets.user_id', '=', 'users.id')               
+                ->select('users.unique_id','bets.losswinValue')
+                ->where('bets.pool_id',$id)
+                ->where('bets.isGroup1','1')
+                ->where('bets.losswinType','Win')
+                ->get();
+
+            $secondWinnergroup = DB::table('bets')
+                ->leftJoin('users', 'bets.user_id', '=', 'users.id')               
+                ->select('users.unique_id','bets.losswinValue')
+                ->where('bets.pool_id',$id)
+                ->where('bets.isGroup2','1')
+                ->where('bets.losswinType','Win')
+                ->get();
+
+            $thirdWinnergroup = DB::table('bets')
+                ->leftJoin('users', 'bets.user_id', '=', 'users.id')               
+                ->select('users.unique_id','bets.losswinValue')
+                ->where('bets.pool_id',$id)
+                ->where('bets.isGroup3','1')
+                ->where('bets.losswinType','Win')
+                ->get();
+
+
+        return json_encode(array('pool'=>$pool,'match'=>$match,'league'=>$league,'firstWinnergroup'=>$firstWinnergroup,'secondWinnergroup'=>$secondWinnergroup,'thirdWinnergroup'=>$thirdWinnergroup));
     }
 
     

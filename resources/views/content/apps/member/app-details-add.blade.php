@@ -474,7 +474,10 @@ $(document).on('click', '#basic_details_submit', function(event){
      
       if((name!='') && (status!='') && (email!='')  && (password!='')  && (password==password_confirmation))
       {
-          $.ajax({
+           $.ajax({
+              beforeSend: function(){
+                $('.ajax-loader').css("visibility", "visible");
+              },
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
@@ -520,7 +523,10 @@ $(document).on('click', '#basic_details_submit', function(event){
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
-              }
+              } ,
+              complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+              }  
           });
 
         

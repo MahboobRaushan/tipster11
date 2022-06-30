@@ -7,7 +7,7 @@ use Validator;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\CustomPermissionController;
-
+use DB;
 
 
 class GameController extends Controller
@@ -179,18 +179,43 @@ class GameController extends Controller
      */
     
     public function destroy($id){
-       
-        $game = Game::where('id',$id);
-        if($game->first()->icon_path)
+
+        $dataexist = 0;
+
+        if(DB::table('leagues')
+             ->where('game_id',$id)
+            ->count() > 0 )
         {
-            unlink($game->first()->icon_path);
+              $league_id = DB::table('leagues')
+             ->where('game_id',$id)
+            ->first()->id;
+
+             $dataexist = DB::table('match')
+             ->where('league',$league_id)
+            ->count(); 
         }
+
         
-        if($game)
-        {
-            $game->delete();
-        }
-             
-        return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
+
+          if($dataexist > 0) 
+            {
+                return json_encode(array('status'=>'notok','message'=>'You can\'t delete this game, because it is already assign with some matches'));
+            }
+            else
+            {   
+       
+                $game = Game::where('id',$id);
+                if($game->first()->icon_path)
+                {
+                    unlink($game->first()->icon_path);
+                }
+                
+                if($game)
+                {
+                    $game->delete();
+                }
+                     
+                return json_encode(array('status'=>'ok','message'=>'Successfully deleted !'));
+            }
     }
 }

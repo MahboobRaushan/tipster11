@@ -29,6 +29,9 @@ data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}
   @include('panels/styles')
 
 </head>
+
+
+
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->

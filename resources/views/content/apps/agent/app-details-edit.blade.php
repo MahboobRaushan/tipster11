@@ -566,14 +566,20 @@ function fetch_data(page)
  {
   var user_id = $('#user_id').val();
   //alert(user_id);
-  $.ajax({
+   $.ajax({
+              beforeSend: function(){
+                $('.ajax-loader').css("visibility", "visible");
+              },
    url:site_base_url+"agent/details_edit_list_data?page="+page+'&user_id='+user_id,
    success:function(data)
    {    
     //alert(data);
     $('#table_data').html(data);
     
-   }
+   } ,
+              complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+              }    
   });
  }
 
@@ -679,7 +685,10 @@ $(document).on('click', '.confirmitem', function(event){
 
 $(document).on('click', '#btn_save_confirm', function(event){
   event.preventDefault();
-   $.ajax({
+    $.ajax({
+              beforeSend: function(){
+                $('.ajax-loader').css("visibility", "visible");
+              },
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
@@ -736,7 +745,10 @@ $(document).on('click', '#btn_save_confirm', function(event){
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
-              }
+              } ,
+              complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+              }    
           });
    
 });
@@ -752,7 +764,10 @@ $(document).on('click', '#basic_details_submit', function(event){
      
       if((name!='') && (status!=''))
       {
-          $.ajax({
+           $.ajax({
+              beforeSend: function(){
+                $('.ajax-loader').css("visibility", "visible");
+              },
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
@@ -791,7 +806,10 @@ $(document).on('click', '#basic_details_submit', function(event){
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
-              }
+              } ,
+              complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+              }  
           });
 
         
@@ -812,7 +830,10 @@ $(document).on('click', '#bank_details_submit', function(event){
 
 
  
-          $.ajax({
+           $.ajax({
+              beforeSend: function(){
+                $('.ajax-loader').css("visibility", "visible");
+              },
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
@@ -851,7 +872,10 @@ $(document).on('click', '#bank_details_submit', function(event){
                   //$('#btn-save_edit').html('Save Changes');
                  
                   
-              }
+              } ,
+              complete: function(){
+                $('.ajax-loader').css("visibility", "hidden");
+              }  
           });
 
         

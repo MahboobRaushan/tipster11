@@ -33,7 +33,11 @@
  // die();
   ?>
 
-   
+
+ 
+
+
+
 
 
 <!-- poolss list start -->
@@ -509,6 +513,29 @@ alt="preview image" style="max-height: 100px;">
       </div>
     </div>
     <!-- Modal to add edit league Ends-->
+
+     <!-- Modal to view league starts-->
+    <div class="modal modal-slide-in edit-pools-modal fade" id="modals-slide-in-view-result">
+      <div class="modal-dialog">
+       
+         <form class="edit-new-league modal-content pt-0"  id="postForm_view_result" name="postForm_view_result" > 
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel_view_result">Pool / Jackpot Winner</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div  id="details_modal_body_content_result">
+             
+            </div>
+           
+            <button  class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          </form>
+        
+      </div>
+    </div>
+    <!-- Modal to add edit league Ends-->
+
 
      <!-- Modal to match pool starts-->
     <div class="modal modal-slide-in match-pool-modal fade" id="modals-slide-in-match">
