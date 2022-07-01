@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Pools List')
+@section('title', 'Jackpot List')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -73,7 +73,7 @@
         <form class="add-new-pools modal-content pt-0"  id="postForm" name="postForm" enctype="multipart/form-data">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Pool</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add New Jackpot</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="mb-1">
@@ -82,7 +82,7 @@
                 type="text"
                 class="form-control dt-full-name"
                 id="basic-icon-default-fullname"
-                placeholder="Pool 1"
+                placeholder="Jackpot 1"
                 name="name"
               />
             </div>
@@ -153,7 +153,7 @@ alt="preview image" style="max-height: 100px;">
               <label class="form-label" for="basic-icon-default-fullname">Commission (%)</label>
              
              <table width="100%" >
-                <tr><th>Mega Jackpot</th><th>Pool Prize</th><th>Company</th><th>Agent</th></tr>
+                <tr><th>Mega Jackpot</th><th>Jackpot Prize</th><th>Company</th><th>Agent</th></tr>
                 <tr><td><input
                 type="number"
                 class="form-control dt-full-name"
@@ -250,7 +250,7 @@ alt="preview image" style="max-height: 100px;">
           <input type="hidden" id="edit_id" name="edit_id" value="" />
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel_edit">Edit Pool</h5>
+            <h5 class="modal-title" id="exampleModalLabel_edit">Edit Jackpot</h5>
           </div>
           <div class="modal-body flex-grow-1">
             
@@ -261,7 +261,7 @@ alt="preview image" style="max-height: 100px;">
                 type="text"
                 class="form-control dt-full-name"
                 id="basic-icon-default-name_edit"
-                placeholder="Pool 1"
+                placeholder="Jackpot 1"
                 name="name"
               />
             </div>
@@ -333,7 +333,7 @@ alt="preview image" style="max-height: 100px;">
               <label class="form-label" for="basic-icon-default-fullname">Commission (%)</label>
              
              <table width="100%" >
-                <tr><th>Mega Jackpot</th><th>Pool Prize</th><th>Company</th><th>Agent</th></tr>
+                <tr><th>Mega Jackpot</th><th>Jackpot Prize</th><th>Company</th><th>Agent</th></tr>
                 <tr><td><input
                 type="number"
                 class="form-control dt-full-name"
@@ -431,7 +431,7 @@ alt="preview image" style="max-height: 100px;">
           </div>
           <div class="modal-body p-3 pt-0">
             <div class="text-center mb-2">
-              <h1 class="mb-1">Delete Pool</h1>
+              <h1 class="mb-1">Delete Jackpot</h1>
               <p>Are you sure?</p>
             </div>
 
@@ -466,7 +466,7 @@ alt="preview image" style="max-height: 100px;">
           </div>
           <div class="modal-body p-3 pt-0">
             <div class="text-center mb-2">
-              <h1 class="mb-1">Delete Pool Match</h1>
+              <h1 class="mb-1">Delete Jackpot Match</h1>
               <p>Are you sure?</p>
             </div>
 
@@ -500,7 +500,7 @@ alt="preview image" style="max-height: 100px;">
           <form class="edit-new-league modal-content pt-0"  id="postForm_view" name="postForm_view" >
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel_view">Pool Details</h5>
+            <h5 class="modal-title" id="exampleModalLabel_view">Jackpot Details</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div  id="details_modal_body_content">
@@ -521,7 +521,7 @@ alt="preview image" style="max-height: 100px;">
          <form class="edit-new-league modal-content pt-0"  id="postForm_view_result" name="postForm_view_result" > 
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel_view_result">Pool / Jackpot Winner</h5>
+            <h5 class="modal-title" id="exampleModalLabel_view_result">Jackpot / Jackpot Winner</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div  id="details_modal_body_content_result">

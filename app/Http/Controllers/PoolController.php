@@ -339,7 +339,7 @@ class PoolController extends Controller
                 ->count();
                 if($pool_match_total_count >= 10)
                 {
-                    return json_encode(array('status'=>'notok','message'=>'Maximum match on a Pool , you reached !')); 
+                    return json_encode(array('status'=>'notok','message'=>'Maximum match on a Jackpot , you reached !')); 
                 }
                 else
                 {

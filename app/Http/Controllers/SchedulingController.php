@@ -15,9 +15,10 @@ class SchedulingController extends Controller
         //return 0;
         /*
         DB::table('testing')->insert(
-            ['name' => rand(100,999), 'description'=>date('Y-m-d H:i:s')]
+            ['description'=>date('Y-m-d H:i:s')]
         );
         */
+        
 
         $current_date_time = Carbon::now()->toDateTimeString();
         $currentTime = strtotime($current_date_time);
@@ -88,7 +89,29 @@ class SchedulingController extends Controller
             }
         }
 
+     //mega jackpot round exist check  start 
+        $current_mega_jackpot_id = 0;
+
         
-               
+         $mega_jackpotcount = DB::table('mega_jackpot')                
+                ->where('status','Active')                 
+                 ->count();
+         if($mega_jackpotcount > 0 )
+         {
+               $current_mega_jackpot_id = DB::table('mega_jackpot')                
+                ->where('status','Active')                 
+                 ->first()->id; 
+
+                 $mega_jackpot_round_exist = DB::table('mega_jackpot_round')                
+                ->where('mega_jackpot_id',$current_mega_jackpot_id)                 
+                 ->count();
+
+                 if($mega_jackpot_round_exist==0)
+                 {
+                    DB::table('mega_jackpot_round')                    
+                    ->insert(['mega_jackpot_id' => $current_mega_jackpot_id,'round_title'=>'Round#1','is_running'=>'1','is_applicable_for_mega_jackpot'=>'1']);
+                 }
+         }
+          //mega jackpot round exist check   end
     }
 }
