@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "Jackpots" => "Jackpots",
+    "Pool" => "Jackpot",
     "Role" => "Role",
     "Direct" => "Direct",
     "Indirect" => "Indirect",

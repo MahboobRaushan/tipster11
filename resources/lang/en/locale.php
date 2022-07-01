@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "Jackpots" => "Jackpots",
+    "Pool" => "Jackpot",
     "Adjust Log" => "Adjust Log",
     "Deposits" => "Deposits",
     "Players" => "Players",
@@ -8,7 +10,7 @@ return [
     "Notifications" => "Notifications",
     "Announcements" => "Announcements",
     "Matches" => "Matches",
-    "Pools" => "Pools",
+    "Pools" => "Jackpots",
     "Mega Jackpots" => "Mega Jackpots",
     "Company WinLoss" => "Company WinLoss",
     "Statements" => "Statements",
