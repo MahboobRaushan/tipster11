@@ -28,10 +28,40 @@ class PoolController extends Controller
         
         $custom_get_all_permissions_access = $custom_permission_controller->custom_get_all_permissions();
 
+       
+        $allpools = DB::table('pools')->select('name')->get();
+        $max_num=0;
+        if(!empty($allpools))
+        {
+            foreach($allpools as $vv)
+            {
+                $tempstr = $vv->name;
+              
+                $temparray = explode(' ',$tempstr);
+              
+                if(!empty($temparray))
+                {
+                    foreach($temparray as $tempval)
+                    {
+                        $tempval=intval($tempval);
+                        
+                            if($tempval > $max_num)
+                            {
+                                $max_num = $tempval;
+                            }
+                     
+                    }
+                }
+            }
+        }
+        $max_num++;
+        
+       
+
 
         $pageConfigs = ['pageHeader' => false];  
         //return view('/comming-soon',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
-         return view('/content/apps/pools/app-pools-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
+         return view('/content/apps/pools/app-pools-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'max_num'=>$max_num]);
     }
      public function ajaxlist()
     {

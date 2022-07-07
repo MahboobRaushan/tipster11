@@ -123,6 +123,7 @@ class MatchController extends Controller
             
         ]);
 
+        /*
            $matchexist = DB::table('match')                   
             ->where('homeTeam',$request->homeTeam)
             ->where('awayTeam',$request->awayTeam)
@@ -131,6 +132,7 @@ class MatchController extends Controller
          {
             return json_encode(array('status'=>'notok','message'=>'These Home Team and Away Team combination already exist.'));
          }
+         */
 
         if ($v->fails())
         {
@@ -215,6 +217,7 @@ class MatchController extends Controller
 
         // return json_encode(array('status'=>'ok','message'=>'Successfully updated!','request'=> $request->name));
 
+        /*
         $matchexist = DB::table('match')                   
             ->where('homeTeam',$request->homeTeam)
             ->where('awayTeam',$request->awayTeam)
@@ -224,6 +227,8 @@ class MatchController extends Controller
          {
             return json_encode(array('status'=>'notok','message'=>'These Home Team and Away Team combination already exist in another match.'));
          }
+
+         */
 
         if ($v->fails())
         {

@@ -906,18 +906,47 @@ public function getalljackpot(Request $request)
   public function login(Request $request)
 {
   $request->validate([
-  'email' => 'required|string|email',
+  'email' => 'required|string',
   'password' => 'required|string',
   'remember_me' => 'boolean'
   ]);
 
-  $credentials = request(['email','password']);
+  $pos = strpos($request->email, '@');
+  if ($pos !== false) 
+  {
+      $credentials = array('email'=>$request->email,'password'=>$request->password);
+  }
+  else 
+  {
+      $user_2_count =  User:: where('unique_id',$request->email)->count();
+      if($user_2_count==0)
+      {
+        return response()->json([
+              'message' => 'Unauthorized',
+              'loginStatus'=>false,
+              'user'=>null
+              
+          ],200);
+      }
+      else 
+      {
+         $email =  User:: where('unique_id',$request->email)->first()->email;
+          $credentials = array('email'=>$email,'password'=>$request->password);
+      }
+  }
+
+
+
+  //$credentials = request(['email','password']);
+
+
   if(!Auth::attempt($credentials))
   {
   return response()->json([
       'message' => 'Unauthorized',
       'loginStatus'=>false,
-      'user'=>null,
+      'user'=>null
+      
   ],200);
   }
 

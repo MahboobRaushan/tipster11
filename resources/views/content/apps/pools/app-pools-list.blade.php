@@ -83,6 +83,7 @@
                 class="form-control dt-full-name"
                 id="basic-icon-default-fullname"
                 placeholder="Jackpot 1"
+                value="Jackpot {{$max_num}}"
                 name="name"
               />
             </div>
