@@ -210,6 +210,7 @@ class PoolController extends Controller
                 ->where('bets.losswinType','Win')
                 ->get();
 
+           
 
         return json_encode(array('pool'=>$pool,'match'=>$match,'league'=>$league,'firstWinnergroup'=>$firstWinnergroup,'secondWinnergroup'=>$secondWinnergroup,'thirdWinnergroup'=>$thirdWinnergroup));
     }

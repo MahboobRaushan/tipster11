@@ -387,9 +387,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('statement/companywinloss', [StatementController::class,'companywinloss_list'])->name('statementcompanywinloss');
 
     Route::get('megajackpots', [MegajackpotController::class,'megajackpots_list'])->name('megajackpots');
+     Route::get('megajackpots/ajaxlist/{page_no}', [MegajackpotController::class,'ajaxlist']);
      Route::post('megajackpots/baseprize', [MegajackpotController::class,'baseprize'])->name('megajackpots.baseprize');
      Route::post('megajackpots/poolround', [MegajackpotController::class,'poolround'])->name('megajackpots.poolround');
-
+      Route::get('involvedlist', [MegajackpotController::class,'involvedlist'])->name('involvedlist');
      
 
     Route::get('pool', [PoolController::class,'pool_list'])->name('pool');

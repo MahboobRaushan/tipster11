@@ -282,7 +282,8 @@
               <th>Final Prize (Pool Final Total Prize)</th>
               <th>Winner</th>
               <th>Contributed Amount to Mega Jackpot</th>
-              <th>Which Mega Jackpot</th>
+              <th>Which Mega Jackpot (Round)</th>
+             
               <th>Status</th>
               <th>Actions</th>
               
@@ -290,6 +291,10 @@
           </thead>
         </table>
       </div>
+
+         <div class="d-flex justify-content-between mx-0 row dataTables_wrapper "><div class="col-sm-12 col-md-4"><div class="dataTables_info" id="DataTables_Table_1_info" >Showing <span id="pagination_start_no"></span> to <span id="pagination_end_no"></span> of <span id="pagination_total_entries"></span> entries</div></div><div class="col-sm-12 col-md-8"><div class="dataTables_paginate paging_simple_numbers" id="dataTables_paginate_id" ><div class="pagination" >
+          
+        </div></div></div></div>
     </div>
     
 
@@ -304,11 +309,10 @@
     
     </div>
     <div class="card-datatable table-responsive pt-0">
-      <table class="megajackpots_involved-list-table table">
+      <table class="megajackpots_involved-list-table_2 table">
         <thead class="table-light">
           <tr>
-            <th></th>           
-            
+             <th>Name</th>
             <th>Start Time</th>           
             <th>End Time</th>
             <th>Base Prize</th>
@@ -318,6 +322,24 @@
             
           </tr>
         </thead>
+        <tbody>
+          @if(!empty($mega_jackpot_history))
+            @foreach($mega_jackpot_history as $mj)
+              <tr>
+                <td>{{$mj->name}}</td>
+                <td>{{$mj->startTime}}</td>          
+                <td>{{$mj->endTime}}</td> 
+                <td>{{(int)$mj->basePrize}}</td> 
+                <td>{{(int)$mj->accumulatedPrize}}</td> 
+                <td>{{(int)($mj->basePrize+$mj->accumulatedPrize)}}</td>
+                 <td>{{$mj->winner_user_ids}}</td>
+                
+              </tr>
+            @endforeach
+          @endif
+        </tbody>
+       
+      
       </table>
     </div>
     
@@ -369,6 +391,28 @@
       </div>
     </div>
 
+
+ <!-- Modal to view league starts-->
+    <div class="modal modal-slide-in edit-pools-modal fade" id="modals-slide-in-view">
+      <div class="modal-dialog">
+       
+          <form class="edit-new-league modal-content pt-0"  id="postForm_view" name="postForm_view" >
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel_view">Jackpot Details</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div  id="details_modal_body_content">
+             
+            </div>
+           
+            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add edit league Ends-->
+    
 @endsection
 
 @section('vendor-script')

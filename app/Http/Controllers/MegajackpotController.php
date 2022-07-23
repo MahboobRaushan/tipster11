@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use App\Models\Megajackpot;
+use App\Models\Megajackpotdetails;
 
 class MegajackpotController extends Controller
 {
@@ -14,6 +15,13 @@ class MegajackpotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $per_page;
+    function __construct() {
+        $this->per_page = 10;
+      }
+
+   
+
     public function megajackpots_list()
     { 
          $custom_permission_controller = new CustomPermissionController;
@@ -38,6 +46,8 @@ class MegajackpotController extends Controller
         $pool_1_details = [];
          $pool_2_details = [];
           $pool_3_details = [];
+
+           $mega_jackpot_history = Megajackpot::orderBy('id','desc')->get();
 
 
 
@@ -106,9 +116,74 @@ class MegajackpotController extends Controller
        // echo "<pre>";
        //  print_r($pooldetails);
        //  die();
+
+
        
 
-        return view('/content/apps/megajackpots/app-megajackpots-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'mega_jackpot_id'=>$mega_jackpot_id,'mega_jackpot_basePrize'=>$mega_jackpot_basePrize,'mega_jackpot_accumulatedPrize'=>$mega_jackpot_accumulatedPrize,'mega_jackpot_round'=>$mega_jackpot_round,'pool_1_details'=>$pool_1_details,'pool_2_details'=>$pool_2_details,'pool_3_details'=>$pool_3_details,'pooldetails'=>$pooldetails]);
+        return view('/content/apps/megajackpots/app-megajackpots-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'mega_jackpot_id'=>$mega_jackpot_id,'mega_jackpot_basePrize'=>$mega_jackpot_basePrize,'mega_jackpot_accumulatedPrize'=>$mega_jackpot_accumulatedPrize,'mega_jackpot_round'=>$mega_jackpot_round,'pool_1_details'=>$pool_1_details,'pool_2_details'=>$pool_2_details,'pool_3_details'=>$pool_3_details,'pooldetails'=>$pooldetails,'mega_jackpot_history'=>$mega_jackpot_history]);
+    }
+
+    public function handle_pagination($total, $page, $shown, $url) {  
+          $pages = ceil( $total / $shown ); 
+          $range_start = ( ($page >= 5) ? ($page - 3) : 1 );
+          $range_end = ( (($page + 5) > $pages ) ? $pages : ($page + 5) );
+
+          if ( $page >= 1 ) {
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url .'1">&laquo; </a></li>';
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $page ) .'">&lsaquo; </a></li>';
+            $r[] = ( ($range_start > 1) ? ' ... ' : '' ); 
+          }
+
+          if ( $range_end > 1 ) {
+            foreach(range($range_start, $range_end) as $key => $value) {
+              if ( $value == ($page + 1) ) $r[] = '<li class="page-item active" aria-current="page"><span class="page-link">'. $value .'</span></li>'; 
+              else $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ($value ) .'">'. $value .'</a></li>'; 
+            }
+          }
+
+          if ( ( $page + 1 ) < $pages ) {
+            $r[] = ( ($range_end < $pages) ? ' ... ' : '' );
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $page + 2 ) .'"> &rsaquo;</a></li>';
+            $r[] = '<li class="page-item"><a class="page-link" href="'. $url . ( $pages  ) .'"> &raquo;</a></li>';
+          }
+
+          return ( (isset($r)) ? '<div class="pagination" style="float:right;"><nav><ul class="pagination">'. implode("", $r) .'</ul></nav></div>' : '');
+        }     
+     public function ajaxlist($page_no)
+    {
+       // Paginator::setCurrentPage($page_no);
+        $per_page = $this->per_page;
+        $offset=($page_no -1 ) * $per_page ;
+        $limit=$per_page;
+
+        $data = DB::table('mega_jackpot_details')
+            //->select('pools.*','mega_jackpot.name as mega_jackpot_name')
+             ->select('pools.*','mega_jackpot.name as mega_jackpot_name','mega_jackpot_round.round_title')           
+            ->leftJoin('pools', 'pools.id', '=', 'mega_jackpot_details.pool_id')
+            ->leftJoin('mega_jackpot', 'mega_jackpot.id', '=', 'mega_jackpot_details.mega_jackpot_id')
+            //->leftJoin('mega_jackpot_round as mjr_1', 'mjr_1.pool_1_id', '=', 'pools.id')
+            //->leftJoin('mega_jackpot_round as mjr_2', 'mjr_1.pool_2_id', '=', 'pools.id')
+            //->leftJoin('mega_jackpot_round as mjr_3', 'mjr_1.pool_3_id', '=', 'pools.id')
+            ->leftJoin('mega_jackpot_round', function ($join) {
+                $join->on('mega_jackpot_round.pool_1_id', '=', 'mega_jackpot_details.pool_id')->orOn('mega_jackpot_round.pool_2_id', '=', 'mega_jackpot_details.pool_id')->orOn('mega_jackpot_round.pool_3_id', '=', 'mega_jackpot_details.pool_id');
+            })
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
+           
+            $totalcount = DB::table('mega_jackpot_details')
+            ->select('mega_jackpot_details.*')
+            //->leftJoin('leagues', 'leagues.id', '=', 'match.league')
+            //->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
+            //->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')          
+            ->count();
+
+           $links = $this->handle_pagination($totalcount, ($page_no-1), $this->per_page, url('/megajackpots?page='));
+           $page_link = array('links'=>$links,'offset'=>$offset,'totalcount'=>$totalcount);
+           
+        return json_decode(json_encode(array('per_page'=>$per_page,'offset'=>$offset,'totalcount'=>$totalcount,'page_links'=>$links,'data'=>$data,'page_no'=>$page_no)));
+        
     }
 
     public function baseprize(Request $request)

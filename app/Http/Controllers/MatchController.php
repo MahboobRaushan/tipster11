@@ -11,7 +11,9 @@ use App\Models\League;
 use App\Models\Tim;
 use App\Models\Pool;
 use App\Models\Betdetails;
-
+use App\Models\Megajackpot;
+use App\Models\Megajackpotdetails;
+use App\Models\Bet;
 
 
 class MatchController extends Controller
@@ -291,7 +293,7 @@ class MatchController extends Controller
             $match_save_result = $match->save();
 
 
-           
+            
 
             if($match_save_result)
             {
@@ -337,9 +339,9 @@ class MatchController extends Controller
 
 
                               //$currentbetdetailsmatch = Betdetails::where('id',$this_id)->first();
-                              $currentbetdetailsmatch = DB::table('bet_details')
-                               ->where('id',$this_id)               
-                                ->first();
+                              //$currentbetdetailsmatch = DB::table('bet_details')
+                              // ->where('id',$this_id)               
+                              //  ->first();
 
 
                               //$currentbetdetailsmatch->save();
@@ -353,8 +355,11 @@ class MatchController extends Controller
                             
                         }
                     }
+                    if(($status=='Void') || ($status=='Finished'))
+                    {
+                        $this->recalculatePoolResultByMatchId($request->edit_id); 
+                    }
 
-               $this->recalculatePoolResultByMatchId($request->edit_id); 
             }
 
             if($originalstartTime!=$startTime)
@@ -435,12 +440,215 @@ class MatchController extends Controller
                 {
                     $pool_id = $pool->id;
                     $perBetAmount = $pool->perBetAmount;
+
+
+
+                     $mega_jackpot_round_exist_1 = DB::table('mega_jackpot_round')                
+                    ->where('pool_1_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_1 > 0)
+                     {
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_1_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_1_status='Finished';
+                         $mega_jackpot_round_update->save();
+                     }
+
+                      $mega_jackpot_round_exist_2 = DB::table('mega_jackpot_round')                
+                    ->where('pool_2_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_2 > 0)
+                     {
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_2_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_2_status='Finished';
+                         $mega_jackpot_round_update->save();
+                     }
+
+                      $mega_jackpot_round_exist_3 = DB::table('mega_jackpot_round')                
+                    ->where('pool_3_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_3 > 0)
+                     {
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_3_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_3_status='Finished';
+                         $mega_jackpot_round_update->save();
+                     }
+
+
                     $this->recalculatePoolResultByPoolId($pool_id,$perBetAmount);
+                    $this->recalculateMegaJackpotResultByPoolId($pool_id);
                 }
             }
             
 
      }
+
+      public function recalculateMegaJackpotResultByPoolId($pool_id){
+        if(Megajackpot::where('status','Active')->count() > 0)
+        {
+             $megajackpot = Megajackpot::where('status','Active')->first();
+             $mega_jackpot_id = $megajackpot->id;
+
+           
+
+           $isapplicablecount =   DB::table("mega_jackpot_round")
+            ->whereRaw('is_running=1 and pool_1_status="Finished" and pool_2_status="Finished" and pool_3_status="Finished" and (pool_1_id="'.$pool_id.'"  or pool_2_id="'.$pool_id.'"  or pool_3_id="'.$pool_id.'" ) ')
+            ->count();
+            if($isapplicablecount > 0)
+            {
+                 $isapplicableexist =   DB::table("mega_jackpot_round")
+                ->whereRaw('is_running=1 and pool_1_status="Finished" and pool_2_status="Finished" and pool_3_status="Finished" ')
+                ->first();
+                $pool_1_id = $isapplicableexist->pool_1_id;
+                $pool_2_id = $isapplicableexist->pool_2_id;
+                $pool_3_id = $isapplicableexist->pool_3_id;
+
+                $group_1_result = Bet::select('user_id')->where(['pool_id'=>$pool_1_id,'losswinType'=>'Win','isGroup1'=>'1'])->get();
+                $group_1_array=[];
+                if(!empty($group_1_result))
+                {
+                    foreach($group_1_result as $group_1)
+                    {
+                        $group_1_array[]=$group_1->user_id;
+                    }
+                }
+
+                $group_2_result = Bet::select('user_id')->where(['pool_id'=>$pool_2_id,'losswinType'=>'Win','isGroup2'=>'1'])->get();
+                $group_2_array=[];
+                if(!empty($group_2_result))
+                {
+                    foreach($group_2_result as $group_2)
+                    {
+                        $group_2_array[]=$group_2->user_id;
+                    }
+                }
+
+                $group_3_result = Bet::select('user_id')->where(['pool_id'=>$pool_3_id,'losswinType'=>'Win','isGroup3'=>'1'])->get();
+                $group_3_array=[];
+                if(!empty($group_3_result))
+                {
+                    foreach($group_3_result as $group_3)
+                    {
+                        $group_3_array[]=$group_3->user_id;
+                    }
+                }
+
+                sort($group_1_array);
+                sort($group_2_array);
+                sort($group_3_array);
+
+                $final_winner_array=[];
+
+                $ar1 = $group_1_array;
+                $ar2 = $group_2_array;
+                $ar3 = $group_3_array;
+
+                $n1 = count($ar1); 
+                $n2 = count($ar2); 
+                $n3 = count($ar3); 
+
+                 $i = 0; $j = 0; $k = 0; 
+  
+                    // Iterate through three arrays while 
+                    // all arrays have elements 
+                    while ($i < $n1 && $j < $n2 && $k < $n3) 
+                    { 
+                          
+                        // If x = y and y = z, print any 
+                        // of them and move ahead in all  
+                        // arrays 
+                        if ($ar1[$i] == $ar2[$j] &&   $ar2[$j] == $ar3[$k]) 
+                        { 
+                            $final_winner_array[]= $ar1[$i] ; 
+                            $i++; 
+                            $j++; 
+                            $k++;  
+                        } 
+                  
+                        // x < y 
+                        else if ($ar1[$i] < $ar2[$j]) 
+                            $i++; 
+                  
+                        // y < z 
+                        else if ($ar2[$j] < $ar3[$k]) 
+                            $j++; 
+                  
+                        // We reach here when x > y and 
+                        // z < y, i.e., z is smallest 
+                        else
+                            $k++; 
+                    } 
+
+                    if(count($final_winner_array) > 0)
+                    {
+                        //winner
+                        $megajackpot->status='Finished';
+                        $megajackpot->winner_user_ids=implode(',',$final_winner_array);
+                        $megajackpot->endTime=date('Y-m-d H:i:s');
+                        $megajackpot->save();
+
+                        // add new entry mega jackpot 
+                        $allmega_jackpot = DB::table('mega_jackpot')->select('name')->get();
+                        $max_num=0;
+                        if(!empty($allmega_jackpot))
+                        {
+                            foreach($allmega_jackpot as $vv)
+                            {
+                                $tempstr = $vv->name;
+                              
+                                $temparray = explode(' ',$tempstr);
+                              
+                                if(!empty($temparray))
+                                {
+                                    foreach($temparray as $tempval)
+                                    {
+                                        $tempval=intval($tempval);
+                                        
+                                            if($tempval > $max_num)
+                                            {
+                                                $max_num = $tempval;
+                                            }
+                                     
+                                    }
+                                }
+                            }
+                        }
+                        $max_num++;
+                        $new_name = 'Mega Jackpot '.$max_num;
+
+                        $megajackpotData = array(
+                            'name'=>$new_name,
+                            'basePrize'=>0.0,
+                            'accumulatedPrize'=>0.0,
+                            'startTime'=>date('Y-m-d H:i:s'),
+                            'status'=>'Active',
+                            'created_at'=>date('Y-m-d H:i:s')
+                        );
+                        Megajackpot::create($megajackpotData); 
+
+
+                    }
+                    else
+                    {
+                        //no winner
+                    }
+
+                $isapplicableexist->is_running=2;
+                $isapplicableexist->save();
+
+
+
+            }
+
+
+         }
+
+      }
 
       public function recalculatePoolResultByPoolId($pool_id,$perBetAmount){
 
@@ -810,6 +1018,7 @@ class MatchController extends Controller
                
 
             }
+            /* calculate for mega jackpot winner */
 
 
       }
