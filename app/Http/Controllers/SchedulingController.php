@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Pool;
 use Carbon\Carbon;
+use App\Models\Megajackpot;
 
 class SchedulingController extends Controller
 {
@@ -33,65 +34,83 @@ class SchedulingController extends Controller
             $startT = $pool->startTime;
             $startTime = strtotime($startT);
             $endT = $pool->endTime;
-            $endTime = strtotime($endT);
-            $id = $pool->id;
-            $status = $pool->status;
-            if($currentTime < $startTime)
+            if($endT!='')
             {
-                //status = 0 inactive
-                if($status!='Inactive')
-                {                  
-                    DB::table('pools')
-                    ->where('id', $id)
-                    ->update(['status' => 'Inactive']);
-
-                }
-            }
-            if(($currentTime > $startTime) && ($currentTime < $endTime))
-            {
-                 //status = 1 active
-                if($status!='Active')
-                {
-                     DB::table('pools')
-                    ->where('id', $id)
-                    ->update(['status' => 'Active']);
-                }
-            }
-            if($currentTime > $endTime){
-                $matchscount = DB::table('pool_match')
-                ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
-                ->select('match.result')
-                ->whereNull('match.result')
-                ->where('match.status','!=','Void')                 
-                ->where('pool_match.pool_id',$id)               
-                ->count();
-                if($matchscount > 0)
+                $endTime = strtotime($endT);
+                $id = $pool->id;
+                $status = $pool->status;
+                if($currentTime < $startTime)
                 {
                     //status = 0 inactive
                     if($status!='Inactive')
-                    {
-                         DB::table('pools')
+                    {                  
+                        DB::table('pools')
                         ->where('id', $id)
                         ->update(['status' => 'Inactive']);
+
                     }
                 }
-                else 
+                if(($currentTime > $startTime) && ($currentTime < $endTime))
                 {
-                    //status = 2 finished
-                    if($status!='Finished')
+                     //status = 1 active
+                    if($status!='Active')
                     {
                          DB::table('pools')
                         ->where('id', $id)
-                        ->update(['status' => 'Finished']);
+                        ->update(['status' => 'Active']);
                     }
                 }
+                if($currentTime > $endTime){
+                    $matchscount = DB::table('pool_match')
+                    ->leftJoin('match', 'match.id', '=', 'pool_match.match_id')
+                    ->select('match.result')
+                    ->whereNull('match.result')
+                    ->where('match.status','!=','Void')                 
+                    ->where('pool_match.pool_id',$id)               
+                    ->count();
+                    if($matchscount > 0)
+                    {
+                        //status = 0 inactive
+                        if($status!='Inactive')
+                        {
+                             DB::table('pools')
+                            ->where('id', $id)
+                            ->update(['status' => 'Inactive']);
+                        }
+                    }
+                    else 
+                    {
+                        //status = 2 finished
+                        if($status!='Finished')
+                        {
+                             DB::table('pools')
+                            ->where('id', $id)
+                            ->update(['status' => 'Finished']);
+                        }
+                    }
 
+                }
             }
         }
 
      //mega jackpot round exist check  start 
         $current_mega_jackpot_id = 0;
 
+        $mega_jackpotcount_initial = DB::table('mega_jackpot')->count();
+        if($mega_jackpotcount_initial==0)
+        {
+             $new_name = 'Mega Jackpot 1';
+
+                        $megajackpotData = array(
+                            'name'=>$new_name,
+                            'basePrize'=>0.0,
+                            'accumulatedPrize'=>0.0,
+                            'startTime'=>date('Y-m-d H:i:s'),
+                            'status'=>'Active',
+                            'created_at'=>date('Y-m-d H:i:s')
+                        );
+                        Megajackpot::create($megajackpotData); 
+        }
         
          $mega_jackpotcount = DB::table('mega_jackpot')                
                 ->where('status','Active')                 
@@ -111,7 +130,49 @@ class SchedulingController extends Controller
                     DB::table('mega_jackpot_round')                    
                     ->insert(['mega_jackpot_id' => $current_mega_jackpot_id,'round_title'=>'Round#1','is_running'=>'1','is_applicable_for_mega_jackpot'=>'1']);
                  }
+                 //mega jackpot round exist check   end
          }
-          //mega jackpot round exist check   end
+         else
+         {
+             // add new entry mega jackpot 
+                        $allmega_jackpot = DB::table('mega_jackpot')->select('name')->get();
+                        $max_num=0;
+                        if(!empty($allmega_jackpot))
+                        {
+                            foreach($allmega_jackpot as $vv)
+                            {
+                                $tempstr = $vv->name;
+                              
+                                $temparray = explode(' ',$tempstr);
+                              
+                                if(!empty($temparray))
+                                {
+                                    foreach($temparray as $tempval)
+                                    {
+                                        $tempval=intval($tempval);
+                                        
+                                            if($tempval > $max_num)
+                                            {
+                                                $max_num = $tempval;
+                                            }
+                                     
+                                    }
+                                }
+                            }
+                        }
+                        $max_num++;
+                        $new_name = 'Mega Jackpot '.$max_num;
+
+                        $megajackpotData = array(
+                            'name'=>$new_name,
+                            'basePrize'=>0.0,
+                            'accumulatedPrize'=>0.0,
+                            'startTime'=>date('Y-m-d H:i:s'),
+                            'status'=>'Active',
+                            'created_at'=>date('Y-m-d H:i:s')
+                        );
+                        Megajackpot::create($megajackpotData); 
+         }
+          
     }
 }

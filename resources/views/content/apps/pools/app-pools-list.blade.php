@@ -77,16 +77,17 @@
           </div>
           <div class="modal-body flex-grow-1">
             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <label class="form-label" for="max_num_value">Name</label>
               <input
                 type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
+                class="form-control"
+                id="max_num_value"
                 placeholder="Jackpot 1"
                 value="Jackpot {{$max_num}}"
                 name="name"
               />
             </div>
+            <input type="hidden" id="max_num" value="{{$max_num}}" >
 
               <div class="mb-1">
               <label class="form-label" for="basic-icon-default-icon">Icon</label>

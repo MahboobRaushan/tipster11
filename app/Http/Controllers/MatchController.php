@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Match;
+
 
 use Validator;
 use Illuminate\Http\Request;
@@ -14,6 +14,7 @@ use App\Models\Betdetails;
 use App\Models\Megajackpot;
 use App\Models\Megajackpotdetails;
 use App\Models\Bet;
+use App\Models\Match;
 
 
 class MatchController extends Controller
@@ -153,12 +154,17 @@ class MatchController extends Controller
             //updatedBy
            
 
-           
+           //$matchData = [];
             $matchData = array('homeTeam'=>$homeTeam,'awayTeam'=>$awayTeam,'startTime'=>$startTime,'endTime'=>$endTime,'league'=>$league,'createdBy'=>$createdBy);
-            
+            //$match = Match::create($matchData);   
+           //$match = New Match();  
+           //$match->create($matchData) ; 
 
-          
-            $match = Match::create($matchData);          
+            $match = DB::table('match')->insert(
+                            $matchData
+                        );   
+
+             
 
             return json_encode(array('status'=>'ok','message'=>'Successfully added!','res'=>$matchData));
          
@@ -205,7 +211,7 @@ class MatchController extends Controller
      * @param  \App\Models\Match  $match
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Match $match)
+    public function update(Request $request)
     {
          $v = Validator::make($request->all(),[
              'homeTeam' => 'required',
@@ -251,7 +257,7 @@ class MatchController extends Controller
             
 
 
-            $match = Match::where('id',$request->edit_id)->first();
+            $match = DB::table('match')->where('id',$request->edit_id)->first();
             $originalstartTime=$match->startTime;
 
             $updatedBy = Auth::user()->id;
@@ -1032,7 +1038,7 @@ class MatchController extends Controller
     
     public function destroy($id){
        
-        $match = Match::where('id',$id);
+        $match = DB::table('match')->where('id',$id);
         
          $dataexist = DB::table('pool_match')
              ->where('match_id',$id)

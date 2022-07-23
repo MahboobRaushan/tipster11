@@ -108,7 +108,8 @@ class MegajackpotController extends Controller
                     ->pluck('pool_id')             
                      ->toArray();
 
-        $pooldetails = DB::table('pools')   
+        $pooldetails = DB::table('pools') 
+                    ->where('isJackpotPool',1) 
                     ->whereIn('status',['Active','Inactive'])
                     ->whereNotIn('id',$mega_jackpot_details_array)
                      ->get();             

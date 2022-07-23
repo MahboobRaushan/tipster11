@@ -397,6 +397,8 @@ class PoolController extends Controller
             }
             
             $this->recalculatePoolEndtime($request->pool_id);
+
+            app('App\Http\Controllers\SchedulingController')->scheduling();
            
                 
             return json_encode(array('status'=>'ok','message'=>'Successfully added !'));       
