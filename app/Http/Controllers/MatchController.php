@@ -45,7 +45,7 @@ class MatchController extends Controller
         $pageConfigs = ['pageHeader' => false];  
         $league = League::where('status',1)->orderBy('name','asc')->get();
 
-      
+     
 
         return view('/content/apps/match/app-match-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'league'=>$league]);
     }
@@ -238,12 +238,39 @@ class MatchController extends Controller
 
          */
 
+         $mmssg = '';
+         
+         /*
+          $mmssg=$mmssg.'<br>edit_id='.$request->edit_id;
+         $mmssg=$mmssg.'<br>homeTeam='.$request->homeTeam;
+         $mmssg=$mmssg.'<br>awayTeam='.$request->awayTeam;
+         $mmssg=$mmssg.'<br>startTimedate='.$request->startTimedate;
+         $mmssg=$mmssg.'<br>startTimetime='.$request->startTimetime;
+         $mmssg=$mmssg.'<br>endTimedate='.$request->endTimedate;
+         $mmssg=$mmssg.'<br>endTimetime='.$request->endTimetime;
+         $mmssg=$mmssg.'<br>league='.$request->league;
+          $mmssg=$mmssg.'<br>home_score='.$request->home_score;
+         $mmssg=$mmssg.'<br>away_score='.$request->away_score;
+
+          $mmssg=$mmssg.'<br>1111 edit_id='.$request->edit_id;
+
+            return json_encode(array('status'=>'ok','message'=>$mmssg,'gm'=>'abcd'));
+
+        */
+
+         
+         
+
+         
+
         if ($v->fails())
         {
             return json_encode(array('status'=>'notok','message'=>$v->errors()));
         }
         else
         {
+
+
              $homeTeam = $request->homeTeam;
             $awayTeam = $request->awayTeam;
              $startTime = $request->startTimedate.' '.$request->startTimetime;
@@ -260,19 +287,15 @@ class MatchController extends Controller
             $match = DB::table('match')->where('id',$request->edit_id)->first();
             $originalstartTime=$match->startTime;
 
+          
+
             $updatedBy = Auth::user()->id;
+
+
 
             //updatedBy
 
-            $match->homeTeam = $homeTeam;
-            $match->awayTeam = $awayTeam;
-            $match->startTime = $startTime;
-            $match->endTime = $endTime;
-            $match->league = $league;
-            $match->result = $result;
-
-            $match->home_score = $home_score;
-            $match->away_score = $away_score;
+           
 
             if($status=='Void')
             {
@@ -295,14 +318,31 @@ class MatchController extends Controller
             $match->status = $status;
 
             $match->updatedBy = $updatedBy;
+
+            $match_save_result = DB::table('match')
+            ->where('id', $request->edit_id)
+            ->update([
+                'homeTeam' => $homeTeam,
+                'awayTeam' => $awayTeam,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'league' => $league,
+                'result' => $result,
+                'home_score' => $home_score,
+                'away_score' => $away_score,
+                'status' => $status
+            ]);
                       
-            $match_save_result = $match->save();
+            //$match_save_result = $match->save();
 
-
+            
             
 
             if($match_save_result)
             {
+
+                
+
 
               
                 // bet_details table match_result and result column should update
@@ -356,6 +396,9 @@ class MatchController extends Controller
                               DB::table('bet_details')
                                 ->where('id',$this_id)
                                 ->update(['result' => $final_result, 'match_result' => $final_match_result]);
+
+
+
 
 
                             
@@ -423,9 +466,17 @@ class MatchController extends Controller
                             $beforeOneHour = date("Y-m-d H:i:s", $time);
                         }
                 
+                /*
                 $pool = Pool::where('id',$pool_id)->first();
                 $pool->endTime = $beforeOneHour;
                 $pool->save();
+                */
+
+                 DB::table('pools')
+                ->where('id',$pool_id)
+                ->update(['endTime' => $beforeOneHour]);
+
+
 
      }
 
@@ -454,11 +505,18 @@ class MatchController extends Controller
                      ->count();
                       if($mega_jackpot_round_exist_1 > 0)
                      {
+                        /*
                          $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
                         ->where('pool_1_id',$pool_id)                 
                          ->first();
                          $mega_jackpot_round_update->pool_1_status='Finished';
                          $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_1_id',$pool_id) 
+                            ->update(['pool_1_status' => 'Finished']);
+
                      }
 
                       $mega_jackpot_round_exist_2 = DB::table('mega_jackpot_round')                
@@ -466,11 +524,18 @@ class MatchController extends Controller
                      ->count();
                       if($mega_jackpot_round_exist_2 > 0)
                      {
+                         /*
                          $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
                         ->where('pool_2_id',$pool_id)                 
                          ->first();
                          $mega_jackpot_round_update->pool_2_status='Finished';
                          $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_2_id',$pool_id) 
+                            ->update(['pool_2_status' => 'Finished']);
+
                      }
 
                       $mega_jackpot_round_exist_3 = DB::table('mega_jackpot_round')                
@@ -478,11 +543,17 @@ class MatchController extends Controller
                      ->count();
                       if($mega_jackpot_round_exist_3 > 0)
                      {
+                        /*
                          $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
                         ->where('pool_3_id',$pool_id)                 
                          ->first();
                          $mega_jackpot_round_update->pool_3_status='Finished';
                          $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_3_id',$pool_id) 
+                            ->update(['pool_3_status' => 'Finished']);
                      }
 
 
@@ -593,10 +664,17 @@ class MatchController extends Controller
                     if(count($final_winner_array) > 0)
                     {
                         //winner
-                        $megajackpot->status='Finished';
-                        $megajackpot->winner_user_ids=implode(',',$final_winner_array);
-                        $megajackpot->endTime=date('Y-m-d H:i:s');
-                        $megajackpot->save();
+                       
+
+                        //$megajackpot->save();
+
+                        
+
+
+                         DB::table('mega_jackpot')
+                        ->where('id',$mega_jackpot_id)
+                        ->update(['status' => 'Finished', 'winner_user_ids' => implode(',',$final_winner_array),'endTime'=>date('Y-m-d H:i:s')]);
+
 
                         // add new entry mega jackpot 
                         $allmega_jackpot = DB::table('mega_jackpot')->select('name')->get();
@@ -644,8 +722,16 @@ class MatchController extends Controller
                         //no winner
                     }
 
+                    // mega jackpot round new add start 
+
+                    // mega jackpot round new add start
+
                 $isapplicableexist->is_running=2;
-                $isapplicableexist->save();
+                //$isapplicableexist->save();
+
+                 DB::table("mega_jackpot_round")
+                ->whereRaw('is_running=1 and pool_1_status="Finished" and pool_2_status="Finished" and pool_3_status="Finished" ')
+                 ->update(['is_running' => 2]);
 
 
 
