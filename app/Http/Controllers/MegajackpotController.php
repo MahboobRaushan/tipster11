@@ -67,7 +67,8 @@ class MegajackpotController extends Controller
                  {
 
                     $mega_jackpot_round = DB::table('mega_jackpot_round')                
-                    ->where('mega_jackpot_id',$mega_jackpot_id)                 
+                    ->where('mega_jackpot_id',$mega_jackpot_id) 
+                     ->where('is_running',1)               
                      ->first();
 
                     if($mega_jackpot_round->pool_1_id > 0)

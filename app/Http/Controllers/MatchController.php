@@ -31,6 +31,10 @@ class MatchController extends Controller
 
     public function match_list()
     { 
+
+        //$this->recalculateMegaJackpotResultByPoolId(20);
+        //die();
+
           $custom_permission_controller = new CustomPermissionController;
         $custom_permission_access = $custom_permission_controller->custom_permission('match.list');
         if(!$custom_permission_access)
@@ -88,6 +92,7 @@ class MatchController extends Controller
             ->leftJoin('leagues', 'leagues.id', '=', 'match.league')
             ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
             ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
+            ->orderByRaw("FIELD(match.status , 'Running', 'Finished', 'Void') ASC")
             ->offset($offset)
             ->limit($limit)
             ->get();
@@ -500,63 +505,7 @@ class MatchController extends Controller
 
 
 
-                     $mega_jackpot_round_exist_1 = DB::table('mega_jackpot_round')                
-                    ->where('pool_1_id',$pool_id)                 
-                     ->count();
-                      if($mega_jackpot_round_exist_1 > 0)
-                     {
-                        /*
-                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
-                        ->where('pool_1_id',$pool_id)                 
-                         ->first();
-                         $mega_jackpot_round_update->pool_1_status='Finished';
-                         $mega_jackpot_round_update->save();
-                         */
-
-                          DB::table('mega_jackpot_round')
-                            ->where('pool_1_id',$pool_id) 
-                            ->update(['pool_1_status' => 'Finished']);
-
-                     }
-
-                      $mega_jackpot_round_exist_2 = DB::table('mega_jackpot_round')                
-                    ->where('pool_2_id',$pool_id)                 
-                     ->count();
-                      if($mega_jackpot_round_exist_2 > 0)
-                     {
-                         /*
-                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
-                        ->where('pool_2_id',$pool_id)                 
-                         ->first();
-                         $mega_jackpot_round_update->pool_2_status='Finished';
-                         $mega_jackpot_round_update->save();
-                         */
-
-                          DB::table('mega_jackpot_round')
-                            ->where('pool_2_id',$pool_id) 
-                            ->update(['pool_2_status' => 'Finished']);
-
-                     }
-
-                      $mega_jackpot_round_exist_3 = DB::table('mega_jackpot_round')                
-                    ->where('pool_3_id',$pool_id)                 
-                     ->count();
-                      if($mega_jackpot_round_exist_3 > 0)
-                     {
-                        /*
-                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
-                        ->where('pool_3_id',$pool_id)                 
-                         ->first();
-                         $mega_jackpot_round_update->pool_3_status='Finished';
-                         $mega_jackpot_round_update->save();
-                         */
-
-                          DB::table('mega_jackpot_round')
-                            ->where('pool_3_id',$pool_id) 
-                            ->update(['pool_3_status' => 'Finished']);
-                     }
-
-
+                   
                     $this->recalculatePoolResultByPoolId($pool_id,$perBetAmount);
                     $this->recalculateMegaJackpotResultByPoolId($pool_id);
                 }
@@ -641,7 +590,13 @@ class MatchController extends Controller
                         // arrays 
                         if ($ar1[$i] == $ar2[$j] &&   $ar2[$j] == $ar3[$k]) 
                         { 
-                            $final_winner_array[]= $ar1[$i] ; 
+
+                             $player_id = DB::table('users')
+                                         ->where('id',$ar1[$i])
+                                         ->first()->unique_id;
+
+
+                            $final_winner_array[]= $player_id ; 
                             $i++; 
                             $j++; 
                             $k++;  
@@ -705,33 +660,96 @@ class MatchController extends Controller
                         $max_num++;
                         $new_name = 'Mega Jackpot '.$max_num;
 
-                        $megajackpotData = array(
-                            'name'=>$new_name,
-                            'basePrize'=>0.0,
-                            'accumulatedPrize'=>0.0,
-                            'startTime'=>date('Y-m-d H:i:s'),
-                            'status'=>'Active',
-                            'created_at'=>date('Y-m-d H:i:s')
-                        );
-                        Megajackpot::create($megajackpotData); 
+                       
+
+                         DB::table('mega_jackpot')->insert(
+                            array(
+                               'name'=>$new_name,
+                                'basePrize'=>0.0,
+                                'accumulatedPrize'=>0.0,
+                                'startTime'=>date('Y-m-d H:i:s'),
+                                'status'=>'Active',
+                                'created_at'=>date('Y-m-d H:i:s')
+
+                            )
+                        );  
+
+
+
+                         $current_mega_jackpot_id = DB::table('mega_jackpot')                
+                        ->where('status','Active')                 
+                         ->first()->id; 
+                        $round_title = 'Round#1';
+
+                         $match = DB::table('mega_jackpot_round')->insert(
+                            array(
+                                'mega_jackpot_id'=>$current_mega_jackpot_id,
+                                'round_title'=>$round_title,
+                                'is_applicable_for_mega_jackpot'=>1,
+                                'created_at'=>date('Y-m-d H:i:s'),
+                                'is_running'=>1
+
+                            )
+                        );   
 
 
                     }
                     else
                     {
                         //no winner
-                    }
 
-                    // mega jackpot round new add start 
+                        // mega jackpot round new add start 
+
+                     $allmega_jackpot = DB::table('mega_jackpot_round')->where('mega_jackpot_id',$mega_jackpot_id)->select('round_title')->get();
+                        $max_num=0;
+                        if(!empty($allmega_jackpot))
+                        {
+                            foreach($allmega_jackpot as $vv)
+                            {
+                                $tempstr = $vv->round_title;
+                              
+                                $temparray = explode('Round#',$tempstr);
+                              
+                                if(!empty($temparray))
+                                {
+                                    foreach($temparray as $tempval)
+                                    {
+                                        $tempval=intval($tempval);
+                                        
+                                            if($tempval > $max_num)
+                                            {
+                                                $max_num = $tempval;
+                                            }
+                                     
+                                    }
+                                }
+                            }
+                        }
+                        $max_num++;
+                        $round_title = 'Round#'.$max_num;
+
+                         $match = DB::table('mega_jackpot_round')->insert(
+                            array(
+                                'mega_jackpot_id'=>$mega_jackpot_id,
+                                'round_title'=>$round_title,
+                                 'is_applicable_for_mega_jackpot'=>1,
+                                 'created_at'=>date('Y-m-d H:i:s'),
+                                'is_running'=>1
+
+                            )
+                        );   
 
                     // mega jackpot round new add start
+                    }
+
+
 
                 $isapplicableexist->is_running=2;
                 //$isapplicableexist->save();
 
                  DB::table("mega_jackpot_round")
                 ->whereRaw('is_running=1 and pool_1_status="Finished" and pool_2_status="Finished" and pool_3_status="Finished" ')
-                 ->update(['is_running' => 2]);
+                 ->update(['is_running' => 2,'updated_at'=>date('Y-m-d H:i:s')]);
 
 
 
@@ -796,6 +814,64 @@ class MatchController extends Controller
 
             if($allmatchresultneeupdate==0)
             {
+
+                 $mega_jackpot_round_exist_1 = DB::table('mega_jackpot_round')                
+                    ->where('pool_1_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_1 > 0)
+                     {
+                        /*
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_1_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_1_status='Finished';
+                         $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_1_id',$pool_id) 
+                            ->update(['pool_1_status' => 'Finished','updated_at'=>date('Y-m-d H:i:s')]);
+
+                     }
+
+                      $mega_jackpot_round_exist_2 = DB::table('mega_jackpot_round')                
+                    ->where('pool_2_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_2 > 0)
+                     {
+                         /*
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_2_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_2_status='Finished';
+                         $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_2_id',$pool_id) 
+                            ->update(['pool_2_status' => 'Finished','updated_at'=>date('Y-m-d H:i:s')]);
+
+                     }
+
+                      $mega_jackpot_round_exist_3 = DB::table('mega_jackpot_round')                
+                    ->where('pool_3_id',$pool_id)                 
+                     ->count();
+                      if($mega_jackpot_round_exist_3 > 0)
+                     {
+                        /*
+                         $mega_jackpot_round_update= DB::table('mega_jackpot_round')                
+                        ->where('pool_3_id',$pool_id)                 
+                         ->first();
+                         $mega_jackpot_round_update->pool_3_status='Finished';
+                         $mega_jackpot_round_update->save();
+                         */
+
+                          DB::table('mega_jackpot_round')
+                            ->where('pool_3_id',$pool_id) 
+                            ->update(['pool_3_status' => 'Finished','updated_at'=>date('Y-m-d H:i:s')]);
+                     }
+
+                     
                 //pool / jackpot results to calculate
 
                 //A

@@ -1,4 +1,6 @@
 @if ($configData['mainLayoutType'] === 'horizontal' && isset($configData['mainLayoutType']))
+
+
   <nav
     class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center {{ $configData['navbarColor'] }}"
     data-nav="brand-center">
@@ -12,11 +14,21 @@
       </ul>
     </div>
   @else
+
+
+
     <nav
       class="header-navbar navbar navbar-expand-lg align-items-center {{ $configData['navbarClass'] }} navbar-light navbar-shadow {{ $configData['navbarColor'] }} {{ $configData['layoutWidth'] === 'boxed' && $configData['verticalMenuNavbarType'] === 'navbar-floating' ? 'container-xxl' : '' }}">
 @endif
+
+
+
 <div class="navbar-container d-flex content">
+
   <div class="bookmark-wrapper d-flex align-items-center">
+
+    
+
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon"
             data-feather="menu"></i></a></li>
@@ -34,7 +46,48 @@
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('app/todo') }}"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo"><i class="ficon"
             data-feather="check-square"></i></a></li>
+
+    <?php
+    $megajackpot = DB::table('mega_jackpot')->where('status','Active')->first();
+
+     $mega_jackpot_id = $megajackpot->id;
+    // echo 'mega_jackpot_id='.$mega_jackpot_id;
+
+     $mega_jackpot_round_pool_1 = DB::table('mega_jackpot_round')                
+      ->where('mega_jackpot_id',$mega_jackpot_id) 
+       ->where(['is_running'=>1,'pool_1_status'=>'Inactive'])               
+       ->count();
+       if($mega_jackpot_round_pool_1 > 0){
+     ?>
+        <li class="nav-item d-none d-lg-block">      <h1><span class="badge rounded-pill badge-light-danger blink">You should assign Jackpot/ Pool to current mega jackpot round Pool 1</span></h1></li>
+        <?php 
+      }
+
+      $mega_jackpot_round_pool_2 = DB::table('mega_jackpot_round')                
+      ->where('mega_jackpot_id',$mega_jackpot_id) 
+       ->where(['is_running'=>1,'pool_2_status'=>'Inactive'])               
+       ->count();
+       if($mega_jackpot_round_pool_2 > 0){
+     ?>
+        <li class="nav-item d-none d-lg-block">      <h1><span class="badge rounded-pill badge-light-danger blink">You should assign Jackpot/ Pool to current mega jackpot round Pool 2</span></h1></li>
+        <?php 
+      }
+
+      $mega_jackpot_round_pool_3 = DB::table('mega_jackpot_round')                
+      ->where('mega_jackpot_id',$mega_jackpot_id) 
+       ->where(['is_running'=>1,'pool_3_status'=>'Inactive'])               
+       ->count();
+       if($mega_jackpot_round_pool_3 > 0){
+     ?>
+        <li class="nav-item d-none d-lg-block">      <h1><span class="badge rounded-pill badge-light-danger blink">You should assign Jackpot/ Pool to current mega jackpot round Pool 3</span></h1></li>
+        <?php 
+      }
+
+      ?>
+
     </ul>
+    
+
     <ul class="nav navbar-nav">
       <li class="nav-item d-none d-lg-block">
         <a class="nav-link bookmark-star">
@@ -265,6 +318,7 @@
   </ul>
 </div>
 </nav>
+
 
 {{-- Search Start Here --}}
 <ul class="main-search-list-defaultlist d-none">

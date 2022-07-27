@@ -9,6 +9,8 @@ use App\Models\Pool;
 use Carbon\Carbon;
 use App\Models\Megajackpot;
 
+use Mail;
+
 class SchedulingController extends Controller
 {
      public function scheduling()
@@ -19,7 +21,8 @@ class SchedulingController extends Controller
             ['description'=>date('Y-m-d H:i:s')]
         );
         */
-        
+
+               
 
         $current_date_time = Carbon::now()->toDateTimeString();
         $currentTime = strtotime($current_date_time);
@@ -131,6 +134,48 @@ class SchedulingController extends Controller
                     ->insert(['mega_jackpot_id' => $current_mega_jackpot_id,'round_title'=>'Round#1','is_running'=>'1','is_applicable_for_mega_jackpot'=>'1']);
                  }
                  //mega jackpot round exist check   end
+
+
+
+                 $mega_jackpot_id = $current_mega_jackpot_id;
+    // echo 'mega_jackpot_id='.$mega_jackpot_id;
+
+     $mega_jackpot_round_pool_1 = DB::table('mega_jackpot_round')                
+      ->where('mega_jackpot_id',$mega_jackpot_id) 
+       ->where(['is_running'=>1,'pool_1_status'=>'Inactive'])               
+       ->count();
+
+       $all_warning_message  = [];
+       if($mega_jackpot_round_pool_1 > 0){
+                 $all_warning_message[]= 'You should assign Jackpot/ Pool to current mega jackpot round Pool 1';
+              }
+
+              $mega_jackpot_round_pool_2 = DB::table('mega_jackpot_round')                
+              ->where('mega_jackpot_id',$mega_jackpot_id) 
+               ->where(['is_running'=>1,'pool_2_status'=>'Inactive'])               
+               ->count();
+               if($mega_jackpot_round_pool_2 > 0){
+                    $all_warning_message[]= 'You should assign Jackpot/ Pool to current mega jackpot round Pool 2';
+              }
+
+              $mega_jackpot_round_pool_3 = DB::table('mega_jackpot_round')                
+              ->where('mega_jackpot_id',$mega_jackpot_id) 
+               ->where(['is_running'=>1,'pool_3_status'=>'Inactive'])               
+               ->count();
+               if($mega_jackpot_round_pool_3 > 0){
+                $all_warning_message[]= 'You should assign Jackpot/ Pool to current mega jackpot round Pool 3'; 
+              }
+            //$details = implode(',<br> ',$all_warning_message);
+
+            //Mail::to('mahboob.raushan@gmail.com')->send($details);
+            $to_email =env('MAIL_ADDRESS_FOR_SCHEDULING','mahboob.raushan@gmail.com');
+            $data=['email'=>$to_email, 'all_warning_message'=> $all_warning_message];
+            $user['to']=$to_email;
+            Mail::send('emails.schedulingwarningmegajackporounpoolmail',$data,function ($messages) use ($user){
+                $messages->to($user['to']);
+                $messages->subject('Warning for Mega Jackpot Round - Pool setup - urgent');
+            });
+
          }
          else
          {

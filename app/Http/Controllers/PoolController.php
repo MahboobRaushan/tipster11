@@ -224,10 +224,11 @@ class PoolController extends Controller
 
             $match = DB::table('match')
                 ->leftJoin('tims as t1', 't1.id', '=', 'match.homeTeam')
-                ->select('match.id','t1.name as homeTeam_name','t2.name as awayTeam_name','match.startTime','match.endTime')
+                ->select('match.id','t1.name as homeTeam_name','t2.name as awayTeam_name','match.startTime','match.endTime','match.status')
                 ->leftJoin('tims as t2', 't2.id', '=', 'match.awayTeam')
                 ->where('match.league',$league_id)
                // ->where('match.status','Running')
+                 ->orderByRaw("FIELD(match.status , 'Running', 'Finished', 'Void') ASC")
                 ->get();
 
             
