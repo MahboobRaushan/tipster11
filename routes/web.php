@@ -34,7 +34,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\SchedulingController;
 
-
+use App\Http\Controllers\CkeditorController;
 
 
 
@@ -264,6 +264,8 @@ Route::get('/maps/leaflet', [ChartsController::class, 'maps_leaflet'])->name('ma
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
+Route::post('ckeditor/upload', [CkeditorController::class, 'upload'])->name('ckeditor.upload');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -416,7 +418,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::delete('matches/{id}',  [MatchController::class,'destroy'])->name('games.destroy');
 
 
+   // Route::get('announcement', [AnnouncementController::class,'announcement_list'])->name('announcement');
+
     Route::get('announcement', [AnnouncementController::class,'announcement_list'])->name('announcement');
+
+     Route::get('announcements/ajaxlist/{page_no}', [AnnouncementController::class,'ajaxlist']);
+    Route::post('announcements/add', [AnnouncementController::class,'store'])->name('announcements.store');
+    Route::post('announcements/{id}', [AnnouncementController::class,'details']);
+    Route::post('announcements/update/{id}', [AnnouncementController::class,'update'])->name('announcements.update');
+    Route::delete('announcements/{id}',  [AnnouncementController::class,'destroy'])->name('announcements.destroy');
 
     Route::get('notification', [NotificationController::class,'notification_list'])->name('notification');
 

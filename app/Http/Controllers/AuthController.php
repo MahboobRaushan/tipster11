@@ -14,6 +14,8 @@ use App\Models\Megajackpot;
 use App\Models\Megajackpotdetails;
 
 use App\Models\Bettransaction;
+use App\Models\Announcement;
+
 
 use File;
 
@@ -899,6 +901,20 @@ public function getalljackpot(Request $request)
              
              //id name isJackpotPool
              return response()->json($jackpot);
+       
+        
+    }
+
+public function getallannouncement(Request $request)
+    {
+
+         
+               
+       
+         
+             $announcements =  Announcement:: where('status','1')->orderBy('id','desc')->get();
+            
+             return response()->json($announcements);
        
         
     }

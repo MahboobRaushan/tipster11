@@ -28,23 +28,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   Route::post('reset', [AuthController::class, 'reset']);
    Route::get('getjackpot', [AuthController::class, 'getjackpot']);
     Route::get('getalljackpot', [AuthController::class, 'getalljackpot']);
+    Route::get('getallannouncement', [AuthController::class, 'getallannouncement']);
 
   Route::get('testingvue', [AuthController::class, 'testingvue']);
 
   Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::get('logout', [AuthController::class, 'logout']);
-    Route::get('user', [AuthController::class, 'user']);
-    Route::post('emailchange', [AuthController::class, 'emailchange']);
-    Route::post('passwordchange', [AuthController::class, 'passwordchange']);
+        Route::get('logout', [AuthController::class, 'logout']);
+        Route::get('user', [AuthController::class, 'user']);
+        Route::post('emailchange', [AuthController::class, 'emailchange']);
+        Route::post('passwordchange', [AuthController::class, 'passwordchange']);
 
-    Route::post('deposit', [AuthController::class, 'deposit']);
-    Route::post('withdraw', [AuthController::class, 'withdraw']);
+        Route::post('deposit', [AuthController::class, 'deposit']);
+        Route::post('withdraw', [AuthController::class, 'withdraw']);
 
-    Route::get('getdeposit', [AuthController::class, 'getdeposit']);
-    Route::get('getwithdraw', [AuthController::class, 'getwithdraw']);
-     Route::get('getbet', [AuthController::class, 'getbet']);
-    
-    Route::post('placebet', [AuthController::class, 'placebet']);
+        Route::get('getdeposit', [AuthController::class, 'getdeposit']);
+        Route::get('getwithdraw', [AuthController::class, 'getwithdraw']);
+         Route::get('getbet', [AuthController::class, 'getbet']);
+        
+        Route::post('placebet', [AuthController::class, 'placebet']);
    
 
     
