@@ -228,7 +228,7 @@ class AnnouncementController extends Controller
     }
      public function destroy($id){
        
-        $announcement = DB::table('announcements')->where('id',$id)->first();
+        $announcement = DB::table('announcements')->where('id',$id);
         
        $announcement->delete();
                  
