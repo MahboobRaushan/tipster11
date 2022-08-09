@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Settlement List')
+@section('title', 'Agent Commission List')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -37,128 +37,67 @@
   
   <!-- list and filter start -->
   <div class="card">
-    <div class="card-text m-2">
-       <form id="searchform" name="searchform" >
+
+     <div class="card-text m-2">
           <div class="row">
             <div class="col-lg-12">
+              <form id="searchform" name="searchform" >
              <div class="row">
-                <div class="col-md-4 ">
+                <div class="col-md-3 ">
                   <label class="form-label" for="fp-range">Date Range</label>
                   <input
                     type="text"
-                    name="daterange" 
-                    id="fp-range"
+                    name="daterange"
+                    id="fp-range"                   
                     class="form-control flatpickr-range"
                     placeholder="YYYY-MM-DD to YYYY-MM-DD"
                   />
                 </div>
-                 <div class="col-md-4 ">
-                  <label class="form-label" for="fp-range">Agent ID</label>
-                  <select class="select2 form-select" id="agent_id" name="agent_id">
-                    <option value="">Select Agent ID</option>
-                    <?php 
-                    if(!empty($agents))
-                    {
-                      foreach($agents as $agent)
-                      {
-                        ?>
-                        <option value="{{$agent->id}}"  >{{$agent->unique_id}}</option>
-                        <?php
-
-                      }
-                    }
-                    ?>
-                    </select>
+                 <div class="col-md-3 ">
+                  <label class="form-label" for="fp-range">Name</label>
+                  <input type="text" class="form-control" id="name" name="name" />
+                  
                 </div>
-                <div class="col-md-4 mt-2">
-                  <a id="search_btn" href='{{Route("settlementlistall")}}' class="dt-button add-new btn btn-info" >Search</a>
+                 <div class="col-md-3 ">
+                  <label class="form-label" for="fp-range">Player ID</label>
+                  <select class="select2 form-select" id="member_id" name="member_id" >
+                    <option value="">Select Member</option>
+                    @if(!empty($members))
+                      @foreach($members as $member)
+                      <option value="{{$member->unique_id}}">{{$member->unique_id}}</option>
+                      @endforeach
+                    @endif
+                  </select>
+                  
+                </div>
+                
+                <div class="col-md-3 mt-2">
+                  <a id="search_btn" href='{{Route("commissionlist")}}' class="dt-button add-new btn btn-info" >Search</a>
                   
                 </div>
 
                 
 
               </div>
+            </form>
             </div>
            
           </div>
-        </form>
         </div>
+    
+    <div >
+     
 
-
-         <div id="pagination_data">
-          @include("content/apps/agent/app-settlement-list-pagination",['pageConfigs'=>$pageConfigs         
-          ,'data'=>$data,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access  ,'agents'=>$agents   
+        <div id="pagination_data">
+          @include("content/apps/agent/agent_commissionlist-pagination",['pageConfigs'=>$pageConfigs         
+          ,'data'=>$data ,'members'=>$members      
           
           ])
         </div>
 
-
-    
-  
-    <!-- Modal to add new details starts-->
-    <div class="modal modal-slide-in new-details-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-details modal-content pt-0"  id="postForm" name="postForm" >
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Details</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Individual Agent Id</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-individualAgentId"
-                placeholder="A001"
-                name="individualAgentId"
-              />
-            </div>
-
-          
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Settlement Amount</label>
-              <input
-                type="number"
-                class="form-control dt-full-name"
-                id="basic-icon-default-settlementAmount"
-                placeholder="2000"
-                name="settlementAmount"
-              />
-            </div>
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Settlement Date</label>
-              <input
-                      type="text"
-                     
-                      class="form-control flatpickr-basic"
-                       placeholder="YYYY-MM-DD"
-                      id="basic-icon-default-settlementDate"
-                     
-                      name="settlementDate"
-                    />
-            </div>
-             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Settlement Status</label>
-               <select
-                id="basic-icon-default-settlementStatus"
-                class="form-control select2"
-                name="settlementStatus"
-               >
-               <option value="paid">Paid</option>
-               <option value="due">Due</option>
-             </select>
-            </div>
-           
-          
-           
-            <button type="button" id="btn-save" class="btn btn-primary me-1 data-submit">Save</button>
-            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
     </div>
-    <!-- Modal to add new details Ends-->
+     
+   
     
 
   </div>
@@ -199,10 +138,10 @@
 
 @section('page-script')
   {{-- Page js files --}}
-   
+  
  <script src="{{ asset(mix('js/scripts/forms/pickers/form-pickers.js')) }}"></script>
 
-  <script src="{{ asset(mix('js/scripts/pages/app-agentsettlement-list.js')) }}"></script>
-  }
+  <script src="{{ asset(mix('js/scripts/pages/app-agentstatement-list.js')) }}"></script>
+  
 @endsection
 

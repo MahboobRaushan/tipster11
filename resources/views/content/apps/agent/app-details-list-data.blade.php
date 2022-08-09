@@ -9,7 +9,8 @@
               <th>Name</th>
               <th>Email</th>
               <th>Registration Date</th>              
-              <th>Credit Balance</th>              
+              <th>Credit Balance</th>  
+              <th>Commission Percentage</th>                
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -38,6 +39,7 @@
               </td>
              
               <td> {{ $row->credits }}</td>
+                <td> {{ $row->commission_percentage }}</td>
               
               <td> 
                 <?php if($row->status ==1){?>

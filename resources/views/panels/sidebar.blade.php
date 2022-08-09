@@ -54,7 +54,35 @@ if(isset($custom_get_all_permissions_access))
       }
     }
     ?>
-
+ <?php if(Auth::user()->user_type=='agent')
+ {
+  ?>
+   <li class="nav-item  {{Route::currentRouteName() === '' ? 'active' : ''}}">
+          <a href="{{url('memberlist')}}" class="d-flex align-items-center" >
+            <i data-feather="copy"></i>
+            <span class="menu-title text-truncate fw-bolder">Member List</span> 
+            
+          </a>
+        
+        </li>
+        <li class="nav-item  {{Route::currentRouteName() === '' ? 'active' : ''}}">
+          <a href="{{url('commissionlist')}}" class="d-flex align-items-center" >
+            <i data-feather="copy"></i>
+            <span class="menu-title text-truncate fw-bolder">Commission List</span> 
+            
+          </a>
+        
+        </li>
+        <li class="nav-item  {{Route::currentRouteName() === '' ? 'active' : ''}}">
+          <a href="{{url('settlementlist')}}" class="d-flex align-items-center" >
+            <i data-feather="copy"></i>
+            <span class="menu-title text-truncate fw-bolder">Settlement List</span> 
+            
+          </a>
+        
+        </li>
+  <?php 
+ } ?>
 
       {{-- Foreach menu item starts --}}
       @if(isset($menuData[0]))

@@ -16,3 +16,4 @@
   <img src="{{ asset('images/logo/ajax-loader.gif') }}" class="img-responsive" />
   </center>
 </div> 
+<input type="hidden" id="loadingimgsrc" value="{{ asset('images/logo/ajax-loader.gif') }}" />

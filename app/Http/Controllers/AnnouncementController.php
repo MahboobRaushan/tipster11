@@ -40,6 +40,8 @@ class AnnouncementController extends Controller
        // return view('/content/components/component-modals',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access]);
 
         $announcements = Announcement::orderBy('created_at','desc')->get();
+   
+
         return view('/content/apps/announcement/app-announcement-list',['pageConfigs' => $pageConfigs,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access,'announcements'=>$announcements]);
         
     }

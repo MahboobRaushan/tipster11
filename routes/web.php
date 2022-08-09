@@ -334,7 +334,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 
     Route::get('agent/statement', [AgentController::class,'statement_list'])->name('statement');
+    Route::get('agent/statementdetails/{id}/{date}', [AgentController::class,'statementdetails'])->name('statementdetails');
+   
+
+
     Route::get('agent/settlement', [AgentController::class,'settlement_list'])->name('settlement');
+
+    Route::get('agent/settlementdetails/{id}', [MemberController::class,'settlement_details'])->name('settlementdetails');
+    Route::post('agent/settlementdelete/{id}', [MemberController::class,'settlement_delete'])->name('settlementdelete');
+    Route::post('agent/settlementapproved/{id}', [AgentController::class,'settlement_approved'])->name('settlementapproved');
 
     Route::get('member/details', [MemberController::class,'details_list'])->name('details');
     Route::post('member/passwordchange', [MemberController::class,'passwordchange'])->name('member.password.change');
@@ -344,7 +352,13 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
       Route::get('member/details_adjustcreditlog_list_data', [MemberController::class,'details_adjustcreditlog_list_data'])->name('details_adjustcreditlog_list_data');
   
 
-    
+      Route::get('memberlist', [MemberController::class,'agent_memberlist'])->name('memberlist');
+      Route::get('commissionlist', [MemberController::class,'agent_commissionlist'])->name('commissionlist');
+      Route::get('settlementlist', [MemberController::class,'agent_settlementlist'])->name('settlementlist');
+      Route::get('settlementlistall', [AgentController::class,'settlement_list'])->name('settlementlistall');
+      Route::get('settlementlist_get', [MemberController::class,'agent_settlementlist_get'])->name('settlementlist_get');
+      Route::post('settlement_save', [MemberController::class,'agent_settlement_save'])->name('settlement_save');
+
 
 
      Route::post('member/basic_detailsupdate', [MemberController::class,'basic_detailsupdate'])->name('member.basic_details.update');

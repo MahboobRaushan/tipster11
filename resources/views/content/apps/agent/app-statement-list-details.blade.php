@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Statement List')
+@section('title', 'Statement Details')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -38,90 +38,17 @@
   <!-- list and filter start -->
   <div class="card">
 
-     <div class="card-text m-2">
-          <div class="row">
-            <div class="col-lg-12">
-              <form id="searchform" name="searchform" >
-             <div class="row">
-                <div class="col-md-4 ">
-                  <label class="form-label" for="fp-range">Date Range</label>
-                  <input
-                    type="text"
-                    name="daterange"
-                    id="fp-range"
-                    <?php 
-                    if(($start_date_form!='') && ($start_date_form!=''))
-                    {
-                      ?>
-                      value="{{$start_date_form}} to {{$end_date_form}}"
-                      <?php 
-                    }
-                    ?>
-                    class="form-control flatpickr-range"
-                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
-                  />
-                </div>
-                 <div class="col-md-4 ">
-                  <label class="form-label" for="fp-range">Agent ID</label>
-                  <select class="select2 form-select" id="agent_id" name="agent_id">
-                    <option value="">Select Agent ID</option>
-                    <?php 
-                    if(!empty($agents))
-                    {
-                      foreach($agents as $agent)
-                      {
-                        ?>
-                        <option value="{{$agent->id}}" <?php 
-                        if($agent_id_form!='') 
-                        {
-                            if($agent_id_form==$agent->id)
-                            {
-                            ?>
-                            selected="selected"
-                            <?php 
-                            }
-                        }
-                        ?>
-                    >{{$agent->unique_id}}</option>
-                        <?php
-
-                      }
-                    }
-                    ?>
-                     
-                     
-                    </select>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <a id="search_btn" href='{{Route("statement")}}' class="dt-button add-new btn btn-info" >Search</a>
-                  
-                </div>
-
-                
-
-              </div>
-            </form>
-            </div>
-           
-          </div>
-        </div>
-    
-    <div >
      
+    
+    
 
-        <div id="pagination_data">
-          @include("content.apps.agent.app-statement-list-pagination",['pageConfigs'=>$pageConfigs
+    <div id="pagination_data">
+          @include("content.apps.agent.app-statement-list-details-pagination",['pageConfigs'=>$pageConfigs
           ,'custom_get_all_permissions_access'=>$custom_get_all_permissions_access
           ,'data'=>$data
-          ,'start_date_form'=>$start_date_form
-          ,'end_date_form'=>$end_date_form
-          ,'agents'=>$agents
-          ,'agent_id_form'=>$agent_id_form
           
           ])
         </div>
-
-    </div>
      
     <!-- Modal to add new details starts-->
     <div class="modal modal-slide-in new-details-modal fade" id="modals-slide-in">

@@ -192,6 +192,22 @@
             </select>
             
           </div>
+           <div class="mb-1 col-md-6">
+            <label class="form-label" for="vertical-modern-commission_percentage">Commission Percentage</label>
+            <div class="input-group mb-1">
+            
+              <span class="input-group-text" id="basic-addon6"><i data-feather="dollar-sign" class=""></i></span>
+              <input
+               name="commission_percentage"
+                id="commission_percentage"
+                type="number"
+                class="form-control"
+                placeholder="Commission Percentage"
+                aria-label="Password"
+                aria-describedby="basic-addon6"
+              />
+            </div>
+          </div>
        
          <div class="mb-1 mt-2 col-md-6">
            <button type="submit" id="basic_details_submit" class="btn btn-primary"> Submit</button>            

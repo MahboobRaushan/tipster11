@@ -146,9 +146,27 @@
               />
             </div>
           </div>
-        </div>
+
+           <div class="mb-1 col-md-6">
+            <label class="form-label" for="vertical-modern-commission_percentage">Commission Percentage</label>
+            <div class="input-group mb-1">
+            
+              <span class="input-group-text" id="basic-addon6"><i data-feather="dollar-sign" class=""></i></span>
+              <input
+               name="commission_percentage"
+                id="commission_percentage"
+                type="number"
+                 value="{{ $data->commission_percentage }}"
+                class="form-control"
+                placeholder="Commission Percentage"
+                aria-label="Password"
+                aria-describedby="basic-addon6"
+              />
+            </div>
+          </div>
        
-        <div class="row">
+
+       
          
           <div class="mb-1 col-md-6">
             <label class="form-label" for="status">Status</label>
